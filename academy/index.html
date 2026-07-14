@@ -1,0 +1,1363 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Valura Academy — educação médica continuada. Aulas semanais, pós-teste e certificado, com os professores Igor Morais e Bernardo Tardin.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Valura Academy — Educação médica continuada">
+<meta property="og:description" content="Aulas semanais, pós-teste e certificado. Valor que cura, saber que fica.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Valura Academy — Educação médica continuada</title>
+<style>
+  :root{
+    color-scheme:dark;
+    --ground:#0B0B10;--ground-2:#0E1024;--panel:#12132A;--panel-2:#161737;--indigo:#1B1F3B;
+    --line:#262845;--line-soft:#1b1d38;
+    --gold:#C6A15B;--gold-hi:#E7CE93;--gold-deep:#7C6230;
+    --ash:#D2CCBE;--ash-dim:#9A9484;--ash-faint:#827D6F;
+    --parch:#EDE7D6;--parch-ink:#191712;--parch-dim:#6c6656;
+    --ok:#7FB98A;--warn:#D9B36A;--err:#C97A6F;
+    --fd:"Palatino Linotype","Book Antiqua",Palatino,"Iowan Old Style","Sitka Text",Georgia,serif;
+    --fl:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--ground);color:var(--ash);font-family:var(--fd);line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,40px)}
+  .eyebrow{font-family:var(--fl);text-transform:uppercase;letter-spacing:.32em;font-size:11px;font-weight:600;color:var(--gold);opacity:.85;margin:0 0 16px}
+  h1,h2,h3,h4{font-weight:500;text-wrap:balance;margin:0}
+  h2{font-size:clamp(24px,3.8vw,36px);color:#EDE7D8;letter-spacing:.01em;line-height:1.14}
+  p{margin:0}
+  a{color:inherit}
+  .mk{color:var(--gold);display:block}
+  .muted{color:var(--ash-dim)}
+  .small{font-family:var(--fl);font-size:12.5px;color:var(--ash-dim)}
+  .flex{display:flex;align-items:center;gap:12px}
+  .grow{flex:1}
+
+  /* NAV */
+  nav.top{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(12px);background:rgba(11,11,16,.78);border-bottom:1px solid var(--line-soft)}
+  nav.top .in{max-width:var(--maxw);margin:0 auto;padding:12px clamp(16px,4vw,40px);display:flex;align-items:center;gap:18px}
+  nav.top .brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
+  nav.top .brand .mk{width:24px;height:24px}
+  nav.top .brand b{font-family:var(--fd);letter-spacing:.22em;text-indent:.22em;font-size:15.5px;color:var(--gold);font-weight:500;white-space:nowrap}
+  nav.top .brand small{font-family:var(--fl);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ash-dim);display:block;margin-top:-2px}
+  nav.top .links{margin-left:auto;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  nav.top .links a{font-family:var(--fl);font-size:12.5px;letter-spacing:.05em;color:var(--ash-dim);text-decoration:none;transition:color .2s;padding:4px 2px}
+  nav.top .links a:hover,nav.top .links a.on{color:var(--gold-hi)}
+  nav.top .cta{font-family:var(--fl);font-size:12.5px;font-weight:600;letter-spacing:.04em;color:#0B0B10;background:linear-gradient(180deg,var(--gold-hi),var(--gold));padding:8px 15px;border-radius:8px;text-decoration:none;white-space:nowrap}
+  nav.top .user{font-family:var(--fl);font-size:12px;color:var(--gold-hi);border:1px solid var(--gold-deep);border-radius:999px;padding:5px 13px;text-decoration:none;white-space:nowrap}
+  nav.top button.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:8px;color:var(--ash);font-size:17px;padding:4px 11px;cursor:pointer}
+  @media(max-width:860px){
+    nav.top .links{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(11,11,16,.97);border-bottom:1px solid var(--line-soft);flex-direction:column;align-items:flex-start;padding:16px clamp(16px,4vw,40px);gap:14px}
+    nav.top .links.open{display:flex}
+    nav.top button.burger{display:block}
+  }
+
+  /* buttons */
+  .btn{font-family:var(--fl);font-size:14px;font-weight:600;letter-spacing:.02em;color:#0B0B10;background:linear-gradient(180deg,var(--gold-hi),var(--gold));padding:12px 22px;border-radius:10px;text-decoration:none;display:inline-block;border:0;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 0 0 rgba(198,161,91,0)}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(198,161,91,.18)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+  .btn-ghost{font-family:var(--fl);font-size:14px;font-weight:600;color:var(--gold-hi);border:1px solid var(--gold-deep);background:none;padding:12px 22px;border-radius:10px;text-decoration:none;display:inline-block;cursor:pointer;transition:border-color .2s,background .2s}
+  .btn-ghost:hover{border-color:var(--gold);background:rgba(198,161,91,.06)}
+  .btn-sm{padding:7px 14px;font-size:12.5px;border-radius:8px}
+  .btn-danger{color:#F1D9D4;border-color:#6b3a33}
+  .btn-danger:hover{border-color:var(--err);background:rgba(201,122,111,.08)}
+
+  main{padding-top:58px;min-height:calc(100vh - 200px)}
+
+  /* HERO (home) */
+  header.hero{position:relative;padding:clamp(64px,9vw,110px) 0 clamp(44px,6vw,72px);overflow:hidden}
+  header.hero::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(27,31,59,.55),rgba(11,11,16,0) 62%);z-index:0}
+  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
+  @media(min-width:900px){.hero .wrap{grid-template-columns:1.2fr .8fr}}
+  .hero h1{font-size:clamp(32px,5.4vw,56px);line-height:1.06;color:#F1EBDC;letter-spacing:.005em}
+  .hero h1 em{font-style:normal;color:transparent;background:linear-gradient(180deg,var(--gold-hi),var(--gold));-webkit-background-clip:text;background-clip:text}
+  .hero .sub{margin-top:22px;font-size:clamp(15.5px,2vw,18px);color:var(--ash-dim);max-width:56ch}
+  .hero .actions{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+  .hero-mark{display:grid;place-items:center;position:relative}
+  .hero-mark .mk{width:min(230px,58vw);animation:rise 1.3s cubic-bezier(.2,.7,.2,1) both}
+  .hero-mark::after{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle at 50% 46%,rgba(198,161,91,.20),transparent 66%);filter:blur(8px);z-index:-1;animation:breathe 7s ease-in-out infinite}
+  .hero .tag{font-family:var(--fl);letter-spacing:.34em;text-transform:uppercase;font-size:11px;color:var(--gold);opacity:.75;margin-top:20px;text-align:center}
+
+  section{padding:clamp(48px,7vw,88px) 0;position:relative}
+  section.alt{background:linear-gradient(180deg,var(--ground),var(--ground-2) 50%,var(--ground))}
+  section .lead{font-size:clamp(15.5px,1.9vw,18px);color:var(--ash-dim);max-width:62ch;margin-top:14px}
+  .center{text-align:center;display:flex;flex-direction:column;align-items:center}
+  .center .lead{margin-left:auto;margin-right:auto}
+
+  .cards{display:grid;grid-template-columns:1fr;gap:18px;margin-top:38px}
+  @media(min-width:640px){.cards.c2{grid-template-columns:1fr 1fr}.cards.c3{grid-template-columns:repeat(3,1fr)}.cards.c4{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:940px){.cards.c4{grid-template-columns:repeat(4,1fr)}}
+  .card{border:1px solid var(--line-soft);border-radius:16px;padding:24px;background:linear-gradient(180deg,rgba(18,19,42,.5),rgba(11,12,24,.3))}
+  .card .k{font-family:var(--fl);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.85}
+  .card h3{font-size:18px;color:#E9E3D4;margin:11px 0 8px;font-weight:500}
+  .card p{font-size:13.5px;color:var(--ash-dim);line-height:1.55}
+  a.card{text-decoration:none;display:block;transition:border-color .2s,transform .15s}
+  a.card:hover{border-color:var(--gold-deep);transform:translateY(-2px)}
+
+  /* pills & chips */
+  .pill{font-family:var(--fl);font-size:10.5px;letter-spacing:.06em;color:var(--ash-dim);border:1px solid var(--line);border-radius:999px;padding:3px 10px;display:inline-block}
+  .pill.gold{color:var(--gold-hi);border-color:var(--gold-deep)}
+  .pill.ok{color:var(--ok);border-color:#3b5a43}
+  .pill.warn{color:var(--warn);border-color:#5c4a26}
+  .pill.err{color:var(--err);border-color:#5c332c}
+
+  /* pricing */
+  .price-card{border:1px solid var(--gold-deep);border-radius:20px;padding:34px;background:linear-gradient(180deg,rgba(27,31,59,.55),rgba(11,12,24,.35));max-width:430px;position:relative}
+  .price-card .val{font-size:clamp(40px,6vw,54px);color:#F1EBDC;font-weight:500;line-height:1}
+  .price-card .val small{font-size:16px;color:var(--ash-dim)}
+  .price-card ul{list-style:none;margin:22px 0 26px;padding:0;display:grid;gap:10px}
+  .price-card li{font-family:var(--fl);font-size:13.5px;color:var(--ash);padding-left:24px;position:relative}
+  .price-card li::before{content:"";position:absolute;left:0;top:5px;width:12px;height:12px;border:1.5px solid var(--gold);border-radius:50%}
+
+  /* founders / professores */
+  .founder{border:1px solid var(--line-soft);border-radius:16px;padding:26px;background:linear-gradient(180deg,rgba(18,19,42,.5),rgba(11,12,24,.3));display:flex;gap:18px;align-items:flex-start}
+  .founder .av{width:52px;height:52px;border-radius:50%;flex:none;display:grid;place-items:center;border:1px solid var(--gold-deep);background:rgba(198,161,91,.06);font-family:var(--fd);color:var(--gold-hi);font-size:20px}
+  .founder .role{font-family:var(--fl);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.85}
+  .founder h3{font-size:19px;color:#EDE7D8;margin:4px 0 8px;font-weight:500}
+  .founder p{font-size:13.5px;color:var(--ash-dim);line-height:1.55}
+
+  /* news */
+  .news{display:grid;gap:14px;margin-top:34px}
+  .news-item{border:1px solid var(--line-soft);border-radius:14px;padding:18px 22px;background:rgba(18,19,42,.35);display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;text-decoration:none;transition:border-color .2s}
+  .news-item:hover{border-color:var(--gold-deep)}
+  .news-item .d{font-family:var(--fl);font-size:11px;color:var(--gold);letter-spacing:.08em;white-space:nowrap}
+  .news-item .t{color:#E9E3D4;font-size:15.5px;flex:1;min-width:220px}
+  .news-item .s{font-family:var(--fl);font-size:11px;color:var(--ash-faint)}
+
+  /* app sub-nav */
+  .appbar{border-bottom:1px solid var(--line-soft);background:rgba(14,16,36,.5)}
+  .appbar .in{max-width:var(--maxw);margin:0 auto;padding:0 clamp(16px,4vw,40px);display:flex;gap:4px;overflow-x:auto}
+  .appbar a{font-family:var(--fl);font-size:12.5px;letter-spacing:.04em;color:var(--ash-dim);text-decoration:none;padding:13px 14px;border-bottom:2px solid transparent;white-space:nowrap}
+  .appbar a.on{color:var(--gold-hi);border-bottom-color:var(--gold)}
+  .appbar a:hover{color:var(--gold-hi)}
+
+  /* panels & KPIs */
+  .panel{border:1px solid var(--line-soft);border-radius:16px;padding:24px;background:linear-gradient(180deg,rgba(18,19,42,.5),rgba(11,12,24,.3));margin-top:20px}
+  .panel h3{font-size:17px;color:#E9E3D4;margin-bottom:14px}
+  .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px}
+  @media(min-width:760px){.kpis{grid-template-columns:repeat(4,1fr)}}
+  .kpi{border:1px solid var(--line-soft);border-radius:14px;padding:18px 20px;background:rgba(18,19,42,.4)}
+  .kpi .n{font-size:30px;color:#F1EBDC;line-height:1.1}
+  .kpi .l{font-family:var(--fl);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash-dim);margin-top:4px}
+
+  /* course cards */
+  .course{border:1px solid var(--line-soft);border-radius:16px;background:linear-gradient(180deg,rgba(18,19,42,.5),rgba(11,12,24,.3));overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .15s}
+  .course:hover{border-color:var(--gold-deep);transform:translateY(-2px)}
+  .course .thumb{height:110px;display:flex;align-items:center;justify-content:center;position:relative;background:radial-gradient(circle at 30% 20%,rgba(198,161,91,.16),transparent 60%),linear-gradient(160deg,var(--indigo),var(--ground-2))}
+  .course .thumb .mk{width:44px;height:44px;opacity:.9}
+  .course .thumb .area{position:absolute;top:12px;left:14px}
+  .course .thumb .nova{position:absolute;top:12px;right:14px}
+  .course .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .course h3{font-size:16.5px;color:#E9E3D4;font-weight:500;line-height:1.3}
+  .course .meta{display:flex;gap:8px;flex-wrap:wrap}
+  .course .desc{font-family:var(--fl);font-size:12.5px;color:var(--ash-dim);line-height:1.5;flex:1}
+  .course .foot{display:flex;align-items:center;gap:10px;margin-top:4px}
+  .prog{flex:1;height:5px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+  .prog i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold-deep),var(--gold))}
+
+  /* lesson player & deck */
+  .player{border:1px solid var(--line-soft);border-radius:18px;overflow:hidden;background:#07070c;margin-top:22px}
+  .player .video{aspect-ratio:16/9;width:100%;display:grid;place-items:center;position:relative}
+  .player .video iframe{width:100%;height:100%;border:0;display:block}
+  .player .vpending{text-align:center;padding:30px}
+  .player .vpending .mk{width:54px;height:54px;margin:0 auto 14px;opacity:.7}
+  .deck{aspect-ratio:16/9;width:100%;position:relative;background:linear-gradient(160deg,#0E1024,#0B0B10)}
+  .deck .slide{position:absolute;inset:0;padding:clamp(22px,5.5%,56px);display:none;flex-direction:column;justify-content:center;gap:14px;overflow:auto}
+  .deck .slide.on{display:flex}
+  .deck .slide .sk{font-family:var(--fl);font-size:clamp(9px,1.2vw,11px);letter-spacing:.3em;text-transform:uppercase;color:var(--gold);opacity:.8}
+  .deck .slide h3{font-size:clamp(19px,3.2vw,34px);color:#F1EBDC;font-weight:500;line-height:1.15}
+  .deck .slide p,.deck .slide li{font-size:clamp(12.5px,1.75vw,17.5px);color:var(--ash);line-height:1.55}
+  .deck .slide ul{margin:4px 0 0;padding-left:1.15em;display:grid;gap:7px}
+  .deck .slide li::marker{color:var(--gold)}
+  .deck .slide .note{font-family:var(--fl);font-size:clamp(10px,1.3vw,12.5px);color:var(--ash-faint);margin-top:auto}
+  .deck-ctrl{display:flex;align-items:center;gap:14px;padding:12px 18px;border-top:1px solid var(--line-soft);background:rgba(14,16,36,.6)}
+  .deck-ctrl .cnt{font-family:var(--fl);font-size:12px;color:var(--ash-dim);letter-spacing:.06em}
+
+  /* quiz */
+  .q{border:1px solid var(--line-soft);border-radius:16px;padding:22px 24px;background:rgba(18,19,42,.4);margin-top:18px}
+  .q .enun{color:#E9E3D4;font-size:15.5px;line-height:1.5}
+  .q .alts{display:grid;gap:9px;margin-top:14px}
+  .q-alt{font-family:var(--fl);font-size:13.5px;text-align:left;color:var(--ash);border:1px solid var(--line);border-radius:10px;padding:11px 14px;background:rgba(255,255,255,.02);cursor:pointer;transition:border-color .15s,background .15s;line-height:1.45}
+  .q-alt:hover{border-color:var(--gold-deep)}
+  .q-alt.sel{border-color:var(--gold);background:rgba(198,161,91,.08)}
+  .q-alt.certa{border-color:var(--ok);background:rgba(127,185,138,.08)}
+  .q-alt.errada{border-color:var(--err);background:rgba(201,122,111,.08)}
+  .q .fb{font-family:var(--fl);font-size:12.5px;margin-top:12px;padding:10px 14px;border-radius:10px;line-height:1.5}
+  .q .fb.ok{color:var(--ok);background:rgba(127,185,138,.07);border:1px solid #3b5a43}
+  .q .fb.err{color:#E8C3BC;background:rgba(201,122,111,.07);border:1px solid #5c332c}
+  .score-box{text-align:center;padding:38px 24px}
+  .score-box .n{font-size:56px;color:#F1EBDC;line-height:1}
+
+  /* certificate (pergaminho) */
+  .cert{background:var(--parch);color:var(--parch-ink);border-radius:6px;padding:clamp(28px,6vw,64px);max-width:860px;margin:26px auto;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .cert::before{content:"";position:absolute;inset:14px;border:1.5px solid var(--gold-deep);border-radius:3px;pointer-events:none}
+  .cert::after{content:"";position:absolute;inset:19px;border:.5px solid rgba(124,98,48,.45);border-radius:2px;pointer-events:none}
+  .cert .mk{color:var(--gold-deep);width:54px;height:54px;margin:0 auto 10px}
+  .cert{text-align:center}
+  .cert .brand{font-family:var(--fd);letter-spacing:.3em;text-indent:.3em;color:var(--gold-deep);font-size:19px}
+  .cert .kind{font-family:var(--fl);font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--parch-dim);margin-top:4px}
+  .cert h2{color:var(--parch-ink);font-size:clamp(22px,3.6vw,32px);margin:26px 0 6px}
+  .cert .who{font-size:clamp(20px,3vw,27px);color:var(--parch-ink);margin:18px 0 4px;font-style:italic}
+  .cert .body-t{font-size:14.5px;color:#4d4736;max-width:56ch;margin:10px auto;line-height:1.7}
+  .cert .sigs{display:flex;gap:40px;justify-content:center;margin-top:38px;flex-wrap:wrap}
+  .cert .sig{min-width:200px}
+  .cert .sig .ln{border-top:1px solid var(--gold-deep);padding-top:8px;font-size:14px;color:var(--parch-ink)}
+  .cert .sig .rl{font-family:var(--fl);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--parch-dim);margin-top:2px}
+  .cert .code{font-family:var(--fl);font-size:10.5px;letter-spacing:.12em;color:var(--parch-dim);margin-top:30px}
+  @media print{
+    body{background:#fff}
+    nav.top,.appbar,footer,.no-print{display:none !important}
+    main{padding-top:0}
+    .cert{box-shadow:none;margin:0 auto;max-width:100%}
+  }
+
+  /* reference center */
+  .ref-group{margin-top:34px}
+  .ref-group h3{font-size:17px;color:var(--gold-hi);margin-bottom:6px}
+  .ref-group .gd{font-family:var(--fl);font-size:12.5px;color:var(--ash-dim);max-width:70ch}
+  .ref-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
+  @media(min-width:640px){.ref-grid{grid-template-columns:1fr 1fr}}
+  @media(min-width:960px){.ref-grid{grid-template-columns:repeat(3,1fr)}}
+  .ref{border:1px solid var(--line-soft);border-radius:12px;padding:15px 17px;background:rgba(18,19,42,.35);text-decoration:none;display:block;transition:border-color .2s}
+  .ref:hover{border-color:var(--gold-deep)}
+  .ref b{display:block;color:#E9E3D4;font-size:14px;font-weight:500}
+  .ref span{font-family:var(--fl);font-size:11.5px;color:var(--ash-dim);line-height:1.45;display:block;margin-top:3px}
+  .ref .tag{font-family:var(--fl);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);opacity:.8}
+
+  /* forms */
+  .form{display:grid;gap:14px;margin-top:18px}
+  .form label{font-family:var(--fl);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash-dim);display:block;margin-bottom:6px}
+  .form input,.form select,.form textarea{width:100%;font-family:var(--fl);font-size:14px;color:var(--ash);background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:10px;padding:11px 13px;outline:none;transition:border-color .15s}
+  .form input:focus,.form select:focus,.form textarea:focus{border-color:var(--gold)}
+  .form textarea{resize:vertical;min-height:80px}
+  .auth-box{max-width:430px;margin:0 auto;border:1px solid var(--line-soft);border-radius:20px;padding:34px;background:linear-gradient(180deg,rgba(18,19,42,.6),rgba(11,12,24,.4))}
+  .auth-box .mk{width:44px;height:44px;margin:0 auto 14px}
+  .demo-note{font-family:var(--fl);font-size:11.5px;color:var(--ash-faint);border:1px dashed var(--line);border-radius:10px;padding:10px 14px;margin-top:16px;line-height:1.6}
+
+  /* tables */
+  table.t{width:100%;border-collapse:collapse;font-family:var(--fl);font-size:13px;margin-top:14px}
+  table.t th{text-align:left;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash-faint);padding:9px 12px;border-bottom:1px solid var(--line)}
+  table.t td{padding:11px 12px;border-bottom:1px solid var(--line-soft);color:var(--ash);vertical-align:middle}
+  table.t tr:hover td{background:rgba(255,255,255,.02)}
+  .t-wrap{overflow-x:auto}
+
+  /* modal & toast */
+  .modal-bg{position:fixed;inset:0;background:rgba(5,5,9,.7);backdrop-filter:blur(4px);z-index:90;display:none;align-items:flex-start;justify-content:center;padding:6vh 16px;overflow:auto}
+  .modal-bg.open{display:flex}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px;max-width:560px;width:100%}
+  .modal h3{color:#E9E3D4;font-size:19px;margin-bottom:6px}
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--panel-2);border:1px solid var(--gold-deep);color:var(--ash);font-family:var(--fl);font-size:13px;padding:12px 22px;border-radius:12px;z-index:99;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90vw;text-align:center}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* footer */
+  footer{border-top:1px solid var(--line-soft);padding:42px 0 36px;margin-top:40px}
+  footer .in{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+  footer .brand{display:flex;align-items:center;gap:11px}
+  footer .brand .mk{width:26px;height:26px}
+  footer .brand b{font-family:var(--fd);letter-spacing:.28em;text-indent:.28em;color:var(--gold);font-size:17px}
+  footer .motto{font-family:var(--fd);letter-spacing:.32em;text-indent:.32em;color:var(--gold);opacity:.85;font-size:12.5px}
+  footer .meta{font-family:var(--fl);font-size:11px;letter-spacing:.06em;color:var(--ash-faint);max-width:64ch;line-height:1.7}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @keyframes rise{from{opacity:0;transform:translateY(14px) scale(.965)}to{opacity:1;transform:none}}
+  @keyframes breathe{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .hero-mark .mk,.hero-mark::after{animation:none}
+    .reveal{opacity:1;transform:none;transition:none}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 100 100">
+    <path fill-rule="evenodd" fill="currentColor" stroke="none" d="M50 26.3 a21 21 0 1 0 0.01 0 Z M50 41.3 a6 6 0 1 0 0.01 0 Z"/>
+    <path d="M20.3 47.3 L50 77 L79.7 47.3" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<nav class="top">
+  <div class="in">
+    <a class="brand" href="#/">
+      <svg class="mk" aria-hidden="true"><use href="#mark"/></svg>
+      <span><b>VALURA</b><small>Academy</small></span>
+    </a>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    <div class="links" id="navlinks"></div>
+  </div>
+</nav>
+
+<main id="root"></main>
+
+<footer>
+  <div class="wrap in">
+    <div class="brand"><svg class="mk" aria-hidden="true"><use href="#mark"/></svg><b>VALURA</b></div>
+    <p class="motto">Valor · ex · cura</p>
+    <p class="meta">Valura Academy — educação médica continuada dos professores Igor Morais e Bernardo Tardin.
+    Conteúdo educacional destinado a estudantes e profissionais de medicina; não substitui julgamento clínico,
+    protocolos institucionais nem a consulta às fontes oficiais. © Valura.</p>
+    <p class="meta no-print"><a href="#/termos" style="color:var(--ash-dim)">Termos de uso e privacidade</a> · Versão preliminar</p>
+  </div>
+</footer>
+
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true"><div class="modal" id="modalBox"></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+/* ================================================================
+   Valura Academy — MVP (arquivo único)
+   Decisão de arquitetura: Vault-Softwares/30-Decisoes/valura-academy-arquitetura.md
+   Limitação conhecida do MVP (registrada): gabarito e certificado no
+   cliente — na Fase 2 migram para Edge Function (Supabase).
+   ================================================================ */
+
+/* ---------- helpers ---------- */
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $ = sel => document.querySelector(sel);
+const uid = () => 'id-' + Math.random().toString(36).slice(2, 10);
+const hoje = () => new Date().toISOString().slice(0, 10);
+const fmtData = iso => { if (!iso) return '—'; const [a, m, d] = iso.split('-'); return `${d}/${m}/${a}`; };
+const dec = s => { try { return decodeURIComponent(s); } catch { return s; } };
+const AREAS = ['Cardiogeriatria', 'Saúde do Idoso', 'Clínica Médica'];
+
+/* ---------- seed ---------- */
+const SEED_USERS = [
+  { id: 'u-igor', nome: 'Igor Morais', email: 'igor@valura.health', senha: 'valura2026', papel: 'professor',
+    titulo: 'Prof. Dr. Igor Morais', cred: 'Cardiogeriatria · PUC Minas (Contagem) · FCMMG' },
+  { id: 'u-bernardo', nome: 'Bernardo Tardin', email: 'bernardo@valura.health', senha: 'valura2026', papel: 'professor',
+    titulo: 'Prof. Bernardo Tardin', cred: 'Saúde do Idoso · FCMMG' },
+  { id: 'u-demo', nome: 'Aluno de Demonstração', email: 'aluno@demo', senha: 'demo', papel: 'aluno', assinatura: null }
+];
+
+const SEED_AULAS = [
+  {
+    id: 'aga-sbgg', titulo: 'Nova AGA — Avaliação Geriátrica Ampla (modelo SBGG 2023)',
+    area: 'Saúde do Idoso', prof: 'u-bernardo', status: 'publicada',
+    semana: '2026-07-06', ch: '1h',
+    desc: 'O novo modelo de AGA proposto pela SBGG: domínios, instrumentos de rastreio e como transformar a avaliação em plano de cuidados.',
+    videoUrl: '',
+    deck: [
+      { k: 'Valura Academy · Saúde do Idoso', t: 'Nova AGA — Avaliação Geriátrica Ampla', li: ['Modelo SBGG 2023', 'Prof. Bernardo Tardin — FCMMG'], note: 'Material de apoio disponível para download na página da aula.' },
+      { k: 'Por que a AGA', t: 'O idoso não cabe na consulta convencional', li: ['O envelhecimento é heterogêneo: idade cronológica ≠ idade biológica.', 'Doenças se apresentam de forma atípica (queda, delirium, declínio funcional).', 'A AGA é uma avaliação multidimensional e interdisciplinar, centrada em FUNÇÃO — não apenas em diagnósticos.'] },
+      { k: 'Estrutura', t: 'Domínios nucleares da avaliação', li: ['Funcionalidade (AVDs básicas, instrumentais e avançadas)', 'Cognição · Humor', 'Mobilidade, equilíbrio e quedas', 'Nutrição', 'Comorbidades e polifarmácia', 'Suporte social, ambiente e o que importa para o paciente'] },
+      { k: 'Funcionalidade', t: 'Função é o melhor resumo da saúde do idoso', li: ['AVDs básicas — escala de Katz (banho, vestir, transferência, continência, alimentação).', 'AVDs instrumentais — escala de Lawton (telefone, finanças, medicações, transporte…).', 'Perda funcional recente é sinal de alarme: investigar causa, não normalizar.'] },
+      { k: 'Cognição', t: 'Rastreio cognitivo estruturado', li: ['Instrumentos: Mini-Cog, MEEM, MoCA; fluência verbal e desenho do relógio complementam.', 'Escolaridade influencia os pontos de corte — interpretar sempre no contexto.', 'Rastreio positivo não fecha diagnóstico: indica avaliação ampliada.'] },
+      { k: 'Humor', t: 'Depressão: frequente e subdiagnosticada', li: ['GDS-15 (Escala de Depressão Geriátrica) é o rastreio clássico na AGA.', 'Pode se apresentar como queixa cognitiva ("pseudodemência depressiva").', 'Sempre rastrear antes de atribuir declínio apenas à demência.'] },
+      { k: 'Mobilidade', t: 'Marcha, equilíbrio e risco de queda', li: ['Timed Up and Go (TUG): tempo alentecido indica risco de queda.', 'Velocidade de marcha < 0,8 m/s associa-se a pior desfecho.', 'SPPB integra equilíbrio, marcha e força de membros inferiores.', 'Perguntar sempre: quedas nos últimos 12 meses?'] },
+      { k: 'Nutrição', t: 'Estado nutricional e massa muscular', li: ['Mini Avaliação Nutricional (MAN) para rastreio de desnutrição.', 'Perda ponderal não intencional exige investigação.', 'SARC-F rastreia sarcopenia — força e função antes da massa.'] },
+      { k: 'Fragilidade', t: 'O fenótipo que prediz desfechos', li: ['Fenótipo de Fried: perda de peso, exaustão, fraqueza (preensão), lentidão de marcha, baixa atividade física.', 'Alternativa rápida: escala FRAIL.', 'Fragilidade orienta intensidade de intervenção e metas terapêuticas.'] },
+      { k: 'Síntese', t: 'Da avaliação ao plano de cuidados', li: ['O modelo SBGG 2023 organiza instrumentos e fluxo de aplicação da AGA.', 'O produto final não é a pontuação: é o plano de cuidados individualizado.', 'Baixe o documento oficial e os resumos de 1 página nos materiais da aula.'], note: 'Referência: Nova AGA Completa — SBGG, 2023 (PDF nos materiais).' }
+    ],
+    quiz: [
+      { enun: 'Qual das alternativas NÃO é um domínio nuclear da Avaliação Geriátrica Ampla?',
+        alts: ['Funcionalidade (AVDs básicas e instrumentais)', 'Cognição e humor', 'Tipagem sanguínea', 'Mobilidade e risco de quedas'], certa: 2,
+        fb: 'A AGA é multidimensional: função, cognição, humor, mobilidade, nutrição, comorbidades/polifarmácia e contexto social. Tipagem sanguínea não é domínio da AGA.' },
+      { enun: 'Os instrumentos clássicos para avaliar AVDs básicas e AVDs instrumentais são, respectivamente:',
+        alts: ['Lawton e Katz', 'Katz e Lawton', 'MEEM e GDS-15', 'TUG e MAN'], certa: 1,
+        fb: 'Katz avalia as atividades básicas de vida diária; Lawton, as instrumentais.' },
+      { enun: 'Sobre o rastreio cognitivo na AGA, é correto afirmar:',
+        alts: ['O MEEM isoladamente fecha o diagnóstico de demência', 'A escolaridade influencia a interpretação dos pontos de corte', 'Só deve ser feito quando o acompanhante refere queixa', 'O MoCA é contraindicado em ambulatório'], certa: 1,
+        fb: 'Rastreio positivo indica avaliação ampliada — não fecha diagnóstico. Os pontos de corte do MEEM variam com a escolaridade.' },
+      { enun: 'A GDS-15 (Escala de Depressão Geriátrica) é utilizada na AGA para rastrear:',
+        alts: ['Delirium', 'Demência', 'Depressão', 'Risco de queda'], certa: 2,
+        fb: 'A GDS-15 rastreia depressão, que no idoso é frequente, subdiagnosticada e pode mimetizar quadro demencial.' },
+      { enun: 'São critérios do fenótipo de fragilidade de Fried, EXCETO:',
+        alts: ['Perda de peso não intencional', 'Exaustão autorreferida', 'Hipertensão arterial', 'Lentidão da marcha'], certa: 2,
+        fb: 'Os 5 critérios de Fried: perda de peso, exaustão, fraqueza de preensão, lentidão de marcha e baixa atividade física. Hipertensão não faz parte do fenótipo.' }
+    ],
+    materiais: [
+      { nome: 'Nova AGA Completa — SBGG 2023 (documento oficial)', arquivo: 'docs/Nova-AGA-Completa-SBGG-2023.pdf' },
+      { nome: 'Nova AGA — versão de livre distribuição (SBGG)', arquivo: 'docs/AGA-SBGG-versao-livre.pdf' },
+      { nome: 'AGA — resumo de 1 página (FCMMG)', arquivo: 'docs/AGA-Resumo-1pagina-FCMMG.pdf' },
+      { nome: 'AGA completa — resumo de 1 página (FCMMG)', arquivo: 'docs/AGA-Completa-Resumo-1pagina-FCMMG.pdf' }
+    ]
+  },
+  {
+    id: 'ic-idoso', titulo: 'Insuficiência cardíaca no idoso — do diagnóstico aos 4 pilares',
+    area: 'Cardiogeriatria', prof: 'u-igor', status: 'publicada',
+    semana: '2026-07-13', ch: '1h',
+    desc: 'Apresentação atípica, papel dos peptídeos natriuréticos, classificação por fração de ejeção e como titular os 4 pilares no paciente idoso.',
+    videoUrl: '',
+    deck: [
+      { k: 'Valura Academy · Cardiogeriatria', t: 'Insuficiência cardíaca no idoso', li: ['Do diagnóstico aos 4 pilares', 'Prof. Dr. Igor Morais — PUC Minas · FCMMG'] },
+      { k: 'Epidemiologia', t: 'A IC é doença do envelhecimento', li: ['Prevalência sobe progressivamente com a idade.', 'Principal causa cardiovascular de internação no idoso.', 'No idoso predomina a IC com fração de ejeção PRESERVADA (ICFEp).'] },
+      { k: 'Diagnóstico', t: 'Apresentação atípica é a regra', li: ['Fadiga, intolerância ao esforço, delirium, queda — nem sempre dispneia clássica.', 'NT-proBNP < 125 pg/mL em quadro crônico ambulatorial torna IC improvável.', 'Idade, fibrilação atrial e doença renal elevam os peptídeos: interpretar no contexto.', 'Ecocardiograma é o exame estrutural essencial.'] },
+      { k: 'Classificação', t: 'Fenótipos por fração de ejeção', li: ['ICFEr — FE ≤ 40% (reduzida)', 'ICFElr — FE 41–49% (levemente reduzida)', 'ICFEp — FE ≥ 50% (preservada)', 'O fenótipo orienta a terapia com benefício comprovado.'] },
+      { k: 'ICFEr', t: 'Os 4 pilares modificadores de doença', li: ['IECA/BRA ou sacubitril/valsartana', 'Betabloqueador com evidência em IC', 'Antagonista mineralocorticoide (espironolactona)', 'Inibidor de SGLT2', 'Iniciar cedo os quatro, em doses baixas, e titular até a dose-alvo tolerada.'] },
+      { k: 'ICFEp', t: 'O fenótipo do idoso também tem tratamento', li: ['iSGLT2 reduz hospitalização por IC em todo o espectro de FE (EMPEROR-Preserved, DELIVER).', 'Tratar as comorbidades: hipertensão, fibrilação atrial, obesidade.', 'Diurético para alívio da congestão.'] },
+      { k: 'No idoso', t: '"Start low, go slow" — mas chegar lá', li: ['Começar com doses baixas não significa ficar nelas: titular com vigilância.', 'Monitorar PA (hipotensão ortostática), potássio e função renal.', 'Fragilidade e sarcopenia mudam a tolerância — reavaliar a cada ajuste.'] },
+      { k: 'Polifarmácia', t: 'Conciliar, desprescrever, simplificar', li: ['Revisar TODA a lista: interações e cascatas iatrogênicas.', 'Desprescrever o que não agrega desfecho ou conflita com objetivos do paciente.', 'Regimes simples melhoram adesão — fator decisivo de resultado.'] },
+      { k: 'Cuidado centrado', t: 'O desfecho que importa é o do paciente', li: ['Alinhar metas: sintomas e autonomia versus sobrevida a qualquer custo.', 'Reabilitação e exercício supervisionado; vacinação em dia.', 'Na IC avançada: planejamento de cuidados e decisão compartilhada.'] },
+      { k: 'Síntese', t: 'IC no idoso: regra, não exceção', li: ['Suspeita ativa + peptídeos natriuréticos + ecocardiograma.', 'Os 4 pilares salvam vidas também no idoso — titulação cuidadosa.', 'ICFEp: iSGLT2 e manejo rigoroso de comorbidades.', 'Função e objetivos do paciente no centro da decisão.'] }
+    ],
+    quiz: [
+      { enun: 'São considerados os "4 pilares" do tratamento da ICFEr, EXCETO:',
+        alts: ['Inibidor de SGLT2', 'Betabloqueador com evidência em IC', 'Digoxina', 'Antagonista mineralocorticoide'], certa: 2,
+        fb: 'Os 4 pilares: IECA/BRA ou sacubitril/valsartana, betabloqueador, antagonista mineralocorticoide e iSGLT2. Digoxina é adjuvante sintomático em situações selecionadas.' },
+      { enun: 'Qual fenótipo de IC predomina na população idosa?',
+        alts: ['ICFEr (FE ≤ 40%)', 'ICFElr (FE 41–49%)', 'ICFEp (FE ≥ 50%)', 'IC de alto débito'], certa: 2,
+        fb: 'Com o envelhecimento, hipertensão e comorbidades, o fenótipo predominante no idoso é a IC com fração de ejeção preservada.' },
+      { enun: 'Paciente ambulatorial com dispneia crônica e NT-proBNP de 80 pg/mL. A melhor interpretação é:',
+        alts: ['Confirma IC descompensada', 'Torna o diagnóstico de IC improvável', 'Indica ICFEp', 'Valor inválido em idosos'], certa: 1,
+        fb: 'Em quadro crônico não agudo, NT-proBNP < 125 pg/mL tem alto valor preditivo negativo — IC torna-se improvável. Buscar diagnósticos alternativos.' },
+      { enun: 'Sobre os inibidores de SGLT2 na insuficiência cardíaca:',
+        alts: ['Só têm benefício na FE reduzida', 'São contraindicados em idosos', 'Reduzem hospitalização por IC em todo o espectro de FE', 'Exigem suspensão do betabloqueador'], certa: 2,
+        fb: 'EMPEROR-Preserved e DELIVER estenderam o benefício dos iSGLT2 à ICFElr e à ICFEp — hoje beneficiam todo o espectro de FE.' },
+      { enun: 'A titulação dos 4 pilares no paciente idoso deve seguir a lógica:',
+        alts: ['Doses-alvo plenas desde o primeiro dia', 'Evitar os 4 pilares acima dos 80 anos', '"Start low, go slow", titulando até a dose tolerada com vigilância de PA, potássio e função renal', 'Usar apenas diurético'], certa: 2,
+        fb: 'A idade não exclui o benefício dos pilares. Inicia-se com doses baixas e titula-se com monitorização — o erro comum é iniciar e nunca titular.' }
+    ],
+    materiais: []
+  },
+  { id: 'fa-idoso', titulo: 'Fibrilação atrial no idoso — anticoagulação sem medo', area: 'Cardiogeriatria', prof: 'u-igor',
+    status: 'programada', semana: '2026-07-20', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
+    desc: 'CHA₂DS₂-VASc, risco de sangramento, DOACs no idoso frágil e quando (não) suspender.' },
+  { id: 'sarcopenia', titulo: 'Sarcopenia e fragilidade — diagnóstico e intervenção', area: 'Saúde do Idoso', prof: 'u-bernardo',
+    status: 'programada', semana: '2026-07-27', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
+    desc: 'SARC-F, força de preensão, exercício resistido e proteína: o que funciona de verdade.' },
+  { id: 'polifarmacia', titulo: 'Polifarmácia e desprescrição no idoso', area: 'Saúde do Idoso', prof: 'u-bernardo',
+    status: 'programada', semana: '2026-08-03', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
+    desc: 'Critérios de Beers e STOPP/START na prática: por onde começar a desprescrever.' },
+  { id: 'has-idoso', titulo: 'Hipertensão no muito idoso — metas e armadilhas', area: 'Cardiogeriatria', prof: 'u-igor',
+    status: 'programada', semana: '2026-08-10', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
+    desc: 'Metas pressóricas após os 80, hipotensão ortostática e o custo da intensificação cega.' },
+  { id: 'delirium', titulo: 'Delirium — prevenção, diagnóstico e manejo', area: 'Saúde do Idoso', prof: 'u-bernardo',
+    status: 'programada', semana: '2026-08-17', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
+    desc: 'CAM, fatores precipitantes e por que a prevenção não farmacológica vence.' },
+  { id: 'sincope', titulo: 'Síncope no idoso — estratificação de risco', area: 'Cardiogeriatria', prof: 'u-igor',
+    status: 'programada', semana: '2026-08-24', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
+    desc: 'Síncope reflexa, ortostática ou cardíaca? A abordagem estruturada que evita internação desnecessária.' }
+];
+
+const SEED_NOTICIAS = [
+  { id: 'n1', data: '2026-07-10', ambito: 'Global', titulo: 'FDA aprova Sarclisa Escena (isatuximab) para mieloma múltiplo',
+    fonte: 'Drugs.com — New Drug Approvals', url: 'https://www.drugs.com/newdrugs.html' },
+  { id: 'n2', data: '2026-07-07', ambito: 'Global', titulo: 'FDA aprova Trutakna (atacicept) para nefropatia por IgA',
+    fonte: 'Drugs.com — New Drug Approvals', url: 'https://www.drugs.com/newdrugs.html' },
+  { id: 'n3', data: '2026-07-01', ambito: 'Global', titulo: 'Primeiro semestre de 2026 fecha com 22 novas moléculas aprovadas pela FDA',
+    fonte: 'HCPLive', url: 'https://www.hcplive.com/view/fda-news-recap-novel-drug-approvals-in-first-half-of-2026' },
+  { id: 'n4', data: '2026-06-15', ambito: 'Nacional', titulo: 'Anvisa aprova Agenda Regulatória 2026–2027 com 161 temas prioritários',
+    fonte: 'Medscape Brasil', url: 'https://portugues.medscape.com/viewarticle/nova-agenda-anvisa-pode-mudar-registro-pesquisa-e-acesso-2026a1000avn' },
+  { id: 'n5', data: '2026-04-10', ambito: 'Nacional', titulo: 'Ministério da Saúde lança Programa Nacional de Pesquisa Clínica (PPClin) com R$ 120 milhões',
+    fonte: 'Ministério da Saúde', url: 'https://www.gov.br/saude/pt-br/assuntos/noticias/2026/abril/governo-do-brasil-lanca-programa-nacional-de-pesquisa-clinica-e-anuncia-r-120-milhoes-para-impulsionar-a-inovacao-no-sus' },
+  { id: 'n6', data: '2026-05-20', ambito: 'Nacional', titulo: 'Câmara avança em novo modelo de incorporação de tecnologias no SUS: o acordo de acesso gerenciado',
+    fonte: 'Medicina S/A', url: 'https://medicinasa.com.br/incorporacao-tecnologias-sus/' }
+];
+
+const REFERENCIAS = [
+  { grupo: 'Diretrizes e guidelines', desc: 'As fontes oficiais das principais sociedades — sempre a versão vigente.',
+    itens: [
+      { tag: 'Cardiologia', nome: 'AHA — Guidelines & Statements', desc: 'American Heart Association', url: 'https://professional.heart.org/en/guidelines-and-statements' },
+      { tag: 'Cardiologia', nome: 'ACC — Guidelines', desc: 'American College of Cardiology', url: 'https://www.acc.org/Guidelines' },
+      { tag: 'Cardiologia', nome: 'ESC — Clinical Practice Guidelines', desc: 'European Society of Cardiology', url: 'https://www.escardio.org/Guidelines' },
+      { tag: 'Cardiologia', nome: 'SBC — Diretrizes', desc: 'Sociedade Brasileira de Cardiologia (ABC Cardiol)', url: 'https://abccardiol.org/diretrizes/' },
+      { tag: 'Geriatria', nome: 'SBGG — Publicações', desc: 'Sociedade Brasileira de Geriatria e Gerontologia', url: 'https://sbgg.org.br/' },
+      { tag: 'Pneumologia', nome: 'GOLD — DPOC', desc: 'Global Initiative for Chronic Obstructive Lung Disease', url: 'https://goldcopd.org/' },
+      { tag: 'Endocrino', nome: 'ADA — Standards of Care', desc: 'American Diabetes Association', url: 'https://professional.diabetes.org/standards-of-care' },
+      { tag: 'Nefrologia', nome: 'KDIGO — Guidelines', desc: 'Kidney Disease: Improving Global Outcomes', url: 'https://kdigo.org/guidelines/' },
+      { tag: 'Infectologia', nome: 'IDSA — Practice Guidelines', desc: 'Infectious Diseases Society of America', url: 'https://www.idsociety.org/practice-guideline/practice-guidelines/' },
+      { tag: 'Brasil', nome: 'PCDT — Ministério da Saúde', desc: 'Protocolos Clínicos e Diretrizes Terapêuticas do SUS', url: 'https://www.gov.br/saude/pt-br/assuntos/pcdt' },
+      { tag: 'Evidência', nome: 'Cochrane Library', desc: 'Revisões sistemáticas', url: 'https://www.cochranelibrary.com/' },
+      { tag: 'Evidência', nome: 'PubMed', desc: 'Busca da literatura biomédica', url: 'https://pubmed.ncbi.nlm.nih.gov/' }
+    ] },
+  { grupo: 'Indicação de exames de imagem', desc: 'Antes de pedir o exame: o método certo para a suspeita certa.',
+    itens: [
+      { tag: 'Imagem', nome: 'ACR Appropriateness Criteria', desc: 'Critérios de adequação do American College of Radiology, por cenário clínico', url: 'https://www.acr.org/Clinical-Resources/Clinical-Tools-and-Reference/Appropriateness-Criteria' },
+      { tag: 'Imagem', nome: 'ACR AC — busca por tópico', desc: 'Ferramenta de busca direta dos cenários clínicos', url: 'https://acsearch.acr.org/list' }
+    ] },
+  { grupo: 'Antimicrobianos e medicações', desc: 'Espectro, dose, ajuste renal, bula oficial e interações.',
+    itens: [
+      { tag: 'Antimicrobianos', nome: 'The Sanford Guide', desc: 'Referência clássica de terapia antimicrobiana (assinatura)', url: 'https://www.sanfordguide.com/' },
+      { tag: 'Antimicrobianos', nome: 'Stanford — Bugs & Drugs', desc: 'Guias de stewardship e dosagem da Stanford Health Care', url: 'https://med.stanford.edu/bugsanddrugs.html' },
+      { tag: 'Brasil', nome: 'Anvisa — Bulário Eletrônico', desc: 'Bulas oficiais de medicamentos registrados no Brasil', url: 'https://consultas.anvisa.gov.br/#/bulario/' },
+      { tag: 'Brasil', nome: 'Anvisa — Consulta de Medicamentos', desc: 'Registro, situação e apresentações', url: 'https://consultas.anvisa.gov.br/#/medicamentos/' },
+      { tag: 'Interações', nome: 'Drugs.com — Interactions Checker', desc: 'Checagem rápida de interações medicamentosas', url: 'https://www.drugs.com/drug_interactions.html' }
+    ] },
+  { grupo: 'Calculadoras clínicas', desc: 'Escores validados, sem decorar fórmula.',
+    itens: [
+      { tag: 'Escores', nome: 'MDCalc', desc: 'CHA₂DS₂-VASc, HAS-BLED, CKD-EPI, Wells, TIMI e centenas de outros', url: 'https://www.mdcalc.com/' }
+    ] }
+];
+
+const DOWNLOADS = [
+  { nome: 'Nova AGA Completa — SBGG 2023', desc: 'Documento oficial do novo modelo de Avaliação Geriátrica Ampla', arquivo: 'docs/Nova-AGA-Completa-SBGG-2023.pdf' },
+  { nome: 'Nova AGA — versão de livre distribuição', desc: 'Versão aberta do documento da SBGG', arquivo: 'docs/AGA-SBGG-versao-livre.pdf' },
+  { nome: 'AGA — resumo de 1 página (FCMMG)', desc: 'Resumo prático para levar para a enfermaria e o ambulatório', arquivo: 'docs/AGA-Resumo-1pagina-FCMMG.pdf' },
+  { nome: 'AGA completa — resumo de 1 página (FCMMG)', desc: 'Versão estendida do resumo de bolso', arquivo: 'docs/AGA-Completa-Resumo-1pagina-FCMMG.pdf' }
+];
+
+/* ---------- storage ---------- */
+const DB_KEY = 'va_db_v2', SESS_KEY = 'va_sess_v1', PROG_KEY = 'va_prog_v1';
+function loadJSON(k, fb) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? fb; } catch { return fb; } }
+function saveJSON(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+let DB = loadJSON(DB_KEY, null);
+if (!DB || !Array.isArray(DB.users) || !Array.isArray(DB.aulas) || !Array.isArray(DB.noticias)) {
+  DB = { users: SEED_USERS, aulas: SEED_AULAS, noticias: SEED_NOTICIAS };
+  saveJSON(DB_KEY, DB);
+}
+const saveDB = () => saveJSON(DB_KEY, DB);
+let PROG = loadJSON(PROG_KEY, {});
+const saveProg = () => saveJSON(PROG_KEY, PROG);
+
+function me() { const id = loadJSON(SESS_KEY, null); return DB.users.find(u => u.id === id) || null; }
+function login(u) { saveJSON(SESS_KEY, u.id); }
+function logout() { localStorage.removeItem(SESS_KEY); go('#/'); }
+function isProf(u) { return !!u && u.papel === 'professor'; }
+function assinante(u) { return !!u && (isProf(u) || (u.assinatura && u.assinatura.ativa)); }
+function profDe(aula) { return DB.users.find(u => u.id === aula.prof) || { titulo: '—', cred: '' }; }
+function formatoDe(a) {
+  const v = !!a.videoUrl, d = a.deck.length > 0;
+  if (v && d) return 'Vídeo + slides';
+  if (v) return 'Vídeo-aula';
+  if (d) return 'Aula em slides';
+  if (a.materiais.length) return 'Material de estudo';
+  return 'Em produção';
+}
+function progDe(userId, aulaId) {
+  PROG[userId] = PROG[userId] || {};
+  PROG[userId][aulaId] = PROG[userId][aulaId] || { slide: 0, vista: false, concluida: false, tentativas: [], cert: null };
+  const p = PROG[userId][aulaId];
+  if (!Array.isArray(p.tentativas)) p.tentativas = [];
+  if (!Number.isInteger(p.slide) || p.slide < 0) p.slide = 0;
+  return p;
+}
+function certCode(userId, aulaId) {
+  let h = 0; const s = userId + '|' + aulaId + '|' + hoje();
+  for (let i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) >>> 0; }
+  return 'VA-' + h.toString(36).toUpperCase().padStart(7, '0');
+}
+const NOTA_MINIMA = 70, MAX_TENTATIVAS = 3;
+</script>
+<script>
+'use strict';
+/* ---------- UI base ---------- */
+const go = h => { location.hash = h; };
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm = setTimeout(() => t.classList.remove('show'), 3200);
+}
+let _modalPrevFocus = null;
+function modal(html) {
+  _modalPrevFocus = document.activeElement;
+  const box = $('#modalBox'); box.innerHTML = html;
+  $('#modalBg').classList.add('open');
+  box.setAttribute('tabindex', '-1'); box.focus();
+}
+function hideModal() {
+  $('#modalBg').classList.remove('open'); $('#modalBox').innerHTML = '';
+  if (_modalPrevFocus && document.contains(_modalPrevFocus)) _modalPrevFocus.focus();
+  _modalPrevFocus = null;
+}
+$('#modalBg').addEventListener('click', e => { if (e.target.id === 'modalBg') hideModal(); });
+$('#modalBg').addEventListener('keydown', e => {
+  if (e.key !== 'Tab') return;
+  const f = $('#modalBox').querySelectorAll('a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])');
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && (document.activeElement === first || document.activeElement === $('#modalBox'))) { last.focus(); e.preventDefault(); }
+  else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideModal(); });
+
+const MK = '<svg class="mk" aria-hidden="true"><use href="#mark"/></svg>';
+const extA = (url, inner, cls) => `<a class="${cls || 'ref'}" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${inner}</a>`;
+
+function reveal() {
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); return; }
+  const io = new IntersectionObserver(en => en.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), { threshold: .12 });
+  els.forEach(e => io.observe(e));
+}
+
+/* ---------- nav ---------- */
+function renderNav() {
+  const u = me(); const links = $('#navlinks'); const h = location.hash || '#/';
+  const L = (href, label) => `<a href="${href}" class="${h === href || (href !== '#/' && h.startsWith(href)) ? 'on' : ''}">${label}</a>`;
+  let html = '';
+  if (!u) {
+    html = L('#/', 'Início') + L('#/aulas', 'Aulas') + L('#/referencia', 'Referência') + L('#/noticias', 'Notícias')
+      + `<a class="cta" href="#/assinar">Assinar — R$ 39,90/mês</a>` + `<a class="user" href="#/login">Entrar</a>`;
+  } else {
+    html = L('#/app', 'Painel') + L('#/aulas', 'Aulas') + L('#/referencia', 'Referência') + L('#/noticias', 'Notícias') + L('#/certificados', 'Certificados');
+    if (isProf(u)) html += L('#/admin', 'Admin');
+    if (!assinante(u)) html += `<a class="cta" href="#/assinar">Assinar — R$ 39,90/mês</a>`;
+    html += `<a class="user" href="#/perfil">${esc(u.nome.split(' ')[0])}</a>`;
+  }
+  links.innerHTML = html;
+  links.classList.remove('open'); $('#burger').setAttribute('aria-expanded', 'false');
+}
+$('#burger').addEventListener('click', () => {
+  const l = $('#navlinks'); const open = l.classList.toggle('open');
+  $('#burger').setAttribute('aria-expanded', String(open));
+});
+
+/* ---------- fragmentos ---------- */
+function courseCard(a) {
+  const u = me(); const p = profDe(a);
+  const publicada = a.status === 'publicada';
+  const seteDias = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
+  const nova = publicada && a.semana >= seteDias;
+  let foot = '';
+  if (publicada && u) {
+    const pr = progDe(u.id, a.id);
+    const pct = pr.cert ? 100 : pr.concluida ? 80 : pr.vista ? 40 : 0;
+    foot = `<div class="foot"><div class="prog"><i style="width:${pct}%"></i></div><span class="small">${pct}%</span></div>`;
+  }
+  return `<a class="course reveal" href="#/aula/${esc(a.id)}" style="text-decoration:none">
+    <div class="thumb">${MK}
+      <span class="pill area">${esc(a.area)}</span>
+      ${nova ? '<span class="pill gold nova">Nova da semana</span>' : ''}
+      ${!publicada ? `<span class="pill warn nova">Programada · ${esc(fmtData(a.semana))}</span>` : ''}
+    </div>
+    <div class="body">
+      <h3>${esc(a.titulo)}</h3>
+      <div class="meta"><span class="pill">${esc(p.titulo)}</span><span class="pill">${esc(formatoDe(a))}</span><span class="pill">${esc(a.ch)} · pós-teste · certificado</span></div>
+      <p class="desc">${esc(a.desc)}</p>
+      ${foot}
+    </div></a>`;
+}
+function newsItem(n) {
+  return extA(n.url, `<span class="d">${esc(fmtData(n.data))} · ${esc(n.ambito)}</span><span class="t">${esc(n.titulo)}</span><span class="s">${esc(n.fonte)} ↗</span>`, 'news-item');
+}
+
+/* ---------- views ---------- */
+function vHome() {
+  const pubs = DB.aulas.filter(a => a.status === 'publicada').sort((a, b) => b.semana.localeCompare(a.semana));
+  const progs = DB.aulas.filter(a => a.status === 'programada').sort((a, b) => a.semana.localeCompare(b.semana));
+  return `
+  <header class="hero"><div class="wrap">
+    <div>
+      <p class="eyebrow">Educação médica continuada</p>
+      <h1>Uma aula nova <em>toda semana</em>. Saber que vira <em>certificado</em>.</h1>
+      <p class="sub">Aulas de cardiogeriatria, saúde do idoso e clínica médica com os professores Igor Morais (PUC Minas · FCMMG) e Bernardo Tardin (FCMMG). Assista, faça o pós-teste e receba o certificado — tudo digital.</p>
+      <div class="actions"><a class="btn" href="#/assinar">Assinar por R$ 39,90/mês</a><a class="btn-ghost" href="#/aulas">Ver o catálogo</a></div>
+    </div>
+    <div class="hero-mark">${MK}<p class="tag">Valor · ex · cura</p></div>
+  </div></header>
+
+  <section class="alt"><div class="wrap center">
+    <p class="eyebrow">Como funciona</p>
+    <h2>Três passos, nenhum papel.</h2>
+    <div class="cards c3" style="width:100%">
+      <div class="card reveal"><div class="k">1 · Assista</div><h3>Aula da semana</h3><p>Vídeo-aula ou aula em slides, direto no navegador, no seu ritmo. Materiais de apoio para baixar.</p></div>
+      <div class="card reveal"><div class="k">2 · Comprove</div><h3>Pós-teste</h3><p>Questões objetivas sobre a aula, com gabarito comentado. Aprovação a partir de ${NOTA_MINIMA}%.</p></div>
+      <div class="card reveal"><div class="k">3 · Certifique</div><h3>Certificado digital</h3><p>Emitido na hora, com código de verificação, carga horária e assinatura dos professores.</p></div>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <p class="eyebrow">No catálogo</p>
+    <h2>Últimas aulas publicadas.</h2>
+    <div class="cards c2">${pubs.map(courseCard).join('')}</div>
+    ${progs.length ? `<p class="lead" style="margin-top:30px">Próximas semanas: ${progs.slice(0, 3).map(a => esc(a.titulo)).join(' · ')}…</p>` : ''}
+  </div></section>
+
+  <section class="alt"><div class="wrap">
+    <div class="cards c2" style="align-items:center">
+      <div class="reveal">
+        <p class="eyebrow">Assinatura</p>
+        <h2>Tudo incluído. Um preço.</h2>
+        <p class="lead">Catálogo completo, aula nova toda semana, pós-testes, certificados e central de referência. Cancele quando quiser.</p>
+      </div>
+      <div class="price-card reveal">
+        <div class="k" style="font-family:var(--fl);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)">Plano único</div>
+        <div class="val" style="margin-top:10px">R$ 39,90<small>/mês</small></div>
+        <ul>
+          <li>Aula nova toda semana — vídeo, slides ou material, como o tema pedir</li>
+          <li>Pós-teste comentado por aula</li>
+          <li>Certificado digital com código de verificação</li>
+          <li>Central de referência: guidelines, exames e medicações</li>
+          <li>Biblioteca de materiais para download</li>
+        </ul>
+        <a class="btn" href="#/assinar" style="width:100%;text-align:center">Começar agora</a>
+      </div>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <p class="eyebrow">Quem ensina</p>
+    <h2>Professores à beira do leito.</h2>
+    <div class="cards c2" style="margin-top:38px">
+      <div class="founder reveal"><div class="av">IM</div><div>
+        <p class="role">Cardiogeriatria · Clínica Médica</p><h3>Prof. Dr. Igor Morais</h3>
+        <p>Professor de medicina na PUC Minas (Contagem) e na FCMMG. Cardiogeriatra: o coração do idoso, a evidência e a prática — sem atalho.</p></div></div>
+      <div class="founder reveal"><div class="av">BT</div><div>
+        <p class="role">Saúde do Idoso</p><h3>Prof. Bernardo Tardin</h3>
+        <p>Professor de saúde do idoso na FCMMG. Avaliação geriátrica, funcionalidade e o cuidado que enxerga a pessoa inteira.</p></div></div>
+    </div>
+  </div></section>
+
+  <section class="alt"><div class="wrap">
+    <p class="eyebrow">Radar da medicina</p>
+    <h2>Inovação, do mundo ao Brasil.</h2>
+    <p class="lead">O que acaba de mudar na prática e na regulação, garimpado pelos professores.</p>
+    <div class="news">${DB.noticias.slice(0, 4).map(newsItem).join('')}</div>
+    <p style="margin-top:22px"><a class="btn-ghost btn-sm" href="#/noticias">Todas as notícias</a></p>
+  </div></section>
+
+  <section><div class="wrap">
+    <p class="eyebrow">Central de referência</p>
+    <h2>As fontes certas, sempre à mão.</h2>
+    <p class="lead">O acervo de diretrizes e conhecimento fica na área do aluno, já incluído na assinatura.</p>
+    <div class="cards c4">
+      <a class="card reveal" href="#/referencia"><div class="k">Diretrizes</div><h3>Guidelines</h3><p>AHA, ACC, ESC, SBC, SBGG, GOLD, ADA, KDIGO, IDSA, PCDT…</p></a>
+      <a class="card reveal" href="#/referencia"><div class="k">Exames</div><h3>Indicação de imagem</h3><p>ACR Appropriateness Criteria: o método certo para cada cenário clínico.</p></a>
+      <a class="card reveal" href="#/referencia"><div class="k">Fármacos</div><h3>Antimicrobianos & medicações</h3><p>Sanford Guide, Stanford Bugs & Drugs, bulário Anvisa, interações.</p></a>
+      <a class="card reveal" href="#/referencia"><div class="k">Biblioteca</div><h3>Downloads</h3><p>Documentos selecionados — como a Nova AGA Completa (SBGG 2023).</p></a>
+    </div>
+  </div></section>`;
+}
+
+function vLogin() {
+  return `<section><div class="wrap">
+    <div class="auth-box">
+      ${MK}
+      <h2 style="text-align:center;font-size:24px">Entrar</h2>
+      <p class="small" style="text-align:center;margin-top:6px">ou <a href="#/cadastro" style="color:var(--gold-hi)">criar conta gratuita</a></p>
+      <form class="form" id="fLogin" style="margin-top:22px">
+        <div><label for="le">E-mail</label><input id="le" type="email" required autocomplete="username"></div>
+        <div><label for="ls">Senha</label><input id="ls" type="password" required autocomplete="current-password"></div>
+        <button class="btn" type="submit">Entrar</button>
+      </form>
+      <div class="demo-note"><b>Ambiente de demonstração.</b> Contas de teste — aluno: <b>aluno@demo</b> / senha <b>demo</b> · professores: <b>igor@valura.health</b> ou <b>bernardo@valura.health</b> / senha <b>valura2026</b>.</div>
+    </div>
+  </div></section>`;
+}
+function vCadastro() {
+  return `<section><div class="wrap">
+    <div class="auth-box">
+      ${MK}
+      <h2 style="text-align:center;font-size:24px">Criar conta</h2>
+      <p class="small" style="text-align:center;margin-top:6px">Grátis. A assinatura só é necessária para acessar as aulas.</p>
+      <form class="form" id="fCad" style="margin-top:22px">
+        <div><label for="cn">Nome completo</label><input id="cn" required autocomplete="name"></div>
+        <div><label for="ce">E-mail</label><input id="ce" type="email" required autocomplete="username"></div>
+        <div><label for="cs">Senha</label><input id="cs" type="password" required minlength="4" autocomplete="new-password"></div>
+        <label class="small" style="text-transform:none;letter-spacing:0;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" id="clgpd" required style="width:auto;margin-top:3px"> Li e aceito os <a href="#/termos" style="color:var(--gold-hi)">termos de uso e a política de privacidade</a>.</label>
+        <button class="btn" type="submit">Criar conta</button>
+      </form>
+      <div class="demo-note"><b>Ambiente de demonstração.</b> Os dados ficam apenas neste navegador — não use uma senha real.</div>
+    </div>
+  </div></section>`;
+}
+
+function vAssinar() {
+  const u = me();
+  return `<section><div class="wrap center">
+    <p class="eyebrow">Assinatura</p>
+    <h2>R$ 39,90/mês. Tudo incluído.</h2>
+    <p class="lead">Aulas semanais, pós-testes, certificados e central de referência. Sem fidelidade — cancele quando quiser.</p>
+    <div class="price-card reveal" style="margin-top:34px;text-align:left">
+      <div class="val">R$ 39,90<small>/mês</small></div>
+      <ul>
+        <li>Acesso completo ao catálogo e às aulas novas semanais</li>
+        <li>Pós-teste comentado + certificado digital por aula</li>
+        <li>Central de referência e biblioteca de downloads</li>
+      </ul>
+      ${!u ? `<a class="btn" href="#/cadastro" style="width:100%;text-align:center">Criar conta para assinar</a>`
+        : assinante(u) ? `<p class="pill ok" style="padding:8px 16px">Assinatura ativa ✓</p>`
+        : `<button class="btn" style="width:100%" data-act="assinar-sim">Ativar assinatura (simulação)</button>`}
+      <p class="small" style="margin-top:14px;line-height:1.6">Ambiente de demonstração: nenhum pagamento é cobrado e <b>nenhum dado de cartão é coletado</b>. Na versão de produção, a cobrança recorrente será processada pelo <b>Mercado Pago</b> (cartão ou Pix Automático).</p>
+    </div>
+  </div></section>`;
+}
+
+function vDash() {
+  const u = me(); if (!u) { go('#/login'); return ''; }
+  const pubs = DB.aulas.filter(a => a.status === 'publicada');
+  const meus = pubs.map(a => ({ a, p: progDe(u.id, a.id) }));
+  const certs = meus.filter(x => x.p.cert).length;
+  const andamento = meus.filter(x => x.p.vista && !x.p.cert);
+  const naoIniciadas = meus.filter(x => !x.p.vista);
+  const prox = DB.aulas.filter(a => a.status === 'programada').sort((a, b) => a.semana.localeCompare(b.semana))[0];
+  return `<div class="appbar"><div class="in">
+      <a href="#/app" class="on">Painel</a><a href="#/aulas">Catálogo</a><a href="#/certificados">Certificados</a><a href="#/referencia">Referência</a>${isProf(u) ? '<a href="#/admin">Administração</a>' : ''}
+    </div></div>
+  <section style="padding-top:34px"><div class="wrap">
+    <p class="eyebrow">Painel</p>
+    <h2>Olá, ${esc(u.nome.split(' ')[0])}.</h2>
+    ${!assinante(u) ? `<div class="panel" style="border-color:var(--gold-deep)"><p class="lead" style="margin:0">Sua conta ainda não tem assinatura ativa — as aulas estão bloqueadas. <a href="#/assinar" style="color:var(--gold-hi)">Assine por R$ 39,90/mês</a> para liberar tudo.</p></div>` : ''}
+    <div class="kpis">
+      <div class="kpi"><div class="n">${pubs.length}</div><div class="l">Aulas publicadas</div></div>
+      <div class="kpi"><div class="n">${andamento.length}</div><div class="l">Em andamento</div></div>
+      <div class="kpi"><div class="n">${certs}</div><div class="l">Certificados</div></div>
+      <div class="kpi"><div class="n">${prox ? esc(fmtData(prox.semana)) : '—'}</div><div class="l">Próxima aula</div></div>
+    </div>
+    ${andamento.length ? `<div class="panel"><h3>Continue de onde parou</h3><div class="cards c2">${andamento.map(x => courseCard(x.a)).join('')}</div></div>` : ''}
+    ${naoIniciadas.length ? `<div class="panel"><h3>Para começar</h3><div class="cards c2">${naoIniciadas.map(x => courseCard(x.a)).join('')}</div></div>` : ''}
+    ${prox ? `<div class="panel"><h3>Na próxima semana</h3><p class="lead" style="margin-top:0">${esc(prox.titulo)} — ${esc(profDe(prox).titulo)} · ${esc(fmtData(prox.semana))}</p></div>` : ''}
+  </div></section>`;
+}
+
+function vAulas() {
+  const filtro = (location.hash.split('?f=')[1] || '');
+  const areas = ['Todas', ...AREAS];
+  const lista = DB.aulas
+    .filter(a => !filtro || filtro === 'Todas' || a.area === dec(filtro))
+    .sort((a, b) => {
+      if (a.status !== b.status) return a.status === 'publicada' ? -1 : 1;
+      return a.status === 'publicada' ? b.semana.localeCompare(a.semana) : a.semana.localeCompare(b.semana);
+    });
+  return `<section style="padding-top:44px"><div class="wrap">
+    <p class="eyebrow">Catálogo</p>
+    <h2>Aulas.</h2>
+    <p class="lead">Uma aula nova por semana, alternando as especialidades dos professores.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:22px">
+      ${areas.map(ar => `<a class="pill ${(!filtro && ar === 'Todas') || dec(filtro) === ar ? 'gold' : ''}" style="text-decoration:none;padding:6px 14px" href="#/aulas?f=${encodeURIComponent(ar)}">${esc(ar)}</a>`).join('')}
+    </div>
+    <div class="cards c2">${lista.map(courseCard).join('') || '<p class="lead">Nenhuma aula nesta área ainda.</p>'}</div>
+  </div></section>`;
+}
+
+function vAula(id) {
+  const a = DB.aulas.find(x => x.id === id);
+  if (!a) return v404();
+  const u = me(); const p = profDe(a);
+  const bloqueada = a.status === 'publicada' && (!u || !assinante(u));
+  const pr = u ? progDe(u.id, a.id) : null;
+
+  let corpo = '';
+  if (a.status === 'programada') {
+    corpo = `<div class="panel center" style="padding:48px 24px"><div style="opacity:.75">${MK}</div>
+      <h3 style="margin-top:14px">Aula programada para ${esc(fmtData(a.semana))}</h3>
+      <p class="lead">Toda semana entra uma aula nova. Esta já está no forno.</p></div>`;
+  } else if (bloqueada) {
+    corpo = `<div class="panel center" style="padding:48px 24px;border-color:var(--gold-deep)">
+      <h3>Conteúdo exclusivo para assinantes</h3>
+      <p class="lead">Assine por R$ 39,90/mês para liberar esta e todas as aulas, com pós-teste e certificado.</p>
+      <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;justify-content:center">
+        <a class="btn" href="#/assinar">Assinar agora</a>
+        ${!u ? '<a class="btn-ghost" href="#/login">Já tenho conta</a>' : ''}
+      </div></div>`;
+  } else {
+    // Formato livre: a aula mostra o que tiver — vídeo, slides, os dois, ou só materiais.
+    const blocos = [];
+    if (a.videoUrl) {
+      blocos.push(`<div class="player">
+      <div class="video"><iframe src="${esc(a.videoUrl)}" title="${esc(a.titulo)}" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="no-referrer"></iframe></div>
+    </div>`);
+      if (u && !pr.vista) { pr.vista = true; saveProg(); }
+    }
+    if (a.deck.length) {
+      const n = a.deck.length;
+      const cur = Math.min(pr ? pr.slide : 0, n - 1);
+      blocos.push(`<div class="player"><div class="deck" id="deck">
+      ${a.deck.map((s, i) => `<div class="slide ${i === cur ? 'on' : ''}" data-i="${i}">
+        <span class="sk">${esc(s.k || '')}</span><h3>${esc(s.t)}</h3>
+        ${s.li ? `<ul>${s.li.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+        ${s.note ? `<p class="note">${esc(s.note)}</p>` : ''}
+      </div>`).join('')}
+    </div>
+    <div class="deck-ctrl">
+      <button class="btn-ghost btn-sm" data-act="deck-prev" data-id="${esc(a.id)}" aria-label="Slide anterior">← Anterior</button>
+      <span class="cnt" id="deckCnt">${cur + 1} / ${n}</span>
+      <button class="btn-ghost btn-sm" data-act="deck-next" data-id="${esc(a.id)}" aria-label="Próximo slide">Próximo →</button>
+      <span class="grow"></span><span class="small">Use ← → do teclado</span>
+    </div></div>`);
+    }
+    if (!blocos.length && !a.materiais.length) {
+      blocos.push(`<div class="player"><div class="video"><div class="vpending">${MK}
+      <p class="lead">O professor ainda não publicou o conteúdo desta aula.</p>
+      <p class="small" style="margin-top:8px">Professores: adicione o vídeo (URL de incorporação) e/ou os slides (campo "Conteúdo avançado") em Administração → Aulas.</p></div></div></div>`);
+    }
+    corpo = blocos.join('');
+  }
+
+  const temConteudo = !!a.videoUrl || a.deck.length > 0 || a.materiais.length > 0;
+  const podeQuiz = u && assinante(u) && a.status === 'publicada' && a.quiz.length && temConteudo;
+  const aprovado = pr && pr.cert;
+  const marcarManual = u && assinante(u) && a.status === 'publicada' && !a.deck.length && temConteudo && pr && !pr.concluida;
+  return `<section style="padding-top:44px"><div class="wrap">
+    <p class="eyebrow">${esc(a.area)}</p>
+    <h2>${esc(a.titulo)}</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+      <span class="pill gold">${esc(p.titulo)}</span><span class="pill">${esc(p.cred)}</span>
+      <span class="pill">${esc(formatoDe(a))}</span><span class="pill">Carga horária: ${esc(a.ch)}</span>
+      ${aprovado ? '<span class="pill ok">Certificado emitido ✓</span>' : ''}
+    </div>
+    <p class="lead">${esc(a.desc)}</p>
+    ${corpo}
+    ${a.materiais.length && !bloqueada && a.status === 'publicada' ? `<div class="panel"><h3>Materiais da aula</h3><div class="ref-grid">
+      ${a.materiais.map(m => `<a class="ref" href="${esc(m.arquivo)}" download><b>${esc(m.nome)}</b><span>PDF · download</span></a>`).join('')}
+    </div></div>` : ''}
+    ${marcarManual ? `<div class="panel flex" style="flex-wrap:wrap;gap:16px">
+      <div class="grow"><h3 style="margin:0">Terminou de estudar o conteúdo?</h3><p class="small">Marque a aula como concluída para liberar o pós-teste.</p></div>
+      <button class="btn" data-act="concluir" data-id="${esc(a.id)}">Marcar como concluída</button>
+    </div>` : ''}
+    ${podeQuiz ? `<div class="panel flex" style="flex-wrap:wrap;gap:16px">
+      <div class="grow"><h3 style="margin:0">Pós-teste</h3><p class="small">${a.quiz.length} questões · aprovação com ${NOTA_MINIMA}% · até ${MAX_TENTATIVAS} tentativas${pr && pr.tentativas.length ? ` · você usou ${pr.tentativas.length}` : ''}</p></div>
+      ${aprovado ? `<a class="btn-ghost" href="#/certificado/${esc(a.id)}">Ver certificado</a>`
+        : pr && pr.concluida ? `<a class="btn" href="#/quiz/${esc(a.id)}">Fazer o pós-teste</a>`
+        : `<button class="btn" disabled title="Conclua a aula para liberar">Conclua a aula para liberar</button>`}
+    </div>` : ''}
+  </div></section>`;
+}
+
+/* ---------- quiz ---------- */
+let QUIZ = null;
+function vQuiz(id) {
+  const a = DB.aulas.find(x => x.id === id); const u = me();
+  if (!a || a.status !== 'publicada' || !a.quiz.length) return v404();
+  if (!u) { go('#/login'); return ''; }
+  if (!assinante(u)) { go('#/assinar'); return ''; }
+  const pr = progDe(u.id, a.id);
+  const justSent = QUIZ && QUIZ.id === a.id && QUIZ.enviado;
+  if (!pr.concluida && !justSent) { go('#/aula/' + a.id); return ''; }
+  if (pr.cert && !justSent) { go('#/certificado/' + a.id); return ''; }
+  if (pr.tentativas.length >= MAX_TENTATIVAS && !justSent) {
+    return `<section style="padding-top:44px"><div class="wrap center">
+      <h2>Tentativas esgotadas</h2>
+      <p class="lead">Você usou as ${MAX_TENTATIVAS} tentativas desta aula. Reveja o conteúdo e fale com o professor.</p>
+      <p style="margin-top:20px"><a class="btn-ghost" href="#/aula/${esc(a.id)}">Voltar à aula</a></p></div></section>`;
+  }
+  if (!QUIZ || QUIZ.id !== a.id) QUIZ = { id: a.id, resp: Array(a.quiz.length).fill(null), enviado: false };
+  const q = QUIZ;
+  return `<section style="padding-top:44px"><div class="wrap" style="max-width:820px">
+    <p class="eyebrow">Pós-teste · ${esc(a.area)}</p>
+    <h2>${esc(a.titulo)}</h2>
+    <p class="lead">Responda às ${a.quiz.length} questões. Aprovação a partir de ${NOTA_MINIMA}%. Tentativa ${pr.tentativas.length + 1} de ${MAX_TENTATIVAS}.</p>
+    ${a.quiz.map((qq, qi) => `<div class="q">
+      <p class="enun"><b>${qi + 1}.</b> ${esc(qq.enun)}</p>
+      <div class="alts">${qq.alts.map((alt, ai) => {
+        let cls = 'q-alt';
+        if (q.enviado) { if (ai === qq.certa) cls += ' certa'; else if (q.resp[qi] === ai) cls += ' errada'; }
+        else if (q.resp[qi] === ai) cls += ' sel';
+        return `<button type="button" class="${cls}" ${q.enviado ? 'disabled' : ''} data-act="quiz-sel" data-n="${qi}" data-m="${ai}">${String.fromCharCode(65 + ai)}) ${esc(alt)}</button>`;
+      }).join('')}</div>
+      ${q.enviado ? `<div class="fb ${q.resp[qi] === qq.certa ? 'ok' : 'err'}">${q.resp[qi] === qq.certa ? '✔ Correta. ' : '✘ Incorreta. '}${esc(qq.fb)}</div>` : ''}
+    </div>`).join('')}
+    ${!q.enviado
+      ? `<p style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap"><button class="btn" data-act="quiz-enviar">Enviar respostas</button><a class="btn-ghost" href="#/aula/${esc(a.id)}">Voltar à aula</a></p>`
+      : quizResultado(a, pr)}
+  </div></section>`;
+}
+function quizResultado(a, pr) {
+  const t = pr.tentativas[pr.tentativas.length - 1];
+  const ok = t.score >= NOTA_MINIMA;
+  return `<div class="panel score-box">
+    <p class="eyebrow" style="margin-bottom:8px">Resultado</p>
+    <div class="n" style="color:${ok ? 'var(--ok)' : 'var(--err)'}">${t.score}%</div>
+    <p class="lead" style="margin:14px auto 0">${ok ? 'Aprovação! Seu certificado foi emitido.' : `Nota mínima: ${NOTA_MINIMA}%. ${pr.tentativas.length < MAX_TENTATIVAS ? 'Reveja a aula e tente novamente.' : 'Tentativas esgotadas.'}`}</p>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+      ${ok ? `<a class="btn" href="#/certificado/${esc(a.id)}">Ver meu certificado</a>`
+           : pr.tentativas.length < MAX_TENTATIVAS ? `<a class="btn" href="#/aula/${esc(a.id)}">Rever a aula</a><button class="btn-ghost" data-act="quiz-nova">Nova tentativa</button>` : `<a class="btn-ghost" href="#/aula/${esc(a.id)}">Voltar à aula</a>`}
+    </div></div>`;
+}
+
+/* ---------- certificado ---------- */
+function vCert(id) {
+  const a = DB.aulas.find(x => x.id === id); const u = me();
+  if (!a || !u) return v404();
+  const pr = progDe(u.id, a.id);
+  if (!pr.cert) return v404();
+  const p = profDe(a);
+  return `<section style="padding-top:34px"><div class="wrap">
+    <div class="no-print" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <a class="btn-ghost btn-sm" href="#/certificados">← Meus certificados</a><span class="grow"></span>
+      <button class="btn btn-sm" data-act="print">Imprimir / salvar PDF</button>
+    </div>
+    <div class="cert">
+      ${MK}
+      <div class="brand">VALURA</div><div class="kind">Academy · Educação médica continuada</div>
+      <h2>Certificado</h2>
+      <p class="body-t">Certificamos que</p>
+      <p class="who">${esc(u.nome)}</p>
+      <p class="body-t">concluiu a aula <b>${esc(a.titulo)}</b> (${esc(a.area)}), com carga horária de <b>${esc(a.ch)}</b>, tendo sido aprovado(a) no pós-teste com aproveitamento de <b>${pr.cert.score}%</b> em ${esc(fmtData(pr.cert.data))}.</p>
+      <div class="sigs">
+        <div class="sig"><div class="ln">${esc(p.titulo)}</div><div class="rl">${esc(p.cred)}</div></div>
+        <div class="sig"><div class="ln">Valura Academy</div><div class="rl">Educação médica continuada</div></div>
+      </div>
+      <p class="code">Código de verificação: <b>${esc(pr.cert.codigo)}</b> · confira em Certificados → Verificar<br>Documento emitido em ambiente de demonstração — a validação definitiva ocorrerá na plataforma oficial.</p>
+    </div>
+  </div></section>`;
+}
+function vCerts() {
+  const u = me(); if (!u) { go('#/login'); return ''; }
+  const lista = DB.aulas.filter(a => a.status === 'publicada').map(a => ({ a, p: progDe(u.id, a.id) })).filter(x => x.p.cert);
+  return `<section style="padding-top:44px"><div class="wrap">
+    <p class="eyebrow">Certificados</p>
+    <h2>Suas conquistas.</h2>
+    ${lista.length ? `<div class="cards c2">${lista.map(x => `<div class="card">
+        <div class="k">${esc(x.a.area)} · ${esc(fmtData(x.p.cert.data))}</div>
+        <h3>${esc(x.a.titulo)}</h3>
+        <p>Aproveitamento ${x.p.cert.score}% · código ${esc(x.p.cert.codigo)}</p>
+        <p style="margin-top:14px"><a class="btn-ghost btn-sm" href="#/certificado/${esc(x.a.id)}">Abrir certificado</a></p>
+      </div>`).join('')}</div>` : '<p class="lead">Nenhum certificado ainda — conclua uma aula e seja aprovado no pós-teste.</p>'}
+    <div class="panel"><h3>Verificar um certificado</h3>
+      <form class="form" id="fVerif" style="max-width:420px"><div><label for="vcod">Código (ex.: VA-XXXXXXX)</label><input id="vcod" required></div>
+      <button class="btn btn-sm" type="submit" style="justify-self:start">Verificar</button></form>
+      <p class="small" id="vres" style="margin-top:10px"></p>
+      <p class="small" style="margin-top:10px;opacity:.7">No MVP a verificação confere os certificados emitidos neste dispositivo; a verificação pública ocorrerá no servidor, na Fase 2.</p>
+    </div>
+  </div></section>`;
+}
+
+/* ---------- referência / notícias / termos ---------- */
+function vRef() {
+  const u = me();
+  if (!u || !assinante(u)) {
+    return `<section style="padding-top:44px"><div class="wrap">
+    <p class="eyebrow">Central de referência</p>
+    <h2>O acervo do assinante.</h2>
+    <p class="lead">Diretrizes das principais sociedades, indicação de exames de imagem (ACR), antimicrobianos e medicações (Sanford, Stanford, Anvisa), calculadoras clínicas e a biblioteca de downloads. Tudo escolhido pelos professores e incluído na assinatura.</p>
+    <div class="panel center" style="padding:44px 24px;border-color:var(--gold-deep)">
+      <h3>Conteúdo exclusivo para assinantes</h3>
+      <p class="lead">Acervo completo, aulas semanais, pós-testes e certificados. Assine por R$ 39,90/mês.</p>
+      <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;justify-content:center">
+        <a class="btn" href="#/assinar">Assinar agora</a>
+        ${!u ? '<a class="btn-ghost" href="#/login">Já tenho conta</a>' : ''}
+      </div></div>
+  </div></section>`;
+  }
+  return `<section style="padding-top:44px"><div class="wrap">
+    <p class="eyebrow">Central de referência · Área do aluno</p>
+    <h2>Consulte a fonte, não a memória.</h2>
+    <p class="lead">Curadoria dos professores: diretrizes, indicação de exames, antimicrobianos, bulas e calculadoras — sempre nas fontes oficiais.</p>
+    ${REFERENCIAS.map(g => `<div class="ref-group">
+      <h3>${esc(g.grupo)}</h3><p class="gd">${esc(g.desc)}</p>
+      <div class="ref-grid">${g.itens.map(i => extA(i.url, `<span class="tag">${esc(i.tag)}</span><b>${esc(i.nome)}</b><span>${esc(i.desc)} ↗</span>`)).join('')}</div>
+    </div>`).join('')}
+    <div class="ref-group">
+      <h3>Biblioteca de downloads</h3><p class="gd">Documentos selecionados pelos professores, prontos para levar para a prática.</p>
+      <div class="ref-grid">${DOWNLOADS.map(d => `<a class="ref" href="${esc(d.arquivo)}" download><span class="tag">PDF</span><b>${esc(d.nome)}</b><span>${esc(d.desc)}</span></a>`).join('')}</div>
+    </div>
+    <p class="small" style="margin-top:30px;opacity:.8">Os links levam a plataformas externas, algumas com acesso pago ou cadastro próprio. Verifique sempre a versão vigente de cada diretriz.</p>
+  </div></section>`;
+}
+function vNoticias() {
+  const ns = [...DB.noticias].sort((a, b) => b.data.localeCompare(a.data));
+  return `<section style="padding-top:44px"><div class="wrap">
+    <p class="eyebrow">Radar da medicina</p>
+    <h2>Notícias de inovação.</h2>
+    <p class="lead">Curadoria dos professores — regulação, novas terapias e tecnologia em saúde, no Brasil e no mundo.</p>
+    <div class="news">${ns.map(newsItem).join('')}</div>
+  </div></section>`;
+}
+function vTermos() {
+  return `<section style="padding-top:44px"><div class="wrap" style="max-width:820px">
+    <p class="eyebrow">LGPD</p>
+    <h2>Termos de uso e privacidade.</h2>
+    <div class="panel"><p class="lead" style="margin:0;font-size:15px;line-height:1.8">
+      A Valura Academy trata apenas os dados necessários à prestação do serviço educacional: nome, e-mail, progresso nas aulas, resultados de pós-teste e certificados emitidos. Nenhum dado é vendido ou compartilhado para fins de marketing de terceiros. O conteúdo é educacional e não substitui julgamento clínico nem protocolos institucionais. Nesta versão de demonstração, os dados ficam armazenados apenas no seu navegador (localStorage) e podem ser apagados por você a qualquer momento limpando os dados do site. Na versão de produção, o tratamento seguirá a Lei Geral de Proteção de Dados (Lei 13.709/2018), com armazenamento em território nacional, direito de acesso, correção e exclusão mediante solicitação, e consentimento explícito no cadastro. Dados de pacientes não são coletados nem devem ser inseridos na plataforma em nenhuma hipótese.
+    </p></div>
+  </div></section>`;
+}
+
+/* ---------- perfil / admin ---------- */
+function vPerfil() {
+  const u = me(); if (!u) { go('#/login'); return ''; }
+  return `<section style="padding-top:44px"><div class="wrap" style="max-width:640px">
+    <p class="eyebrow">Perfil</p>
+    <h2>${esc(u.nome)}</h2>
+    <div class="panel">
+      <p class="small">E-mail: <b style="color:var(--ash)">${esc(u.email)}</b></p>
+      <p class="small" style="margin-top:6px">Papel: <b style="color:var(--ash)">${u.papel === 'professor' ? 'Professor' : 'Aluno'}</b></p>
+      <p class="small" style="margin-top:6px">Assinatura: ${assinante(u) ? '<span class="pill ok">ativa</span>' : '<span class="pill warn">inativa</span>'}</p>
+      <div style="display:flex;gap:12px;margin-top:22px;flex-wrap:wrap">
+        ${!assinante(u) ? '<a class="btn btn-sm" href="#/assinar">Assinar</a>' : ''}
+        ${(!isProf(u) && assinante(u)) ? '<button class="btn-ghost btn-sm btn-danger" data-act="cancelar">Cancelar assinatura</button>' : ''}
+        <button class="btn-ghost btn-sm" data-act="sair">Sair da conta</button>
+      </div>
+    </div>
+  </div></section>`;
+}
+
+function vAdmin(sub) {
+  const u = me(); if (!isProf(u)) { go('#/'); return ''; }
+  sub = sub || 'aulas';
+  const T = (s, l) => `<a href="#/admin/${s}" class="${sub === s ? 'on' : ''}">${l}</a>`;
+  let corpo = '';
+  if (sub === 'aulas') {
+    corpo = `<div class="panel"><div class="flex" style="flex-wrap:wrap"><h3 style="margin:0" class="grow">Aulas (${DB.aulas.length})</h3>
+      <button class="btn btn-sm" data-act="aula-form">+ Nova aula</button></div>
+      <div class="t-wrap"><table class="t"><thead><tr><th>Título</th><th>Área</th><th>Professor</th><th>Formato</th><th>Status</th><th>Semana</th><th></th></tr></thead><tbody>
+      ${DB.aulas.map(a => `<tr><td>${esc(a.titulo)}</td><td>${esc(a.area)}</td><td>${esc(profDe(a).nome)}</td><td>${esc(formatoDe(a))}</td>
+        <td>${a.status === 'publicada' ? '<span class="pill ok">publicada</span>' : '<span class="pill warn">programada</span>'}</td><td>${esc(fmtData(a.semana))}</td>
+        <td style="white-space:nowrap"><button class="btn-ghost btn-sm" data-act="aula-form" data-id="${esc(a.id)}">Editar</button>
+        <button class="btn-ghost btn-sm btn-danger" data-act="aula-del" data-id="${esc(a.id)}">Excluir</button></td></tr>`).join('')}
+      </tbody></table></div>
+      <p class="small" style="margin-top:14px">Vídeo: cole a URL de <b>incorporação</b> (embed) do YouTube não listado ou Vimeo. Slides, pós-teste e materiais: use o campo "Conteúdo avançado (JSON)" ao criar/editar a aula — a edição estruturada chega na Fase 2.</p></div>`;
+  } else if (sub === 'noticias') {
+    corpo = `<div class="panel"><div class="flex" style="flex-wrap:wrap"><h3 style="margin:0" class="grow">Notícias (${DB.noticias.length})</h3>
+      <button class="btn btn-sm" data-act="noticia-form">+ Nova notícia</button></div>
+      <div class="t-wrap"><table class="t"><thead><tr><th>Data</th><th>Âmbito</th><th>Título</th><th>Fonte</th><th></th></tr></thead><tbody>
+      ${[...DB.noticias].sort((a, b) => b.data.localeCompare(a.data)).map(n => `<tr><td>${esc(fmtData(n.data))}</td><td>${esc(n.ambito)}</td><td>${esc(n.titulo)}</td><td>${esc(n.fonte)}</td>
+        <td style="white-space:nowrap"><button class="btn-ghost btn-sm btn-danger" data-act="noticia-del" data-id="${esc(n.id)}">Excluir</button></td></tr>`).join('')}
+      </tbody></table></div></div>`;
+  } else {
+    const alunos = DB.users.filter(x => x.papel === 'aluno');
+    corpo = `<div class="panel"><h3>Alunos (${alunos.length})</h3>
+      <div class="t-wrap"><table class="t"><thead><tr><th>Nome</th><th>E-mail</th><th>Assinatura</th><th>Certificados*</th></tr></thead><tbody>
+      ${alunos.map(al => {
+        const nc = DB.aulas.filter(a => a.status === 'publicada' && PROG[al.id] && PROG[al.id][a.id] && PROG[al.id][a.id].cert).length;
+        return `<tr><td>${esc(al.nome)}</td><td>${esc(al.email)}</td><td>${al.assinatura && al.assinatura.ativa ? '<span class="pill ok">ativa</span>' : '<span class="pill warn">inativa</span>'}</td><td>${nc}</td></tr>`;
+      }).join('')}
+      </tbody></table></div>
+      <p class="small" style="margin-top:12px">*No MVP, o progresso registrado é o deste dispositivo. Relatórios completos chegam com o backend (Fase 2).</p></div>`;
+  }
+  const certsTot = Object.values(PROG).reduce((s, per) => s + Object.values(per).filter(x => x.cert).length, 0);
+  return `<div class="appbar"><div class="in">${T('aulas', 'Aulas')}${T('noticias', 'Notícias')}${T('alunos', 'Alunos')}</div></div>
+  <section style="padding-top:34px"><div class="wrap">
+    <p class="eyebrow">Administração</p>
+    <h2>Gestão da plataforma.</h2>
+    <div class="kpis">
+      <div class="kpi"><div class="n">${DB.aulas.filter(a => a.status === 'publicada').length}</div><div class="l">Aulas publicadas</div></div>
+      <div class="kpi"><div class="n">${DB.aulas.filter(a => a.status === 'programada').length}</div><div class="l">Programadas</div></div>
+      <div class="kpi"><div class="n">${DB.users.filter(x => x.papel === 'aluno').length}</div><div class="l">Alunos</div></div>
+      <div class="kpi"><div class="n">${certsTot}</div><div class="l">Certificados (dispositivo)</div></div>
+    </div>
+    ${corpo}
+  </div></section>`;
+}
+
+function v404() {
+  return `<section style="padding-top:64px"><div class="wrap center">
+    ${MK}<h2 style="margin-top:18px">Página não encontrada.</h2>
+    <p style="margin-top:20px"><a class="btn-ghost" href="#/">Voltar ao início</a></p></div></section>`;
+}
+
+/* ---------- ações (VA) ---------- */
+window.VA = {
+  sair: () => { logout(); toast('Sessão encerrada.'); },
+  simularAssinatura() {
+    const u = me(); if (!u) { go('#/login'); return; }
+    u.assinatura = { ativa: true, desde: hoje(), plano: 'mensal-3990' }; saveDB();
+    toast('Assinatura ativada (simulação). Bons estudos!'); render();
+  },
+  cancelarAssinatura() {
+    const u = me(); if (!u) return;
+    modal(`<h3>Cancelar assinatura?</h3><p class="small" style="margin-top:8px">Você perderá o acesso às aulas, mas seus certificados já emitidos permanecem válidos.</p>
+      <div style="display:flex;gap:12px;margin-top:22px;justify-content:flex-end">
+      <button class="btn-ghost btn-sm" data-act="modal-fechar">Manter</button>
+      <button class="btn btn-sm" data-act="cancelar-ok">Confirmar cancelamento</button></div>`);
+  },
+  cancelarConfirma() { const u = me(); if (u) { u.assinatura = null; saveDB(); } hideModal(); toast('Assinatura cancelada.'); render(); },
+  fecharModal: hideModal,
+  deckNav(aulaId, delta) {
+    const a = DB.aulas.find(x => x.id === aulaId); if (!a) return;
+    const u = me(); const pr = u ? progDe(u.id, a.id) : { slide: 0 };
+    const slides = document.querySelectorAll('#deck .slide'); if (!slides.length) return;
+    let cur = Math.max(0, [...slides].findIndex(s => s.classList.contains('on')));
+    const next = Math.max(0, Math.min(slides.length - 1, cur + delta));
+    slides[cur].classList.remove('on'); slides[next].classList.add('on');
+    $('#deckCnt').textContent = (next + 1) + ' / ' + slides.length;
+    if (u) {
+      pr.slide = next; pr.vista = true;
+      if (next === slides.length - 1 && !pr.concluida) { pr.concluida = true; toast('Aula concluída! O pós-teste está liberado abaixo.'); }
+      saveProg();
+    }
+  },
+  marcarConcluida(aulaId) {
+    const u = me(); if (!u) return;
+    const pr = progDe(u.id, aulaId); pr.vista = true; pr.concluida = true; saveProg();
+    toast('Aula concluída! O pós-teste está liberado.'); render();
+  },
+  quizSel(qi, ai, btn) {
+    if (!QUIZ || QUIZ.enviado) return;
+    QUIZ.resp[qi] = ai;
+    if (btn) {
+      document.querySelectorAll(`.q-alt[data-n="${qi}"]`).forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+    } else render();
+  },
+  quizEnviar() {
+    const a = DB.aulas.find(x => x.id === QUIZ.id); const u = me(); if (!a || !u) return;
+    if (QUIZ.resp.some(r => r === null)) { toast('Responda todas as questões antes de enviar.'); return; }
+    const acertos = a.quiz.reduce((s, q, i) => s + (QUIZ.resp[i] === q.certa ? 1 : 0), 0);
+    const score = Math.round(100 * acertos / a.quiz.length);
+    const pr = progDe(u.id, a.id);
+    pr.tentativas.push({ data: hoje(), score });
+    if (score >= NOTA_MINIMA && !pr.cert) {
+      pr.cert = { codigo: certCode(u.id, a.id), data: hoje(), score };
+      pr.concluida = true;
+    }
+    saveProg(); QUIZ.enviado = true; render();
+  },
+  quizNova() { QUIZ = null; render(); },
+  aulaForm(id) {
+    const a = id ? DB.aulas.find(x => x.id === id) : null;
+    const profs = DB.users.filter(x => x.papel === 'professor');
+    modal(`<h3>${a ? 'Editar aula' : 'Nova aula'}</h3>
+      <form class="form" id="fAula">
+        <div><label>Título</label><input name="titulo" required value="${a ? esc(a.titulo) : ''}"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><label>Área</label><select name="area">${AREAS.map(x => `<option ${a && a.area === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select></div>
+          <div><label>Professor</label><select name="prof">${profs.map(pp => `<option value="${esc(pp.id)}" ${a && a.prof === pp.id ? 'selected' : ''}>${esc(pp.nome)}</option>`).join('')}</select></div>
+          <div><label>Status</label><select name="status"><option value="programada" ${a && a.status === 'programada' ? 'selected' : ''}>Programada</option><option value="publicada" ${a && a.status === 'publicada' ? 'selected' : ''}>Publicada</option></select></div>
+          <div><label>Semana (data)</label><input name="semana" type="date" required value="${a ? esc(a.semana) : ''}"></div>
+          <div><label>Carga horária</label><input name="ch" required value="${a ? esc(a.ch) : '1h'}"></div>
+        </div>
+        <div><label>Descrição</label><textarea name="desc" required>${a ? esc(a.desc) : ''}</textarea></div>
+        <div><label>URL de incorporação do vídeo (YouTube não listado / Vimeo)</label><input name="videoUrl" value="${a ? esc(a.videoUrl) : ''}" placeholder="https://www.youtube.com/embed/…"></div>
+        <div><label>Conteúdo avançado — JSON com deck, quiz e materiais (opcional)</label>
+        <textarea name="avancado" rows="6" spellcheck="false" placeholder='{"deck":[{"k":"kicker","t":"Título do slide","li":["tópico 1","tópico 2"]}],"quiz":[{"enun":"Enunciado…","alts":["A","B","C","D"],"certa":0,"fb":"comentário"}],"materiais":[{"nome":"Documento","arquivo":"docs/arquivo.pdf"}]}'>${a && (a.deck.length || a.quiz.length || a.materiais.length) ? esc(JSON.stringify({ deck: a.deck, quiz: a.quiz, materiais: a.materiais }, null, 1)) : ''}</textarea></div>
+        <div style="display:flex;gap:12px;justify-content:flex-end"><button type="button" class="btn-ghost btn-sm" data-act="modal-fechar">Cancelar</button><button class="btn btn-sm" type="submit">Salvar</button></div>
+      </form>`);
+    $('#fAula').addEventListener('submit', e => {
+      e.preventDefault();
+      const f = new FormData(e.target); const v = Object.fromEntries(f.entries());
+      if (v.videoUrl && !/^https:\/\/(www\.)?(youtube\.com\/embed\/|player\.vimeo\.com\/video\/)/.test(v.videoUrl)) {
+        toast('URL de vídeo inválida: use o link de INCORPORAÇÃO do YouTube (…/embed/…) ou Vimeo (player.vimeo.com/video/…).'); return;
+      }
+      let av = null;
+      if (v.avancado && v.avancado.trim()) {
+        let j;
+        try { j = JSON.parse(v.avancado); } catch { toast('Conteúdo avançado: não é JSON válido.'); return; }
+        const okStr = x => typeof x === 'string';
+        const deck = Array.isArray(j.deck) ? j.deck : [];
+        const quiz = Array.isArray(j.quiz) ? j.quiz : [];
+        const mats = Array.isArray(j.materiais) ? j.materiais : [];
+        if (!deck.every(s => s && okStr(s.t) && (s.k === undefined || okStr(s.k)) && (s.note === undefined || okStr(s.note)) && (s.li === undefined || (Array.isArray(s.li) && s.li.every(okStr))))) {
+          toast('Conteúdo avançado: cada slide do deck precisa de "t" (texto) e, opcionalmente, "k", "li" (lista de textos) e "note".'); return;
+        }
+        if (!quiz.every(q => q && okStr(q.enun) && Array.isArray(q.alts) && q.alts.length >= 2 && q.alts.every(okStr) && Number.isInteger(q.certa) && q.certa >= 0 && q.certa < q.alts.length && (q.fb === undefined || okStr(q.fb)))) {
+          toast('Conteúdo avançado: cada questão precisa de "enun", "alts" (2 ou mais) e "certa" (índice válido); "fb" é opcional.'); return;
+        }
+        if (!mats.every(mm => mm && okStr(mm.nome) && okStr(mm.arquivo) && /^(docs\/|https:\/\/)/.test(mm.arquivo))) {
+          toast('Conteúdo avançado: cada material precisa de "nome" e "arquivo" começando com docs/ ou https://.'); return;
+        }
+        av = { deck, quiz, materiais: mats };
+      }
+      delete v.avancado;
+      if (a) { Object.assign(a, v); if (av) Object.assign(a, av); }
+      else DB.aulas.push({ deck: [], quiz: [], materiais: [], ...v, ...(av || {}), id: uid() });
+      saveDB(); hideModal(); toast('Aula salva.'); render();
+    });
+  },
+  aulaDel(id) {
+    const a = DB.aulas.find(x => x.id === id); if (!a) return;
+    modal(`<h3>Excluir aula?</h3><p class="small" style="margin-top:8px">"${esc(a.titulo)}" será removida do catálogo. Certificados já emitidos não são afetados.</p>
+      <div style="display:flex;gap:12px;margin-top:22px;justify-content:flex-end">
+      <button class="btn-ghost btn-sm" data-act="modal-fechar">Manter</button>
+      <button class="btn btn-sm" data-act="aula-del-ok" data-id="${esc(id)}">Excluir</button></div>`);
+  },
+  aulaDelConfirma(id) { DB.aulas = DB.aulas.filter(x => x.id !== id); saveDB(); hideModal(); toast('Aula excluída.'); render(); },
+  noticiaForm() {
+    modal(`<h3>Nova notícia</h3>
+      <form class="form" id="fNot">
+        <div><label>Título</label><input name="titulo" required></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><label>Data</label><input name="data" type="date" required value="${hoje()}"></div>
+          <div><label>Âmbito</label><select name="ambito"><option>Nacional</option><option>Global</option></select></div>
+        </div>
+        <div><label>Fonte</label><input name="fonte" required placeholder="ex.: Ministério da Saúde"></div>
+        <div><label>URL</label><input name="url" type="url" required placeholder="https://…"></div>
+        <div style="display:flex;gap:12px;justify-content:flex-end"><button type="button" class="btn-ghost btn-sm" data-act="modal-fechar">Cancelar</button><button class="btn btn-sm" type="submit">Publicar</button></div>
+      </form>`);
+    $('#fNot').addEventListener('submit', e => {
+      e.preventDefault();
+      const v = Object.fromEntries(new FormData(e.target).entries());
+      if (!/^https:\/\//.test(v.url)) { toast('A URL precisa começar com https://'); return; }
+      DB.noticias.push({ id: uid(), ...v }); saveDB(); hideModal(); toast('Notícia publicada.'); render();
+    });
+  },
+  noticiaDel(id) { DB.noticias = DB.noticias.filter(x => x.id !== id); saveDB(); toast('Notícia excluída.'); render(); }
+};
+
+/* ---------- delegação de ações (sem handlers inline) ---------- */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-act]');
+  if (!t) return;
+  const { act, id, n, m } = t.dataset;
+  switch (act) {
+    case 'deck-prev': VA.deckNav(id, -1); break;
+    case 'deck-next': VA.deckNav(id, 1); break;
+    case 'quiz-sel': VA.quizSel(Number(n), Number(m), t); break;
+    case 'quiz-enviar': VA.quizEnviar(); break;
+    case 'quiz-nova': VA.quizNova(); break;
+    case 'assinar-sim': VA.simularAssinatura(); break;
+    case 'cancelar': VA.cancelarAssinatura(); break;
+    case 'cancelar-ok': VA.cancelarConfirma(); break;
+    case 'modal-fechar': hideModal(); break;
+    case 'concluir': VA.marcarConcluida(id); break;
+    case 'aula-form': VA.aulaForm(id || undefined); break;
+    case 'aula-del': VA.aulaDel(id); break;
+    case 'aula-del-ok': VA.aulaDelConfirma(id); break;
+    case 'noticia-form': VA.noticiaForm(); break;
+    case 'noticia-del': VA.noticiaDel(id); break;
+    case 'sair': VA.sair(); break;
+    case 'print': window.print(); break;
+  }
+});
+
+/* ---------- router ---------- */
+function render() {
+  const raw = (location.hash || '#/').slice(1);
+  const [path] = raw.split('?');
+  const seg = path.split('/').filter(Boolean);
+  let html;
+  const r0 = seg[0] || '';
+  if (r0 === '') html = vHome();
+  else if (r0 === 'login') html = vLogin();
+  else if (r0 === 'cadastro') html = vCadastro();
+  else if (r0 === 'assinar') html = vAssinar();
+  else if (r0 === 'app') html = vDash();
+  else if (r0 === 'aulas') html = vAulas();
+  else if (r0 === 'aula') html = vAula(seg[1]);
+  else if (r0 === 'quiz') html = vQuiz(seg[1]);
+  else if (r0 === 'certificado') html = vCert(seg[1]);
+  else if (r0 === 'certificados') html = vCerts();
+  else if (r0 === 'referencia') html = vRef();
+  else if (r0 === 'noticias') html = vNoticias();
+  else if (r0 === 'perfil') html = vPerfil();
+  else if (r0 === 'admin') html = vAdmin(seg[1]);
+  else if (r0 === 'termos') html = vTermos();
+  else html = v404();
+  if (html === '') return; // redirecionado por guard
+  $('#root').innerHTML = html;
+  renderNav(); reveal();
+  bindForms();
+}
+function bindForms() {
+  const fl = $('#fLogin');
+  if (fl) fl.addEventListener('submit', e => {
+    e.preventDefault();
+    const em = $('#le').value.trim().toLowerCase(), sn = $('#ls').value;
+    const u = DB.users.find(x => x.email.toLowerCase() === em && x.senha === sn);
+    if (!u) { toast('E-mail ou senha incorretos.'); return; }
+    login(u); toast('Bem-vindo(a), ' + u.nome.split(' ')[0] + '!'); go('#/app');
+  });
+  const fc = $('#fCad');
+  if (fc) fc.addEventListener('submit', e => {
+    e.preventDefault();
+    const em = $('#ce').value.trim().toLowerCase();
+    if (DB.users.some(x => x.email.toLowerCase() === em)) { toast('Já existe conta com este e-mail.'); return; }
+    const u = { id: uid(), nome: $('#cn').value.trim(), email: em, senha: $('#cs').value, papel: 'aluno', assinatura: null, lgpd: hoje() };
+    DB.users.push(u); saveDB(); login(u);
+    toast('Conta criada! Agora ative sua assinatura.'); go('#/assinar');
+  });
+  const fv = $('#fVerif');
+  if (fv) fv.addEventListener('submit', e => {
+    e.preventDefault();
+    const cod = $('#vcod').value.trim().toUpperCase();
+    let achado = null;
+    for (const [uidK, per] of Object.entries(PROG)) {
+      for (const [aid, p] of Object.entries(per)) {
+        if (p.cert && p.cert.codigo === cod) { const us = DB.users.find(x => x.id === uidK); const au = DB.aulas.find(x => x.id === aid); achado = { us, au, p }; }
+      }
+    }
+    $('#vres').innerHTML = achado && achado.us && achado.au
+      ? `<span style="color:var(--ok)">✔ Válido:</span> ${esc(achado.us.nome)} — ${esc(achado.au.titulo)} (${achado.p.cert.score}%, ${esc(fmtData(achado.p.cert.data))})`
+      : '<span style="color:var(--err)">✘ Código não encontrado neste dispositivo.</span>';
+  });
+}
+document.addEventListener('keydown', e => {
+  if (!$('#deck')) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    const aulaId = (location.hash.split('/')[2] || '').split('?')[0];
+    if (aulaId) VA.deckNav(aulaId, e.key === 'ArrowRight' ? 1 : -1);
+  }
+});
+window.addEventListener('hashchange', () => { if (!location.hash.startsWith('#/quiz')) QUIZ = null; render(); });
+render();
+</script>
+</body>
+</html>

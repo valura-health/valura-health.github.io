@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Valura">
+  <rect width="100" height="100" rx="22" fill="#0B0B10"/>
+  <path fill-rule="evenodd" fill="#C6A15B" d="M50 26.3 a21 21 0 1 0 0.01 0 Z M50 41.3 a6 6 0 1 0 0.01 0 Z"/>
+  <path d="M20.3 47.3 L50 77 L79.7 47.3" fill="none" stroke="#C6A15B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
