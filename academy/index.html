@@ -116,6 +116,7 @@
   /* founders / professores */
   .founder{border:1px solid var(--line-soft);border-radius:16px;padding:26px;background:linear-gradient(180deg,rgba(18,19,42,.5),rgba(11,12,24,.3));display:flex;gap:18px;align-items:flex-start}
   .founder .av{width:52px;height:52px;border-radius:50%;flex:none;display:grid;place-items:center;border:1px solid var(--gold-deep);background:rgba(198,161,91,.06);font-family:var(--fd);color:var(--gold-hi);font-size:20px}
+  .founder .avf{width:88px;height:88px;border-radius:50%;flex:none;object-fit:cover;object-position:50% 16%;border:1px solid var(--gold-deep)}
   .founder .role{font-family:var(--fl);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.85}
   .founder h3{font-size:19px;color:#EDE7D8;margin:4px 0 8px;font-weight:500}
   .founder p{font-size:13.5px;color:var(--ash-dim);line-height:1.55}
@@ -686,10 +687,10 @@ function vHome() {
     <p class="eyebrow">Quem ensina</p>
     <h2>Professores à beira do leito.</h2>
     <div class="cards c2" style="margin-top:38px">
-      <div class="founder reveal"><div class="av">IM</div><div>
+      <div class="founder reveal"><img class="avf" src="img/igor.jpg" alt="Prof. Dr. Igor Morais" loading="lazy"><div>
         <p class="role">Cardiogeriatria · Clínica Médica</p><h3>Prof. Dr. Igor Morais</h3>
         <p>Professor de medicina na PUC Minas (Contagem) e na FCMMG. Cardiogeriatra: o coração do idoso, a evidência e a prática — sem atalho.</p></div></div>
-      <div class="founder reveal"><div class="av">BT</div><div>
+      <div class="founder reveal"><img class="avf" src="img/bernardo.jpg" alt="Prof. Bernardo Tardin" loading="lazy"><div>
         <p class="role">Saúde do Idoso</p><h3>Prof. Bernardo Tardin</h3>
         <p>Professor de saúde do idoso na FCMMG. Avaliação geriátrica, funcionalidade e o cuidado que enxerga a pessoa inteira.</p></div></div>
     </div>
