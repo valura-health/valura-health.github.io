@@ -303,7 +303,7 @@
     <p class="meta">Valura Academy — educação médica continuada dos professores Igor Morais e Bernardo Tardin.
     Conteúdo educacional destinado a estudantes e profissionais de medicina; não substitui julgamento clínico,
     protocolos institucionais nem a consulta às fontes oficiais. © Valura.</p>
-    <p class="meta no-print"><a href="#/termos" style="color:var(--ash-dim)">Termos de uso e privacidade</a> · Versão preliminar</p>
+    <p class="meta no-print"><a href="../" style="color:var(--ash-dim)">Site institucional da Valura</a> · <a href="#/termos" style="color:var(--ash-dim)">Termos de uso e privacidade</a> · Versão preliminar</p>
   </div>
 </footer>
 
@@ -331,9 +331,9 @@ const AREAS = ['Cardiogeriatria', 'Saúde do Idoso', 'Clínica Médica'];
 /* ---------- seed ---------- */
 const SEED_USERS = [
   { id: 'u-igor', nome: 'Igor Morais', email: 'igor@valura.health', senha: 'valura2026', papel: 'professor',
-    titulo: 'Prof. Dr. Igor Morais', cred: 'Cardiogeriatria · PUC Minas (Contagem) · FCMMG' },
+    titulo: 'Prof. Dr. Igor Morais', cred: 'CRM-MG 76695 · RQE 59902/59904/66254 · PUC Minas · FCMMG' },
   { id: 'u-bernardo', nome: 'Bernardo Tardin', email: 'bernardo@valura.health', senha: 'valura2026', papel: 'professor',
-    titulo: 'Prof. Bernardo Tardin', cred: 'Saúde do Idoso · FCMMG' },
+    titulo: 'Prof. Bernardo Tardin', cred: 'CRM-MG 82630 · RQE 56655/62264 · FCMMG' },
   { id: 'u-demo', nome: 'Aluno de Demonstração', email: 'aluno@demo', senha: 'demo', papel: 'aluno', assinatura: null }
 ];
 
@@ -495,7 +495,7 @@ const DOWNLOADS = [
 ];
 
 /* ---------- storage ---------- */
-const DB_KEY = 'va_db_v2', SESS_KEY = 'va_sess_v1', PROG_KEY = 'va_prog_v1';
+const DB_KEY = 'va_db_v3', SESS_KEY = 'va_sess_v1', PROG_KEY = 'va_prog_v1';
 function loadJSON(k, fb) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? fb; } catch { return fb; } }
 function saveJSON(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
 let DB = loadJSON(DB_KEY, null);
@@ -581,12 +581,13 @@ function reveal() {
 function renderNav() {
   const u = me(); const links = $('#navlinks'); const h = location.hash || '#/';
   const L = (href, label) => `<a href="${href}" class="${h === href || (href !== '#/' && h.startsWith(href)) ? 'on' : ''}">${label}</a>`;
+  const siteLink = `<a href="../" title="Voltar ao site institucional da Valura">← Site Valura</a>`;
   let html = '';
   if (!u) {
-    html = L('#/', 'Início') + L('#/aulas', 'Aulas') + L('#/referencia', 'Referência') + L('#/noticias', 'Notícias')
+    html = siteLink + L('#/', 'Início') + L('#/aulas', 'Aulas') + L('#/referencia', 'Referência') + L('#/noticias', 'Notícias')
       + `<a class="cta" href="#/assinar">Assinar — R$ 39,90/mês</a>` + `<a class="user" href="#/login">Entrar</a>`;
   } else {
-    html = L('#/app', 'Painel') + L('#/aulas', 'Aulas') + L('#/referencia', 'Referência') + L('#/noticias', 'Notícias') + L('#/certificados', 'Certificados');
+    html = siteLink + L('#/app', 'Painel') + L('#/aulas', 'Aulas') + L('#/referencia', 'Referência') + L('#/noticias', 'Notícias') + L('#/certificados', 'Certificados');
     if (isProf(u)) html += L('#/admin', 'Admin');
     if (!assinante(u)) html += `<a class="cta" href="#/assinar">Assinar — R$ 39,90/mês</a>`;
     html += `<a class="user" href="#/perfil">${esc(u.nome.split(' ')[0])}</a>`;
@@ -687,11 +688,11 @@ function vHome() {
     <h2>Professores à beira do leito.</h2>
     <div class="cards c2" style="margin-top:38px">
       <div class="founder reveal"><img class="avf" src="img/igor.jpg" alt="Prof. Dr. Igor Morais" loading="lazy"><div>
-        <p class="role">Cardiogeriatria · Clínica Médica</p><h3>Prof. Dr. Igor Morais</h3>
-        <p>Professor de medicina na PUC Minas (Contagem) e na FCMMG. Cardiogeriatra: o coração do idoso, a evidência e a prática — sem atalho.</p></div></div>
+        <p class="role">Cardiogeriatria · Clínica Médica · CRM-MG 76695</p><h3>Prof. Dr. Igor Morais</h3>
+        <p>Clínico, cardiologista e geriatra (RQE nas três especialidades). Professor na PUC Minas (Contagem) e na FCMMG. Diretor Técnico da Rede Paulo de Tarso e plantonista de CTI no HUCM. O coração do idoso, a evidência e a prática. Sem atalho.</p></div></div>
       <div class="founder reveal"><img class="avf" src="img/bernardo.jpg" alt="Prof. Bernardo Tardin" loading="lazy"><div>
-        <p class="role">Saúde do Idoso</p><h3>Prof. Bernardo Tardin</h3>
-        <p>Professor de saúde do idoso na FCMMG. Avaliação geriátrica, funcionalidade e o cuidado que enxerga a pessoa inteira.</p></div></div>
+        <p class="role">Saúde do Idoso · Oncogeriatria · CRM-MG 82630</p><h3>Prof. Bernardo Tardin</h3>
+        <p>Geriatra com formação em oncogeriatria pelo Hospital Sírio-Libanês. Professor de saúde do idoso na FCMMG e geriatra da Suntor (Rede Paulo de Tarso). Avaliação geriátrica, funcionalidade e o cuidado que enxerga a pessoa inteira.</p></div></div>
     </div>
   </div></section>
 

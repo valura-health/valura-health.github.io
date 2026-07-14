@@ -15,7 +15,7 @@
     --ground:#0B0B10;--ground-2:#0E1024;--panel:#12132A;--indigo:#1B1F3B;
     --line:#262845;--line-soft:#1b1d38;
     --gold:#C6A15B;--gold-hi:#E7CE93;--gold-deep:#7C6230;
-    --ash:#D2CCBE;--ash-dim:#9A9484;--ash-faint:#5E5A50;
+    --ash:#D2CCBE;--ash-dim:#9A9484;--ash-faint:#827D6F;
     --parch:#EDE7D6;--parch-ink:#191712;--parch-dim:#6c6656;
     --fd:"Palatino Linotype","Book Antiqua",Palatino,"Iowan Old Style","Sitka Text",Georgia,serif;
     --fl:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -116,6 +116,10 @@
   @media(min-width:680px){.founders{grid-template-columns:1fr 1fr}}
   .founder{border:1px solid var(--line-soft);border-radius:16px;padding:28px;background:linear-gradient(180deg,rgba(18,19,42,.5),rgba(11,12,24,.3));display:flex;gap:18px;align-items:flex-start}
   .founder .avf{width:88px;height:88px;border-radius:50%;flex:none;object-fit:cover;object-position:50% 16%;border:1px solid var(--gold-deep)}
+  .founder .cred{font-family:var(--fl);font-size:11.5px;color:var(--ash-faint);line-height:1.65;margin-top:10px}
+  .founder .flinks{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .founder .flinks a{font-family:var(--fl);font-size:11.5px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--gold-deep);border-radius:999px;padding:5px 13px;transition:background .2s}
+  .founder .flinks a:hover{background:rgba(198,161,91,.08)}
   .founder .role{font-family:var(--fl);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.85}
   .founder h3{font-size:20px;color:#EDE7D8;margin:4px 0 8px;font-weight:500}
   .founder p{font-size:13.5px;color:var(--ash-dim);line-height:1.55}
@@ -243,8 +247,11 @@
       <div class="card reveal">
         <div class="k">Assistência</div>
         <h3>Consultas particulares</h3>
-        <p>Cardiogeriatria e clínica médica com o Dr. Igor Morais; saúde do idoso com o Dr. Bernardo Tardin. Medicina de evidência, centrada no desfecho que importa ao paciente.</p>
-        <p style="margin-top:16px"><a class="btn-ghost" style="padding:10px 18px;font-size:13px" href="mailto:contato@valura.health?subject=Agendamento%20de%20consulta">Agendar consulta</a></p>
+        <p>Cardiogeriatria e clínica médica com o Dr. Igor Morais; saúde do idoso e oncogeriatria com o Dr. Bernardo Tardin. Medicina de evidência, centrada no desfecho que importa ao paciente. Agende direto no WhatsApp:</p>
+        <p style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn-ghost" style="padding:10px 15px;font-size:12.5px" href="https://wa.me/5531982873172" target="_blank" rel="noopener noreferrer">Dr. Igor · (31) 98287-3172</a>
+          <a class="btn-ghost" style="padding:10px 15px;font-size:12.5px" href="https://wa.me/5531995200968" target="_blank" rel="noopener noreferrer">Dr. Bernardo · (31) 99520-0968</a>
+        </p>
       </div>
       <div class="card reveal">
         <div class="k">Ensino</div>
@@ -310,17 +317,28 @@
       <div class="founder reveal">
         <img class="avf" src="img/igor.jpg" alt="Dr. Igor Morais" loading="lazy">
         <div>
-          <div class="role">CEO</div>
-          <h3>Dr. Igor Morais</h3>
-          <p>Médico, professor de medicina na PUC Minas e na FCMMG. Lidera estratégia, dados e qualidade: o software, a evidência e a auditabilidade que fazem o valor escalar. Atende em consultório: cardiogeriatria e clínica médica.</p>
+          <div class="role">CEO · CRM-MG 76695</div>
+          <h3>Dr. Igor Cruz Morais</h3>
+          <p>Clínico, cardiologista e geriatra, com RQE nas três especialidades. Diretor Técnico da Rede Paulo de Tarso, a maior rede de hospitais de transição de Minas Gerais. Plantonista de CTI no HUCM e professor na PUC Minas e na FCMMG. Na Valura, lidera estratégia, dados e qualidade. No consultório, atende cardiogeriatria e clínica médica.</p>
+          <p class="cred">RQE 59902 (Clínica Médica) · 59904 (Cardiologia) · 66254 (Geriatria) · Residências: HUCM, Santa Casa BH e Odilon Behrens · MBA em Gestão de Saúde (FGV, em curso) · Criador do programa HerCor de reabilitação cardiopulmonar</p>
+          <div class="flinks">
+            <a href="https://wa.me/5531982873172" target="_blank" rel="noopener noreferrer">Agendar: (31) 98287-3172</a>
+            <a href="https://www.instagram.com/igormorais1" target="_blank" rel="noopener noreferrer">@igormorais1</a>
+          </div>
         </div>
       </div>
       <div class="founder reveal">
         <img class="avf" src="img/bernardo.jpg" alt="Dr. Bernardo Tardin" loading="lazy">
         <div>
-          <div class="role">Presidente</div>
+          <div class="role">Presidente · CRM-MG 82630</div>
           <h3>Dr. Bernardo Tardin</h3>
-          <p>Médico, professor de saúde do idoso na FCMMG. Lidera a operação clínica e a assistência: o cuidado de alta demanda no dia a dia, onde o valor se prova. Atende em consultório: saúde do idoso.</p>
+          <p>Geriatra e clínico, com formação em oncogeriatria pelo Hospital Sírio-Libanês. Especialista no idoso frágil e em reabilitação. Geriatra da Suntor (Rede Paulo de Tarso) e professor de saúde do idoso na FCMMG. Na Valura, lidera a operação clínica e a assistência. No consultório, atende saúde do idoso e oncogeriatria.</p>
+          <p class="cred">RQE 56655 (Clínica Médica) · 62264 (Geriatria) · Residências: Hospital Madre Teresa e Odilon Behrens · Oncogeriatria: Hospital Sírio-Libanês · Nota 5,0 no Doctoralia (17 opiniões) · Consultório: Av. Raja Gabáglia, 2000 — BH</p>
+          <div class="flinks">
+            <a href="https://wa.me/5531995200968" target="_blank" rel="noopener noreferrer">Agendar: (31) 99520-0968</a>
+            <a href="https://www.instagram.com/tardin.bernardo" target="_blank" rel="noopener noreferrer">@tardin.bernardo</a>
+            <a href="https://www.doctoralia.com.br/bernardo-tardin-2/geriatra-medico-clinico-geral/nova-lima" target="_blank" rel="noopener noreferrer">Doctoralia · 5,0★</a>
+          </div>
         </div>
       </div>
     </div>
@@ -343,6 +361,7 @@
     <div class="brand"><svg class="mk"><use href="#mark"/></svg><b>VALURA</b></div>
     <div class="motto">VALOR · EX · CVRA</div>
     <div class="meta">© 2026 Valura · Saúde de máxima eficiência · Dr. Igor Morais &amp; Dr. Bernardo Tardin</div>
+    <div class="meta"><a href="./academy/" style="color:var(--gold);text-decoration:none">Valura Academy — educação médica continuada →</a></div>
     <div class="draft">Versão preliminar</div>
   </div>
 </footer>
