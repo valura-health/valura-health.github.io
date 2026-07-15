@@ -326,7 +326,7 @@ const uid = () => 'id-' + Math.random().toString(36).slice(2, 10);
 const hoje = () => new Date().toISOString().slice(0, 10);
 const fmtData = iso => { if (!iso) return '—'; const [a, m, d] = iso.split('-'); return `${d}/${m}/${a}`; };
 const dec = s => { try { return decodeURIComponent(s); } catch { return s; } };
-const AREAS = ['Cardiogeriatria', 'Saúde do Idoso', 'Clínica Médica'];
+const AREAS = ['Cardiogeriatria', 'Saúde do Idoso', 'Clínica Médica', 'Urgência e Emergência'];
 
 /* ---------- seed ---------- */
 const SEED_USERS = [
@@ -339,102 +339,3457 @@ const SEED_USERS = [
 
 const SEED_AULAS = [
   {
-    id: 'aga-sbgg', titulo: 'Nova AGA — Avaliação Geriátrica Ampla (modelo SBGG 2023)',
-    area: 'Saúde do Idoso', prof: 'u-bernardo', status: 'publicada',
-    semana: '2026-07-06', ch: '1h',
-    desc: 'O novo modelo de AGA proposto pela SBGG: domínios, instrumentos de rastreio e como transformar a avaliação em plano de cuidados.',
-    videoUrl: '',
+    id: "urgencia-puc",
+    titulo: "Sistematização do Atendimento de Urgência",
+    area: "Urgência e Emergência",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-25",
+    ch: "1h",
+    desc: "Da triagem de enfermagem ao ABCDE: uma linguagem única para o paciente grave. Classificação de risco, montagem da sala com o MOVE e avaliação primária.",
+    videoUrl: "",
     deck: [
-      { k: 'Valura Academy · Saúde do Idoso', t: 'Nova AGA — Avaliação Geriátrica Ampla', li: ['Modelo SBGG 2023', 'Prof. Bernardo Tardin — FCMMG'], note: 'Material de apoio disponível para download na página da aula.' },
-      { k: 'Por que a AGA', t: 'O idoso não cabe na consulta convencional', li: ['O envelhecimento é heterogêneo: idade cronológica ≠ idade biológica.', 'Doenças se apresentam de forma atípica (queda, delirium, declínio funcional).', 'A AGA é uma avaliação multidimensional e interdisciplinar, centrada em FUNÇÃO — não apenas em diagnósticos.'] },
-      { k: 'Estrutura', t: 'Domínios nucleares da avaliação', li: ['Funcionalidade (AVDs básicas, instrumentais e avançadas)', 'Cognição · Humor', 'Mobilidade, equilíbrio e quedas', 'Nutrição', 'Comorbidades e polifarmácia', 'Suporte social, ambiente e o que importa para o paciente'] },
-      { k: 'Funcionalidade', t: 'Função é o melhor resumo da saúde do idoso', li: ['AVDs básicas — escala de Katz (banho, vestir, transferência, continência, alimentação).', 'AVDs instrumentais — escala de Lawton (telefone, finanças, medicações, transporte…).', 'Perda funcional recente é sinal de alarme: investigar causa, não normalizar.'] },
-      { k: 'Cognição', t: 'Rastreio cognitivo estruturado', li: ['Instrumentos: Mini-Cog, MEEM, MoCA; fluência verbal e desenho do relógio complementam.', 'Escolaridade influencia os pontos de corte — interpretar sempre no contexto.', 'Rastreio positivo não fecha diagnóstico: indica avaliação ampliada.'] },
-      { k: 'Humor', t: 'Depressão: frequente e subdiagnosticada', li: ['GDS-15 (Escala de Depressão Geriátrica) é o rastreio clássico na AGA.', 'Pode se apresentar como queixa cognitiva ("pseudodemência depressiva").', 'Sempre rastrear antes de atribuir declínio apenas à demência.'] },
-      { k: 'Mobilidade', t: 'Marcha, equilíbrio e risco de queda', li: ['Timed Up and Go (TUG): tempo alentecido indica risco de queda.', 'Velocidade de marcha < 0,8 m/s associa-se a pior desfecho.', 'SPPB integra equilíbrio, marcha e força de membros inferiores.', 'Perguntar sempre: quedas nos últimos 12 meses?'] },
-      { k: 'Nutrição', t: 'Estado nutricional e massa muscular', li: ['Mini Avaliação Nutricional (MAN) para rastreio de desnutrição.', 'Perda ponderal não intencional exige investigação.', 'SARC-F rastreia sarcopenia — força e função antes da massa.'] },
-      { k: 'Fragilidade', t: 'O fenótipo que prediz desfechos', li: ['Fenótipo de Fried: perda de peso, exaustão, fraqueza (preensão), lentidão de marcha, baixa atividade física.', 'Alternativa rápida: escala FRAIL.', 'Fragilidade orienta intensidade de intervenção e metas terapêuticas.'] },
-      { k: 'Síntese', t: 'Da avaliação ao plano de cuidados', li: ['O modelo SBGG 2023 organiza instrumentos e fluxo de aplicação da AGA.', 'O produto final não é a pontuação: é o plano de cuidados individualizado.', 'Baixe o documento oficial e os resumos de 1 página nos materiais da aula.'], note: 'Referência: Nova AGA Completa — SBGG, 2023 (PDF nos materiais).' }
+      {
+        k: "Objetivos",
+        t: "Ao final, você será capaz de...",
+        li: [
+          "Classificar o risco na chegada (Manchester) e diferenciar urgência de emergência.",
+          "Montar a sala com o MOVE: monitorização, oxigênio, acesso venoso e exames.",
+          "Conduzir a avaliação primária ABCDE, tratando primeiro o que mata primeiro."
+        ]
+      },
+      {
+        k: "Por que sistematizar",
+        t: "O custo de não ter um método",
+        li: [
+          "Apenas 33% de adesão ao ABCDE em pacientes instáveis na emergência (revisão 2024).",
+          "86% de sensibilidade do NEWS2 (≥ 5) para sepse, contra 34% do qSOFA.",
+          "5 níveis é o padrão validado de classificação de risco (Manchester e ESI)."
+        ],
+        note: "Fontes: Olgers TJ et al. 2024 (ABCDE); NEWS2 vs qSOFA; AHRQ/ENA; GBCR."
+      },
+      {
+        k: "Conceitos",
+        t: "Classificar não é diagnosticar",
+        li: [
+          "Classificação de risco: ordenar o atendimento pela GRAVIDADE, não pela ordem de chegada.",
+          "É feita pela enfermagem na porta — no Brasil, pelo Manchester.",
+          "Urgência: agravo sem risco imediato de morte, mas que exige cuidado em curto prazo.",
+          "Emergência: risco iminente de morte ou de lesão grave — atendimento imediato.",
+          "Acolhimento (ACCR): PNH/Ministério da Saúde — acolher + classificar risco, obrigatório no SUS."
+        ]
+      },
+      {
+        k: "Manchester",
+        t: "Protocolo de Manchester — 5 níveis",
+        li: [
+          "Vermelho · Emergência: atendimento imediato — risco de vida. 0 min.",
+          "Laranja · Muito urgente: avaliação rápida e monitorização. 10 min.",
+          "Amarelo · Urgente: atendimento prioritário, sem risco imediato. 60 min.",
+          "Verde · Pouco urgente: pode aguardar atendimento eletivo. 120 min.",
+          "Azul · Não urgente: condição não aguda — encaminhamento. 240 min."
+        ],
+        note: "Manchester Triage Group; GBCR (Brasil)."
+      },
+      {
+        k: "Triagem",
+        t: "Da queixa ao nível de risco",
+        li: [
+          "Identifique a queixa de apresentação (dor torácica, dispneia, trauma...).",
+          "Aplique os discriminadores: risco de vida, dor, hemorragia, consciência, temperatura.",
+          "O discriminador mais grave define a cor — e o tempo-alvo de atendimento."
+        ]
+      },
+      {
+        k: "Sistemas",
+        t: "Sistemas validados de 5 níveis",
+        li: [
+          "Manchester: 5 cores; tempo-alvo por discriminador. Padrão no Brasil e na Europa.",
+          "ESI: 5 níveis por gravidade + número de recursos. Padrão nos EUA (AHRQ/ENA).",
+          "CTAS / ATS: Canadá e Austrália — também de 5 níveis. Todos validados."
+        ]
+      },
+      {
+        k: "MOVE",
+        t: "MOVE — o que fazer nos primeiros minutos",
+        li: [
+          "Monitor multiparamétrico ligado: ECG contínuo, PA, FC, SpO2 e FR.",
+          "Oxigênio se SpO2 < 94%; dois acessos venosos calibrosos + coleta de exames.",
+          "Glicemia capilar imediata e ECG de 12 derivações."
+        ],
+        note: "Monitorização, oxigênio, acesso venoso e exames — em paralelo, em segundos."
+      },
+      {
+        k: "ABCDE",
+        t: "A e B: via aérea e ventilação",
+        li: [
+          "A — fala? estridor? corpo estranho? Aspirar, manobras, IOT se necessário.",
+          "B — FR, SpO2, ausculta, expansão. Oxigenar e ventilar com bolsa-valva-máscara.",
+          "Ameaças à vida: obstrução de via aérea e pneumotórax hipertensivo."
+        ],
+        note: "Trate primeiro o que mata primeiro; reavalie a cada passo."
+      },
+      {
+        k: "Intervenções",
+        t: "Condutas de estabilização e evidência",
+        li: [
+          "Oxigênio / via aérea — hipoxemia, rebaixamento, obstrução — em A e B — evidência IA.",
+          "Volume / hemoderivados — choque, hemorragia — em C — evidência IA.",
+          "Glicose / naloxona — hipoglicemia / opioide — em D — evidência IIa.",
+          "Sempre: doses, contraindicações e reavaliação.",
+          "Em PCR: RCP de alta qualidade e desfibrilação (ACLS)."
+        ]
+      },
+      {
+        k: "Segurança",
+        t: "Armadilhas × boas práticas",
+        li: [
+          "Armadilha: pular o A e ir direto ao diagnóstico.",
+          "Armadilha: não reavaliar após cada intervenção.",
+          "Armadilha: fixar-se na primeira hipótese (anchoring).",
+          "Boa prática: reavaliar A→E a cada piora ou conduta (IA).",
+          "Boa prática: comunicar com SBAR; usar escores (NEWS2) (IB).",
+          "Boa prática: equipe com papéis definidos e liderança (2a)."
+        ]
+      },
+      {
+        k: "Take-home",
+        t: "O que levar desta aula",
+        li: [
+          "Triagem prioriza por gravidade, não por ordem de chegada — Manchester dá cor e tempo.",
+          "MOVE monta a sala em segundos: monitor, O2, veia e exames, em paralelo.",
+          "ABCDE: trate primeiro o que mata primeiro e reavalie a cada passo."
+        ],
+        note: "“Aequanimitas — a serenidade que não falta ao médico diante da urgência.” — William Osler"
+      }
     ],
     quiz: [
-      { enun: 'Qual das alternativas NÃO é um domínio nuclear da Avaliação Geriátrica Ampla?',
-        alts: ['Funcionalidade (AVDs básicas e instrumentais)', 'Cognição e humor', 'Tipagem sanguínea', 'Mobilidade e risco de quedas'], certa: 2,
-        fb: 'A AGA é multidimensional: função, cognição, humor, mobilidade, nutrição, comorbidades/polifarmácia e contexto social. Tipagem sanguínea não é domínio da AGA.' },
-      { enun: 'Os instrumentos clássicos para avaliar AVDs básicas e AVDs instrumentais são, respectivamente:',
-        alts: ['Lawton e Katz', 'Katz e Lawton', 'MEEM e GDS-15', 'TUG e MAN'], certa: 1,
-        fb: 'Katz avalia as atividades básicas de vida diária; Lawton, as instrumentais.' },
-      { enun: 'Sobre o rastreio cognitivo na AGA, é correto afirmar:',
-        alts: ['O MEEM isoladamente fecha o diagnóstico de demência', 'A escolaridade influencia a interpretação dos pontos de corte', 'Só deve ser feito quando o acompanhante refere queixa', 'O MoCA é contraindicado em ambulatório'], certa: 1,
-        fb: 'Rastreio positivo indica avaliação ampliada — não fecha diagnóstico. Os pontos de corte do MEEM variam com a escolaridade.' },
-      { enun: 'A GDS-15 (Escala de Depressão Geriátrica) é utilizada na AGA para rastrear:',
-        alts: ['Delirium', 'Demência', 'Depressão', 'Risco de queda'], certa: 2,
-        fb: 'A GDS-15 rastreia depressão, que no idoso é frequente, subdiagnosticada e pode mimetizar quadro demencial.' },
-      { enun: 'São critérios do fenótipo de fragilidade de Fried, EXCETO:',
-        alts: ['Perda de peso não intencional', 'Exaustão autorreferida', 'Hipertensão arterial', 'Lentidão da marcha'], certa: 2,
-        fb: 'Os 5 critérios de Fried: perda de peso, exaustão, fraqueza de preensão, lentidão de marcha e baixa atividade física. Hipertensão não faz parte do fenótipo.' }
+      {
+        enun: "Paciente chega dispneico, SpO2 84%, sonolento. Após classificar o risco, qual a sequência correta?",
+        alts: [
+          "Solicitar tomografia antes de qualquer conduta",
+          "MOVE + ABCDE: garantir via aérea/O2 e reavaliar (A e B primeiro)",
+          "Aguardar vaga na enfermaria para iniciar o oxigênio",
+          "Iniciar antibiótico e liberar para observação"
+        ],
+        certa: 1,
+        fb: "A sequência é montar a sala com o MOVE (monitor, oxigênio se SpO2 < 94%, acesso venoso e exames) e conduzir o ABCDE: trate primeiro o que mata primeiro e reavalie a cada passo. Pular o A para ir direto ao diagnóstico é armadilha clássica."
+      }
     ],
     materiais: [
-      { nome: 'Nova AGA Completa — SBGG 2023 (documento oficial)', arquivo: 'docs/Nova-AGA-Completa-SBGG-2023.pdf' },
-      { nome: 'Nova AGA — versão de livre distribuição (SBGG)', arquivo: 'docs/AGA-SBGG-versao-livre.pdf' },
-      { nome: 'AGA — resumo de 1 página (FCMMG)', arquivo: 'docs/AGA-Resumo-1pagina-FCMMG.pdf' },
-      { nome: 'AGA completa — resumo de 1 página (FCMMG)', arquivo: 'docs/AGA-Completa-Resumo-1pagina-FCMMG.pdf' }
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/urgencia-puc.pdf"
+      }
     ]
   },
   {
-    id: 'ic-idoso', titulo: 'Insuficiência cardíaca no idoso — do diagnóstico aos 4 pilares',
-    area: 'Cardiogeriatria', prof: 'u-igor', status: 'publicada',
-    semana: '2026-07-13', ch: '1h',
-    desc: 'Apresentação atípica, papel dos peptídeos natriuréticos, classificação por fração de ejeção e como titular os 4 pilares no paciente idoso.',
-    videoUrl: '',
+    id: "quedas",
+    titulo: "Quedas no Idoso",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-23",
+    ch: "1h",
+    desc: "Magnitude, desfechos, estratificação de risco e prevenção baseada em evidência. Rastrear e estratificar pelo World Falls Guidelines 2022 e prescrever exercício, vitamina D e revisão de fármacos.",
+    videoUrl: "",
     deck: [
-      { k: 'Valura Academy · Cardiogeriatria', t: 'Insuficiência cardíaca no idoso', li: ['Do diagnóstico aos 4 pilares', 'Prof. Dr. Igor Morais — PUC Minas · FCMMG'] },
-      { k: 'Epidemiologia', t: 'A IC é doença do envelhecimento', li: ['Prevalência sobe progressivamente com a idade.', 'Principal causa cardiovascular de internação no idoso.', 'No idoso predomina a IC com fração de ejeção PRESERVADA (ICFEp).'] },
-      { k: 'Diagnóstico', t: 'Apresentação atípica é a regra', li: ['Fadiga, intolerância ao esforço, delirium, queda — nem sempre dispneia clássica.', 'NT-proBNP < 125 pg/mL em quadro crônico ambulatorial torna IC improvável.', 'Idade, fibrilação atrial e doença renal elevam os peptídeos: interpretar no contexto.', 'Ecocardiograma é o exame estrutural essencial.'] },
-      { k: 'Classificação', t: 'Fenótipos por fração de ejeção', li: ['ICFEr — FE ≤ 40% (reduzida)', 'ICFElr — FE 41–49% (levemente reduzida)', 'ICFEp — FE ≥ 50% (preservada)', 'O fenótipo orienta a terapia com benefício comprovado.'] },
-      { k: 'ICFEr', t: 'Os 4 pilares modificadores de doença', li: ['IECA/BRA ou sacubitril/valsartana', 'Betabloqueador com evidência em IC', 'Antagonista mineralocorticoide (espironolactona)', 'Inibidor de SGLT2', 'Iniciar cedo os quatro, em doses baixas, e titular até a dose-alvo tolerada.'] },
-      { k: 'ICFEp', t: 'O fenótipo do idoso também tem tratamento', li: ['iSGLT2 reduz hospitalização por IC em todo o espectro de FE (EMPEROR-Preserved, DELIVER).', 'Tratar as comorbidades: hipertensão, fibrilação atrial, obesidade.', 'Diurético para alívio da congestão.'] },
-      { k: 'No idoso', t: '"Start low, go slow" — mas chegar lá', li: ['Começar com doses baixas não significa ficar nelas: titular com vigilância.', 'Monitorar PA (hipotensão ortostática), potássio e função renal.', 'Fragilidade e sarcopenia mudam a tolerância — reavaliar a cada ajuste.'] },
-      { k: 'Polifarmácia', t: 'Conciliar, desprescrever, simplificar', li: ['Revisar TODA a lista: interações e cascatas iatrogênicas.', 'Desprescrever o que não agrega desfecho ou conflita com objetivos do paciente.', 'Regimes simples melhoram adesão — fator decisivo de resultado.'] },
-      { k: 'Cuidado centrado', t: 'O desfecho que importa é o do paciente', li: ['Alinhar metas: sintomas e autonomia versus sobrevida a qualquer custo.', 'Reabilitação e exercício supervisionado; vacinação em dia.', 'Na IC avançada: planejamento de cuidados e decisão compartilhada.'] },
-      { k: 'Síntese', t: 'IC no idoso: regra, não exceção', li: ['Suspeita ativa + peptídeos natriuréticos + ecocardiograma.', 'Os 4 pilares salvam vidas também no idoso — titulação cuidadosa.', 'ICFEp: iSGLT2 e manejo rigoroso de comorbidades.', 'Função e objetivos do paciente no centro da decisão.'] }
+      {
+        k: "Objetivos",
+        t: "Ao final, você será capaz de…",
+        li: [
+          "Dimensionar o impacto das quedas e seus desfechos duros no idoso.",
+          "Rastrear e estratificar o risco de queda (World Falls Guidelines 2022).",
+          "Prescrever prevenção baseada em evidência: exercício, vitamina D e revisão de fármacos."
+        ]
+      },
+      {
+        k: "Epidemiologia",
+        t: "A magnitude das quedas",
+        li: [
+          "1 em 3 idosos ≥65 anos cai ao menos 1 vez por ano — e 1 em 2 após os 80.",
+          "684 mil mortes por queda por ano no mundo (OMS).",
+          "37,3 milhões de quedas graves por ano exigem atenção médica (OMS)."
+        ],
+        note: "Fonte: OMS (WHO Falls Fact Sheet); World Falls Guidelines 2022."
+      },
+      {
+        k: "Desfechos",
+        t: "O que está em jogo",
+        li: [
+          "20–30% de mortalidade em 1 ano após fratura de quadril.",
+          "2ª causa mundial de morte por lesão não intencional — 1ª no idoso.",
+          "~50% não recuperam a independência funcional prévia após a fratura."
+        ],
+        note: "Fonte: OMS; meta-análises de mortalidade pós-fratura de quadril."
+      },
+      {
+        k: "Fratura de quadril",
+        t: "O desfecho que muda tudo",
+        li: [
+          "Mortalidade de 20–30% no primeiro ano após a fratura.",
+          "Cerca de metade não recupera a independência funcional prévia.",
+          "Prevenir a queda é prevenir a fratura — e preservar autonomia."
+        ]
+      },
+      {
+        k: "Rastreio",
+        t: "Pergunte sobre quedas a TODO idoso, anualmente",
+        li: [
+          "Caiu no último ano? Quantas vezes? Houve lesão? Tem medo de cair?",
+          "Avalie marcha e equilíbrio: Timed Up and Go (TUG) e velocidade de marcha.",
+          "Risco: TUG >15 s ou velocidade de marcha ≤0,8 m/s."
+        ]
+      },
+      {
+        k: "Estratificação",
+        t: "World Falls Guidelines 2022: baixo, intermediário e alto risco",
+        li: [
+          "Baixo risco: sem queda no último ano e sem alteração de marcha/equilíbrio → orientar e reavaliar.",
+          "Intermediário: 1 queda sem lesão OU alteração de marcha → exercício e correção de fatores.",
+          "Alto risco: ≥2 quedas, queda com lesão ou marcha alterada → avaliação MULTIFATORIAL."
+        ]
+      },
+      {
+        k: "Algoritmo",
+        t: "Rastrear → estratificar → intervir",
+        li: [
+          "Rastrear: perguntar sobre quedas e medo de cair a todo idoso, anualmente.",
+          "Estratificar: marcha e equilíbrio (TUG, velocidade) + histórico de quedas.",
+          "Intervir: avaliação multifatorial e plano personalizado no alto risco."
+        ]
+      },
+      {
+        k: "Prevenção 1/2",
+        t: "Intervenções e nível de evidência: o que mais funciona",
+        li: [
+          "Exercício de equilíbrio e força (Otago, Tai Chi), 3x/semana: reduz 23% da taxa de quedas — evidência alta.",
+          "Vitamina D 800–1000 UI/dia se deficiência ou baixa exposição solar: redução de ~22% com uso DIÁRIO — evidência moderada.",
+          "Revisão de fármacos: desprescrever psicotrópicos (STOPPFall) reduz a exposição a queda — evidência moderada.",
+          "Evitar vitamina D em dose alta intermitente (pode aumentar quedas). Sempre individualizar."
+        ]
+      },
+      {
+        k: "Prevenção 2/2",
+        t: "Ambiente, visão e avaliação multifatorial",
+        li: [
+          "Segurança domiciliar: remover tapetes, instalar barras, melhorar iluminação — reduz quedas, com maior efeito no alto risco (evidência moderada).",
+          "Correção visual: catarata; evitar lentes multifocais ao andar — reduz risco em casos selecionados (evidência baixa).",
+          "Avaliação multifatorial no alto risco: AGA + plano personalizado — reduz quedas (evidência moderada).",
+          "Marca-passo se síncope cardioinibitória; calçado adequado; suspender contenção; vacinação e metas de cuidado."
+        ],
+        note: "Cochrane 2019; World Falls Guidelines 2022; USPSTF 2018; STOPPFall 2021."
+      },
+      {
+        k: "Risco e proteção",
+        t: "O que aumenta e o que protege",
+        li: [
+          "Intrínsecos (alto): fraqueza, alteração de marcha/equilíbrio, baixa visão, cognição/delirium, hipotensão ortostática.",
+          "Extrínsecos (moderado): fármacos (psicotrópicos) e ambiente.",
+          "Proteção de evidência alta: exercício de equilíbrio e força, de forma contínua.",
+          "Proteção de evidência moderada: rever fármacos, corrigir visão e vitamina D; adaptar o ambiente, calçado e dispositivos."
+        ]
+      },
+      {
+        k: "Caso clínico",
+        t: "Sra. Conceição, 81 anos — vamos pensar juntos",
+        li: [
+          "Hipertensa, em uso de clonazepam para dormir.",
+          "Caiu 2 vezes em casa nos últimos 6 meses.",
+          "Agora tem medo de sair do quarto e parou de caminhar.",
+          "TUG = 18 s. Como você estratifica o risco e o que prioriza na prevenção?"
+        ]
+      },
+      {
+        k: "Take-home",
+        t: "O que levar desta aula",
+        li: [
+          "Pergunte sobre quedas a TODO idoso, todo ano — é a porta de entrada da prevenção.",
+          "Queda não é “da idade”: fratura de quadril mata 20–30% em 1 ano e tira a independência.",
+          "O que mais funciona: exercício de equilíbrio (↓23%), revisar fármacos e vitamina D se déficit."
+        ],
+        note: "“Mais vale prevenir a queda do que tratar a fratura.”"
+      }
     ],
     quiz: [
-      { enun: 'São considerados os "4 pilares" do tratamento da ICFEr, EXCETO:',
-        alts: ['Inibidor de SGLT2', 'Betabloqueador com evidência em IC', 'Digoxina', 'Antagonista mineralocorticoide'], certa: 2,
-        fb: 'Os 4 pilares: IECA/BRA ou sacubitril/valsartana, betabloqueador, antagonista mineralocorticoide e iSGLT2. Digoxina é adjuvante sintomático em situações selecionadas.' },
-      { enun: 'Qual fenótipo de IC predomina na população idosa?',
-        alts: ['ICFEr (FE ≤ 40%)', 'ICFElr (FE 41–49%)', 'ICFEp (FE ≥ 50%)', 'IC de alto débito'], certa: 2,
-        fb: 'Com o envelhecimento, hipertensão e comorbidades, o fenótipo predominante no idoso é a IC com fração de ejeção preservada.' },
-      { enun: 'Paciente ambulatorial com dispneia crônica e NT-proBNP de 80 pg/mL. A melhor interpretação é:',
-        alts: ['Confirma IC descompensada', 'Torna o diagnóstico de IC improvável', 'Indica ICFEp', 'Valor inválido em idosos'], certa: 1,
-        fb: 'Em quadro crônico não agudo, NT-proBNP < 125 pg/mL tem alto valor preditivo negativo — IC torna-se improvável. Buscar diagnósticos alternativos.' },
-      { enun: 'Sobre os inibidores de SGLT2 na insuficiência cardíaca:',
-        alts: ['Só têm benefício na FE reduzida', 'São contraindicados em idosos', 'Reduzem hospitalização por IC em todo o espectro de FE', 'Exigem suspensão do betabloqueador'], certa: 2,
-        fb: 'EMPEROR-Preserved e DELIVER estenderam o benefício dos iSGLT2 à ICFElr e à ICFEp — hoje beneficiam todo o espectro de FE.' },
-      { enun: 'A titulação dos 4 pilares no paciente idoso deve seguir a lógica:',
-        alts: ['Doses-alvo plenas desde o primeiro dia', 'Evitar os 4 pilares acima dos 80 anos', '"Start low, go slow", titulando até a dose tolerada com vigilância de PA, potássio e função renal', 'Usar apenas diurético'], certa: 2,
-        fb: 'A idade não exclui o benefício dos pilares. Inicia-se com doses baixas e titula-se com monitorização — o erro comum é iniciar e nunca titular.' }
+      {
+        enun: "Sra. Conceição, 81 anos, hipertensa, em uso de clonazepam para dormir. Caiu 2x em casa nos últimos 6 meses; agora tem medo de sair do quarto e parou de caminhar. TUG = 18 s. Como estratificar o risco e o que priorizar na prevenção?",
+        alts: [
+          "Solicitar densitometria e aguardar o resultado",
+          "Avaliação multifatorial + exercício de equilíbrio e revisão do clonazepam",
+          "Prescrever repouso para evitar novas quedas",
+          "Iniciar antipsicótico para o medo de cair"
+        ],
+        certa: 1,
+        fb: "Alto risco pelo World Falls Guidelines 2022: ≥2 quedas no último ano — e o TUG de 18 s ainda fica acima do corte de 15 s. Alto risco pede avaliação multifatorial, com AGA e plano personalizado. O que mais funciona: exercício de equilíbrio e força (↓23% da taxa de quedas) e revisão de fármacos, desprescrevendo psicotrópicos (STOPPFall)."
+      }
     ],
-    materiais: []
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/quedas.pdf"
+      }
+    ]
   },
-  { id: 'fa-idoso', titulo: 'Fibrilação atrial no idoso — anticoagulação sem medo', area: 'Cardiogeriatria', prof: 'u-igor',
-    status: 'programada', semana: '2026-07-20', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
-    desc: 'CHA₂DS₂-VASc, risco de sangramento, DOACs no idoso frágil e quando (não) suspender.' },
-  { id: 'sarcopenia', titulo: 'Sarcopenia e fragilidade — diagnóstico e intervenção', area: 'Saúde do Idoso', prof: 'u-bernardo',
-    status: 'programada', semana: '2026-07-27', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
-    desc: 'SARC-F, força de preensão, exercício resistido e proteína: o que funciona de verdade.' },
-  { id: 'polifarmacia', titulo: 'Polifarmácia e desprescrição no idoso', area: 'Saúde do Idoso', prof: 'u-bernardo',
-    status: 'programada', semana: '2026-08-03', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
-    desc: 'Critérios de Beers e STOPP/START na prática: por onde começar a desprescrever.' },
-  { id: 'has-idoso', titulo: 'Hipertensão no muito idoso — metas e armadilhas', area: 'Cardiogeriatria', prof: 'u-igor',
-    status: 'programada', semana: '2026-08-10', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
-    desc: 'Metas pressóricas após os 80, hipotensão ortostática e o custo da intensificação cega.' },
-  { id: 'delirium', titulo: 'Delirium — prevenção, diagnóstico e manejo', area: 'Saúde do Idoso', prof: 'u-bernardo',
-    status: 'programada', semana: '2026-08-17', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
-    desc: 'CAM, fatores precipitantes e por que a prevenção não farmacológica vence.' },
-  { id: 'sincope', titulo: 'Síncope no idoso — estratificação de risco', area: 'Cardiogeriatria', prof: 'u-igor',
-    status: 'programada', semana: '2026-08-24', ch: '1h', videoUrl: '', deck: [], quiz: [], materiais: [],
-    desc: 'Síncope reflexa, ortostática ou cardíaca? A abordagem estruturada que evita internação desnecessária.' }
+  {
+    id: "delirium",
+    titulo: "Delirium: Estado Confusional Agudo",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-22",
+    ch: "1h",
+    desc: "Reconhecer, prevenir e tratar a emergência cognitiva mais subdiagnosticada. Definição pelo DSM-5, subtipos motores, CAM e 4AT à beira do leito, prevenção multicomponente (HELP) e manejo sem antipsicótico de rotina.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso clínico",
+        t: "Sra. Lúcia, 82 anos, 2º dia de pós-operatório de fratura de fêmur",
+        li: [
+          "A equipe a descreve como \"quietinha e sonolenta\"; não come e não interage. Sem agitação",
+          "Ninguém testou a atenção",
+          "Está usando opioide e com sonda vesical",
+          "\"Quietinha\" não é o mesmo que \"bem\""
+        ],
+        note: "O delirium hipoativo é o mais comum no idoso — e o mais perdido por parecer \"calmo\". Como confirmar à beira do leito e o que procurar como causa?"
+      },
+      {
+        k: "Definição",
+        t: "Delirium pelo DSM-5",
+        li: [
+          "Distúrbio AGUDO de atenção e consciência (a marca registrada)",
+          "Instala-se em horas a dias e FLUTUA ao longo do dia",
+          "Alteração cognitiva adicional (memória, orientação, linguagem, percepção)",
+          "Consequência de condição médica, intoxicação, abstinência ou fármacos"
+        ]
+      },
+      {
+        k: "Epidemiologia",
+        t: "Comum, grave e caro",
+        li: [
+          "20–30% dos idosos internados (até 50%+ no pós-operatório/UTI)",
+          "Aumenta mortalidade hospitalar e em longo prazo",
+          "Eleva risco de demência e de declínio funcional persistente",
+          "Prolonga internação, quedas e institucionalização",
+          "~30–40% dos casos são preveníveis"
+        ],
+        note: "Delirium não é \"da idade\": é sinal de doença aguda e marcador de mau prognóstico."
+      },
+      {
+        k: "Subtipos",
+        t: "Os subtipos motores",
+        li: [
+          "O hipoativo é o mais comum — e o mais subdiagnosticado",
+          "Hipoativo: sonolência, apatia",
+          "O hipoativo tem PIOR prognóstico que o hiperativo justamente por passar despercebido",
+          "Pós-operatório e terapia intensiva concentram os maiores riscos; monitorar com CAM-ICU é rotina"
+        ]
+      },
+      {
+        k: "Reconhecer",
+        t: "CAM — Confusion Assessment Method",
+        li: [
+          "1. Início agudo E curso flutuante",
+          "2. Inatenção (ex.: meses do ano de trás para frente)",
+          "3. Pensamento desorganizado",
+          "4. Alteração do nível de consciência",
+          "Delirium = 1 E 2 E (3 OU 4)",
+          "Sensibilidade ~94% / especificidade ~89%"
+        ]
+      },
+      {
+        k: "Reconhecer",
+        t: "4AT e a regra de ouro do reconhecimento",
+        li: [
+          "4AT: rápido (< 2 min), não precisa treinamento",
+          "Alerta (nível de consciência); AMT4: idade, data de nascimento, local, ano",
+          "Atenção: meses do ano em ordem inversa; mudança aguda ou curso flutuante",
+          "TESTE A ATENÇÃO de todo idoso internado com mudança do estado mental",
+          "Compare com o basal: pergunte à família como ele \"era\" ontem/semana passada",
+          "Não confunda hipoativo com depressão ou \"cansaço\"; delirium pode coexistir com demência"
+        ]
+      },
+      {
+        k: "Fisiopatologia",
+        t: "Modelo de vulnerabilidade × precipitantes",
+        li: [
+          "Quanto mais vulnerável o cérebro, menor o \"gatilho\" necessário",
+          "Idoso frágil/demente: até uma ITU ou um sedativo desencadeia",
+          "Jovem hígido: precisa de insulto grave (sepse, grande cirurgia)",
+          "Predisponentes: idade avançada, demência/CCL prévios, déficit sensorial, fragilidade, multimorbidade, polifarmácia",
+          "Precipitantes: infecção, dor, distúrbio metabólico, fármacos, cirurgia, retenção urinária/constipação",
+          "Precipitantes: privação de sono, contenção, internação em UTI"
+        ],
+        note: "Atuar nos precipitantes modificáveis é o cerne da prevenção."
+      },
+      {
+        k: "Fármacos",
+        t: "Fármacos que precipitam (Beers 2023)",
+        li: [
+          "Anticolinérgicos (muitos! revisar a lista completa)",
+          "Benzodiazepínicos e hipnóticos Z",
+          "Opioides (necessários às vezes — equilibre com a dor)",
+          "Revisar e desprescrever é prevenção ativa de delirium"
+        ]
+      },
+      {
+        k: "Prevenir",
+        t: "HELP — prevenção multicomponente (1ª linha)",
+        li: [
+          "Reorientação e estimulação cognitiva diária",
+          "Mobilização precoce; evitar contenções e sondas desnecessárias",
+          "Sono protegido (rotina noturna, menos ruído/luz)",
+          "Óculos e aparelhos auditivos; hidratação e nutrição",
+          "Reduz a incidência em ~30–40%",
+          "Na UTI, pacote ABCDEF: dor, despertar e respiração espontânea, sedação sem benzodiazepínicos, CAM-ICU, mobilização, família"
+        ]
+      },
+      {
+        k: "Tratar",
+        t: "Passos 1 e 2: a causa e o não-farmacológico",
+        li: [
+          "Mnemônico: infecção, fármacos, metabólico, hipóxia, dor, retenção, abstinência",
+          "Reavaliar TODA a prescrição; suspender o que for desnecessário",
+          "Corrigir desidratação, distúrbios eletrolíticos, glicemia, constipação",
+          "Reorientar, aproximar a família, restaurar óculos/aparelho auditivo",
+          "Mobilizar, proteger o sono, ambiente calmo e iluminação adequada",
+          "Evitar contenção física (piora a agitação e o desfecho)"
+        ],
+        note: "Tratar a causa É tratar o delirium."
+      },
+      {
+        k: "Tratar",
+        t: "Passo 3 — fármacos: exceção, não regra",
+        li: [
+          "Antipsicóticos NÃO previnem nem encurtam o delirium",
+          "Reservar a sofrimento/agitação grave com risco a si ou a terceiros",
+          "Se preciso: haloperidol em dose baixa OU atípico; monitorar QTc e sintomas extrapiramidais",
+          "Benzodiazepínico só na abstinência de álcool/BZD; senão, piora",
+          "Evitar haloperidol na DLB/Parkinson; preferir atípico se preciso",
+          "Fluxo: confirmar (CAM/4AT) → tratar a causa → não-farmacológico → fármaco só se agitação grave"
+        ]
+      },
+      {
+        k: "Take-home",
+        t: "Mensagens para levar para casa",
+        li: [
+          "Delirium = início agudo + inatenção + curso flutuante. Teste a atenção!",
+          "O hipoativo é o mais comum e o mais perigoso — não o confunda com \"estar calmo\"",
+          "Use CAM/4AT e sempre compare com o estado basal (ouça a família)",
+          "A prevenção multicomponente (HELP) é a intervenção mais eficaz — ~30–40% menos casos",
+          "Trate a causa; antipsicóticos são exceção; evite benzodiazepínicos e contenção"
+        ],
+        note: "\"Medicine is a science of uncertainty and an art of probability.\" — William Osler"
+      }
+    ],
+    quiz: [
+      {
+        enun: "Idoso internado, sonolento, desatento, com piora que vai e volta no mesmo dia. Sem agitação. É delirium?",
+        alts: [
+          "Sim",
+          "Não"
+        ],
+        certa: 0,
+        fb: "Sim — provável delirium hipoativo. Início agudo + inatenção + flutuação fecham CAM, mesmo sem agitação. É o subtipo mais comum e o mais perigoso por passar batido."
+      },
+      {
+        enun: "Sra. Lúcia, pós-operatório de fêmur, hipoativa, em opioide e com sonda vesical. Conduta?",
+        alts: [
+          "Antipsicótico para tratar a sonolência",
+          "Confirmar com CAM; revisar o opioide, retirar a sonda se possível, tratar dor/constipação, descartar ITU; reorientar e mobilizar",
+          "Benzodiazepínico à noite para proteger o sono",
+          "Contenção física para evitar quedas"
+        ],
+        certa: 1,
+        fb: "Causa → não-farmacológico → (raramente) fármaco. Antipsicótico só se agitação grave — não para \"a sonolência\". Benzodiazepínico só na abstinência de álcool/BZD; senão, piora. Contenção física piora a agitação e o desfecho."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/delirium.pdf"
+      }
+    ]
+  },
+  {
+    id: "osso-musculo",
+    titulo: "Osso, Músculo e Fragilidade no Idoso",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-22",
+    ch: "1h",
+    desc: "Osteoporose, sarcopenia, caquexia e síndrome de fragilidade — diagnóstico e terapêutica baseada em evidência. Diferencia as quatro entidades, indica a terapêutica de cada uma e interpreta o desfecho esperado (RRR, NNT, tempo mínimo e sintoma × desfecho duro).",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso clínico",
+        t: "Dona Cecília, 79 anos, viúva, mora só",
+        li: [
+          "No último ano: emagreceu 6 kg sem querer, está mais fraca, lenta e cansada",
+          "Caiu, com fratura de punho",
+          "Uma só paciente reúne osso, músculo, perda de peso e fragilidade",
+          "Como organizar o diagnóstico e o tratamento dela?",
+          "O que reduz desfecho duro (fratura) e o que melhora função? Qual o NNT e o tempo?"
+        ],
+        note: "As quatro síndromes aparecem juntas — e o tratamento de base é compartilhado."
+      },
+      {
+        k: "Por que juntas",
+        t: "O eixo osso–músculo–fragilidade e como ler a evidência",
+        li: [
+          "Perda óssea e muscular caminham juntas e levam à fragilidade",
+          "Compartilham causa (envelhecimento, inflamação, inatividade) e tratamento de base",
+          "RRR impressiona; o que decide é a redução ABSOLUTA e o NNT",
+          "É controle de sintoma ou redução de desfecho duro?",
+          "Qual o tempo mínimo de tratamento até o benefício?"
+        ]
+      },
+      {
+        k: "Osteoporose",
+        t: "Diagnóstico: T-score e fratura por fragilidade",
+        li: [
+          "Osteoporose: T-score ≤ −2,5 OU fratura por fragilidade",
+          "DXA mede a densidade mineral óssea de coluna e colo femoral e fornece o T-score",
+          "FRAX estima risco em 10 anos",
+          "Rastrear: mulheres ≥ 65 anos, homens ≥ 70 anos (ou antes, se risco)",
+          "Tratar se T ≤ −2,5, fratura por fragilidade ou FRAX alto",
+          "Corrigir cálcio e vitamina D antes de iniciar fármaco"
+        ]
+      },
+      {
+        k: "Osteoporose",
+        t: "Bisfosfonatos — 1ª linha",
+        li: [
+          "Alendronato/risedronato (oral), zoledronato (IV); antirreabsortivos. Evidência alta",
+          "↓ ~50% fratura vertebral (alendronato, FIT); RR 0,47 para fratura de quadril",
+          "Reduz fratura vertebral, não-vertebral e de quadril; baixo custo e ampla disponibilidade",
+          "Oral: jejum e permanecer ereto 30 min. Evitar se ClCr < 30–35 mL/min",
+          "Tratar 3–5 anos e reavaliar pausa (\"drug holiday\")",
+          "Adversos: esofagite (oral), sintomas gripais (1ª IV); raros: osteonecrose de mandíbula, fratura atípica de fêmur"
+        ],
+        note: "Monitorização: função renal e cálcio/vitamina D; saúde bucal antes de procedimentos dentários; DXA a cada ~2 anos."
+      },
+      {
+        k: "Osteoporose",
+        t: "Denosumab — potente, mas cuidado com o rebote",
+        li: [
+          "Anti-RANKL, 60 mg SC a cada 6 meses; antirreabsortivo potente. Evidência alta",
+          "↓ 68% fratura vertebral (FREEDOM); ↓ ~40% fratura de quadril",
+          "Pode usar na doença renal (sem ajuste de dose); ganho de massa óssea contínuo",
+          "Suspensão → rebote: fraturas vertebrais múltiplas. Exige relé com bisfosfonato se for parar",
+          "Atrasos na dose também arriscam rebote",
+          "Adversos: hipocalcemia (checar antes; pior na DRC), ONJ e fratura atípica (raros), infecções de pele"
+        ],
+        note: "Monitorização: cálcio/vitamina D antes de cada dose; NUNCA parar/atrasar sem plano de transição; saúde bucal."
+      },
+      {
+        k: "Osteoporose",
+        t: "Anabólicos: teriparatida e romosozumab",
+        li: [
+          "Indicados na osteoporose grave / muito alto risco / falha; formam osso. Evidência alta",
+          "Romosozumab ↓ 37% fratura vertebral vs alendronato (ARCH)",
+          "Maior ganho de massa óssea e redução de fratura; indicados em fratura grave/múltipla ou falha",
+          "Teriparatida: injeção SC diária, até 24 meses; adversos: hipercalcemia, cãibras, tontura",
+          "Romosozumab: evitar pós-IAM/AVC recente (risco CV); alerta para eventos cardiovasculares",
+          "Sequência obrigatória: seguir com antirreabsortivo — o ganho se perde sem terapia sequencial"
+        ]
+      },
+      {
+        k: "Osteoporose",
+        t: "O que esperar do tratamento",
+        li: [
+          "↓ 47–68% fratura vertebral (depende da classe)",
+          "↓ ~40–50% fratura de quadril",
+          "NNT ~15–20 para evitar 1 fratura vertebral em 3 anos",
+          "3–5 anos é o tempo mínimo; depois reavaliar"
+        ],
+        note: "Desfecho DURO: menos fraturas. O NNT é menor (melhor) na prevenção secundária (já fraturado)."
+      },
+      {
+        k: "Sarcopenia",
+        t: "Algoritmo EWGSOP2 e o tratamento",
+        li: [
+          "Encontrar: SARC-F (rastreio, 5 itens) ou suspeita clínica",
+          "Avaliar FORÇA (preensão; sentar-levantar): cortes < 27 kg (homens) / < 16 kg (mulheres)",
+          "Confirmar: MASSA muscular baixa (DXA/BIA). Gravidade: velocidade de marcha ≤ 0,8 m/s",
+          "Exercício RESISTIDO progressivo — melhor evidência",
+          "Proteína 1,0–1,2 g/kg/dia (com leucina); vitamina D se deficiência; tratar causas",
+          "NENHUM fármaco aprovado; suplemento isolado (sem exercício) não funciona; testosterona/GH não de rotina"
+        ],
+        note: "Chave EWGSOP2: a FORÇA vem primeiro; massa confirma; desempenho gradua a gravidade. Exercício + proteína > qualquer intervenção isolada."
+      },
+      {
+        k: "Caquexia",
+        t: "O que é (e o que não é) — e como tratar",
+        li: [
+          "Perda de peso > 5% em 6 meses (ou > 2% se IMC < 20)",
+          "Ligada a inflamação e doença de base (câncer, IC, DPOC, DRC); perde músculo (e gordura)",
+          "Resistente à oferta calórica. Diferencie da sarcopenia (envelhecimento/desuso) e da inanição (responde a comida)",
+          "Tratar a DOENÇA DE BASE é o pilar; nutrição + atividade conforme tolerância",
+          "Anamorelina (aprovada no câncer): ↑ apetite e massa magra, mas não melhora força/sobrevida",
+          "Megestrol/corticoide: ganho de gordura/fluido e riscos; suplemento isolado não reverte o quadro"
+        ],
+        note: "Consenso internacional (Fearon 2011): caquexia é multifatorial e inflamatória. Frequentemente engloba sarcopenia."
+      },
+      {
+        k: "Fragilidade",
+        t: "Fenótipo de Fried e manejo",
+        li: [
+          "5 critérios: perda de peso, exaustão, fraqueza, lentidão e baixa atividade física",
+          "≥ 3 dos 5 = frágil; 1–2 = pré-frágil",
+          "Exercício MULTICOMPONENTE (resistido + equilíbrio + aeróbio)",
+          "Proteína e correção nutricional; vitamina D se déficit",
+          "Avaliação Geriátrica Ampla (AGA) e revisão de polifarmácia (Beers); tratar o reversível, prevenir quedas, vacinar",
+          "Exercício + nutrição revertem o escore de Fried; AGA ↓ internação e institucionalização; desprescrição ↓ iatrogenia e quedas"
+        ],
+        note: "Fragilidade é dinâmica — pode regredir. O ganho é em desfecho duro (quedas, internação)."
+      },
+      {
+        k: "Integração",
+        t: "Conduta integrada no idoso",
+        li: [
+          "1. Rastrear fragilidade (FRAIL/Fried) e função",
+          "2. Avaliar músculo (força/massa) e osso (DXA)",
+          "3. Base para TODOS: exercício resistido + proteína + vitamina D",
+          "4. Específico: antifratura (osteoporose); tratar causa (caquexia)",
+          "Em todos: avaliação geriátrica ampla, prevenção de quedas, desprescrição (Beers), vacinação e metas de cuidado"
+        ]
+      },
+      {
+        k: "Take-home",
+        t: "Mensagens para levar para casa",
+        li: [
+          "Osso, músculo e fragilidade se entrelaçam — e têm tratamento de base comum",
+          "Exercício RESISTIDO + proteína (1,0–1,2 g/kg) + vitamina D: a \"medicação\" transversal",
+          "Osteoporose reduz FRATURA (desfecho duro): bisfosfonato 1ª linha; denosumab potente (cuidado rebote); anabólico no alto risco",
+          "Sarcopenia: sem fármaco aprovado — exercício e proteína são o tratamento",
+          "Caquexia: tratar a doença de base; fármacos têm papel limitado",
+          "Fragilidade é reversível: exercício multicomponente + nutrição + avaliação geriátrica ampla"
+        ],
+        note: "\"Aging is not lost youth but a new stage of opportunity and strength.\" — Betty Friedan"
+      }
+    ],
+    quiz: [
+      {
+        enun: "Paciente em denosumab decide parar por conta própria. Qual o risco e a conduta?",
+        alts: [
+          "Nenhum risco relevante; pode suspender e reavaliar com DXA",
+          "Rebote com fraturas vertebrais múltiplas; nunca parar sem relé com bisfosfonato",
+          "Apenas perda lenta de massa óssea; reavaliar em 2 anos",
+          "Osteonecrose de mandíbula; encaminhar ao dentista"
+        ],
+        certa: 1,
+        fb: "Risco de rebote. Suspender denosumab sem transição causa fraturas vertebrais múltiplas por rebote do turnover. Nunca parar sem relé com bisfosfonato; não atrasar as doses."
+      },
+      {
+        enun: "De volta à Dona Cecília: emagrecimento, fraqueza, lentidão, exaustão e fratura por queda. Como integrar a conduta?",
+        alts: [
+          "Apenas antifratura; reavaliar a função depois",
+          "Apenas exercício resistido e proteína",
+          "Tratar o eixo todo: DXA + antifratura, exercício resistido + proteína, investigar o emagrecimento, AGA, vitamina D, prevenção de quedas e desprescrição",
+          "Suplemento nutricional isolado, sem exercício"
+        ],
+        certa: 2,
+        fb: "Tratar o eixo todo. DXA + antifratura (fraturou → prevenção secundária); exercício resistido + proteína (sarcopenia/fragilidade); investigar causa do emagrecimento (caquexia?); AGA, vitamina D, prevenção de quedas e desprescrição."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/osso-musculo.pdf"
+      }
+    ]
+  },
+  {
+    id: "cardiogeri-dac",
+    titulo: "Doença arterial coronariana e hipotensão postural no idoso",
+    area: "Cardiogeriatria",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-12",
+    ch: "50 min",
+    desc: "Reconhecer a isquemia atípica e equilibrar pressão e quedas. Conduta na SCA e na DAC crônica do idoso, diagnóstico e tratamento da hipotensão postural — individualizando por sangramento, fragilidade e ortostase.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso · gancho",
+        t: "“Cansaço e tontura”: angina sem dor e queda ao levantar no mesmo idoso",
+        li: [
+          "Sr. J., 81 anos: dispneia e fadiga aos esforços, sem dor torácica.",
+          "Episódios de tontura e quase-síncope ao levantar.",
+          "HAS, DM; usa nitrato e diurético.",
+          "Dispneia aos esforços pode ser ANGINA (equivalente isquêmico)? Se for SCA, levo ao cateterismo?",
+          "A tontura é isquemia, arritmia ou hipotensão postural? O nitrato/diurético está piorando a queda?"
+        ],
+        note: "O Sr. J. liga os dois blocos — a isquemia atípica e a hipotensão postural."
+      },
+      {
+        k: "DAC · atipia",
+        t: "A armadilha nº 1: a isquemia do idoso frequentemente NÃO dói",
+        li: [
+          "Dispneia: equivalente anginoso — o mais comum no idoso.",
+          "Confusão/delirium e síncope/tontura: baixo débito, isquemia ou arritmia isquêmica.",
+          "Fadiga, fraqueza e queda funcional inexplicada; sintomas GI (epigastralgia, náusea na parede inferior).",
+          "No idoso, a DAC é mais difusa, multiarterial e calcificada, com componente microvascular (ANOCA/INOCA)."
+        ],
+        note: "Regra: piora funcional, dispneia ou confusão súbita no idoso — pense isquemia mesmo SEM dor. (ESC CCS 2024: equivalentes anginosos)"
+      },
+      {
+        k: "DAC · síndromes",
+        t: "Crônica (SCC) × aguda (SCA) — e no idoso o NSTEMI predomina",
+        li: [
+          "SCC: angina estável ou equivalente aos esforços; ANOCA/INOCA frequente.",
+          "SCC: otimizar fármaco antes do invasivo; eco de repouso + probabilidade pré-teste (ESC 2024).",
+          "SCA: STEMI (supra) × NSTEMI/angina instável — no idoso PREDOMINA o NSTEMI.",
+          "Mais atipia leva a diagnóstico tardio; no STEMI, a reperfusão é tempo-dependente em qualquer idade."
+        ]
+      },
+      {
+        k: "DAC · diagnóstico",
+        t: "ECG + troponina hs: potentes, mas com armadilhas no idoso",
+        li: [
+          "ECG: comparar com o prévio; BRE novo, supra ou infra de ST; pode ser pouco específico.",
+          "Troponina hs: alta sensibilidade — usar o DELTA (variação) seriado.",
+          "Cuidado: elevação CRÔNICA em DRC, IC, FA e idade não é sinônimo de IAM.",
+          "Integrar clínica + ECG + curva de troponina (definição universal de IAM)."
+        ],
+        note: "O que diagnostica é a variação seriada no contexto clínico."
+      },
+      {
+        k: "SCA · conduta",
+        t: "Estabilizar e antiagregar — com dose ajustada ao idoso",
+        li: [
+          "Medidas iniciais: O2 se hipoxêmico, nitrato/analgesia, monitorização e tratar fatores (anemia, PA).",
+          "Adjuvantes: estatina de alta potência; IECA e betabloqueador conforme FE e tolerância.",
+          "AAS para todos + anticoagulação na fase aguda (HNF, enoxaparina ou fondaparinux), ajustada à função renal.",
+          "P2Y12: clopidogrel costuma ser preferido no idoso (menos sangramento que prasugrel e ticagrelor).",
+          "Duração da DAPT: individualizar pelo risco isquêmico × hemorrágico (ex.: PRECISE-DAPT); encurtar se alto sangramento.",
+          "Tríplice terapia (FA + stent): o mais curto possível — em geral anticoagulante + 1 antiagregante. IBP se risco GI."
+        ],
+        note: "No idoso, a maioria das mortes evitáveis vem de dose excessiva de antitrombótico — o sangramento manda na escolha e na duração. Reavalie a cada consulta."
+      },
+      {
+        k: "DAC · decisão",
+        t: "NSTEMI no idoso: invasivo × conservador é decisão compartilhada",
+        li: [
+          "SENIOR-RITA (2024): estratégia invasiva não reduziu morte CV/IAM; reduziu IAM não-fatal e nova revascularização.",
+          "After Eighty (2016): invasiva favoreceu o composto em ≥80 anos — mas com seleção de menos frágeis.",
+          "Decidir considerando fragilidade, função renal, sangramento, expectativa e PREFERÊNCIA do paciente.",
+          "STEMI: reperfusão independe da idade. NSTEMI estável e muito frágil: conservador é opção legítima."
+        ]
+      },
+      {
+        k: "DAC crônica",
+        t: "Antianginosos para sintoma; prevenção secundária para prognóstico",
+        li: [
+          "Antianginosos: betabloqueador, BCC e nitrato; segunda linha ranolazina e trimetazidina.",
+          "Cuidado: betabloqueador causa bradicardia; nitrato causa ortostase e cefaleia.",
+          "Prognóstico: estatina de alta potência, AAS, IECA/BRA se IC, DM ou DRC — vigiar miopatia, K, creatinina, sangramento.",
+          "Estilo de vida: reabilitação cardíaca, exercício, cessar tabaco e dieta — a reabilitação melhora função e quedas."
+        ],
+        note: "Elo com o bloco 2: nitrato e betabloqueador aliviam a angina, mas pioram a hipotensão postural. Titule devagar e meça a PA em pé."
+      },
+      {
+        k: "HO · definição",
+        t: "Hipotensão postural: definição objetiva e como diagnosticar",
+        li: [
+          "Queda ≥20 mmHg na PAS ou ≥10 mmHg na PAD em até 3 min em ortostatismo; se HAS supina, usar ≥30 mmHg de PAS.",
+          "Teste ativo: deitado 5 min, depois em pé medindo a 1 e a 3 min (ESC 2024). Pode ser sintomática OU assintomática.",
+          "Comum: até ~20% dos idosos (mais se frágil ou parkinsoniano); subdiagnosticada — só se acha se MEDIR em pé.",
+          "Tilt test se a suspeita persiste e o teste ativo é inconclusivo (síncope). Causa quedas, síncope e fraturas."
+        ],
+        note: "Associada a maior risco cardiovascular e mortalidade — não é só “tontura”."
+      },
+      {
+        k: "HO · causas",
+        t: "Neurogênica × não-neurogênica: a pista está na frequência cardíaca",
+        li: [
+          "Neurogênica: a FC NÃO sobe adequadamente — Parkinson, atrofia de múltiplos sistemas, demência por corpos de Lewy, neuropatia diabética/amiloidótica.",
+          "Não-neurogênica: a FC SOBE (taquicardia compensatória) — fármacos (anti-HAS, nitrato, α-bloq, diurético, ADT, levodopa), hipovolemia, anemia, álcool.",
+          "HAS supina coexiste em ~50% das neurogênicas: medir também deitado, porque muda o plano.",
+          "Red flags: síncope DE ESFORÇO (isquemia, estenose aórtica), síncope súbita sem pródromo (arritmia), déficit focal ou parkinsonismo."
+        ],
+        note: "HO sem taquicardia compensatória sugere causa neurogênica."
+      },
+      {
+        k: "HO · não-farmacológico",
+        t: "ABCDE: a base é não-farmacológica — e desprescrever o que derruba",
+        li: [
+          "A — Avaliar/retirar fármacos: anti-HAS em excesso, nitrato, α-bloqueador, diurético, ADT.",
+          "B — Beber + sal: hidratar, bolus de água fria (~500 mL) pré-ortostase, sal se não houver IC ou HAS supina grave.",
+          "C — Comportamento: levantar devagar e em etapas, manobras de contrapressão, meias de compressão, cabeceira elevada.",
+          "D e E — Dieta (refeições menores e fracionadas, evitar álcool) e Educar/exercício (reconhecer sintomas, recondicionamento, prevenir quedas)."
+        ],
+        note: "Objetivo: reduzir sintomas e quedas — não “normalizar” a PA. Desprescrever é a primeira medida."
+      },
+      {
+        k: "HO · farmacológico",
+        t: "Se os sintomas persistem: midodrina e fludrocortisona, com cautela",
+        li: [
+          "Midodrina 2,5–10 mg até 3x/dia: α-agonista; NÃO usar após ~18h (4 h antes de deitar) pelo risco de HAS supina.",
+          "Fludrocortisona 0,1–0,2 mg/dia: expande volume; risco de hipocalemia, edema, IC e HAS supina.",
+          "Droxidopa (titular): pró-droga de noradrenalina para HO neurogênica — acesso limitado no Brasil.",
+          "HAS supina coexistente: cabeceira elevada à noite, vasoconstritor de ação curta de dia, aceitar PA deitado um pouco mais alta."
+        ],
+        note: "Midodrina costuma ser preferida (ação curta, menos risco supino); fludrocortisona se hipovolêmico/refratário. Menor dose eficaz. [Consenso/uso off-label parcial]"
+      },
+      {
+        k: "Take-home",
+        t: "Duas frases e o ABCDE para levar",
+        li: [
+          "DAC no idoso: “pense ISQUEMIA mesmo sem dor” — NSTEMI predomina, invasivo é decisão compartilhada e o SANGRAMENTO manda na antitrombótica.",
+          "Hipotensão postural: “MEÇA em pé” — ≥20/10 mmHg em 3 min; a FC diferencia neurogênica de não-neurogênica.",
+          "Não-farmacológico primeiro; cuidado com a HAS supina.",
+          "ABCDE: Avaliar/retirar fármacos · Beber água + sal · Comportamento · Drogas (midodrina/fludro) · Evitar hipertensão supina."
+        ],
+        note: "O erro que liga os dois temas: subtratar a isquemia por “ser idoso” — ou empilhar nitrato e anti-HAS e causar quedas e fraturas."
+      }
+    ],
+    quiz: [
+      {
+        enun: "Idoso de 84 anos, dispneia aos esforços, sem dor, troponina hs com delta positivo. Hipótese mais provável?",
+        alts: [
+          "Ansiedade",
+          "Equivalente anginoso / SCA",
+          "DPOC apenas",
+          "Normal do envelhecimento"
+        ],
+        certa: 1,
+        fb: "Equivalente anginoso; delta de troponina positivo caracteriza SCA."
+      },
+      {
+        enun: "NSTEMI em idoso de 86 anos, frágil. O que dizer sobre a estratégia invasiva à luz do SENIOR-RITA?",
+        alts: [
+          "Sempre obrigatória",
+          "Decisão compartilhada; reduz IAM não-fatal, não a mortalidade",
+          "Proibida",
+          "Igual ao STEMI"
+        ],
+        certa: 1,
+        fb: "SENIOR-RITA: reduziu IAM não-fatal e revascularização, não a mortalidade — individualizar."
+      },
+      {
+        enun: "Hipotensão ortostática sintomática associada a HAS supina. Qual a conduta inicial?",
+        alts: [
+          "Fludrocortisona à noite",
+          "Não-farmacológico + desprescrever + midodrina diurna se persistir",
+          "Aumentar o anti-HAS",
+          "Repouso no leito"
+        ],
+        certa: 1,
+        fb: "Não-farmacológico e desprescrição primeiro; fármaco de ação curta e diurno apenas se os sintomas persistirem."
+      },
+      {
+        enun: "Sr. J., 81 anos, dispneia aos esforços e troponina hs elevada estável: NSTEMI, sem instabilidade, DRC leve, independente, alto risco de sangramento. Conduta?",
+        alts: [
+          "Terapia otimizada + estratégia invasiva discutida (decisão compartilhada); AAS + clopidogrel com dose ajustada; IBP",
+          "Prasugrel + ticagrelor juntos, em dose plena",
+          "Só observar; nenhum antitrombótico"
+        ],
+        certa: 0,
+        fb: "Tratar como SCA, com decisão compartilhada sobre o invasivo e antiagregação ajustada ao risco de sangramento."
+      },
+      {
+        enun: "Sr. J. retorna com tontura ao levantar: PA 150/80 deitado e 118/64 em pé, FC sobe pouco, usa nitrato e diurético, já caiu 1 vez. Conduta?",
+        alts: [
+          "Rever/retirar nitrato e diurético; ABCDE (sal/água, meias, cabeceira elevada); reavaliar — midodrina diurna se persistir",
+          "Aumentar o anti-HAS para a PA deitado",
+          "Fludrocortisona em dose alta à noite"
+        ],
+        certa: 0,
+        fb: "Desprescrever o que derruba e aplicar as medidas não-farmacológicas; fármaco só se persistir, de ação curta e diurno."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/cardiogeri-dac.pdf"
+      },
+      {
+        nome: "Resumo de 1 página (PDF)",
+        arquivo: "docs/aulas/resumo-cardiogeriatria-dac-ho.pdf"
+      }
+    ]
+  },
+  {
+    id: "cardiogeri-has",
+    titulo: "Envelhecimento cardiovascular e hipertensão arterial no idoso",
+    area: "Cardiogeriatria",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-12",
+    ch: "50 min",
+    desc: "Fisiologia do envelhecimento cardiovascular e HAS: por que o idoso é hipertenso — e como tratar com segurança. Metas pressóricas individualizadas pela fragilidade, ortostase e comorbidades.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso · gancho",
+        t: "PAS 168, PAD 72: por que o idoso tem a “máxima” alta e a “mínima” baixa?",
+        li: [
+          "Sra. M., 82 anos: PA 168/72 (pressão de pulso 96).",
+          "Tonta ao levantar; 1 queda recente.",
+          "Caminha sozinha, lúcida, usa 4 medicamentos.",
+          "Quatro perguntas: por que PAS sobe e PAD cai? Qual a meta dela? A tontura muda a conduta? Tratar agressivo ou com cautela?"
+        ],
+        note: "A Sra. M. volta no fim da aula — você decide a meta e o tratamento."
+      },
+      {
+        k: "Fisiologia · vasos",
+        t: "Enrijecimento arterial: mais colágeno, menos elastina, mais cálcio",
+        li: [
+          "Parede arterial: fragmentação da elastina + aumento de colágeno + calcificação da média.",
+          "Resultado mecânico: aorta vira “tubo rígido”, com aumento da velocidade de onda de pulso (VOP).",
+          "A aterosclerose soma disfunção endotelial e placas — amplifica a rigidez.",
+          "Clínica: ↑PAS e ↑pós-carga, que sobrecarrega o ventrículo esquerdo."
+        ],
+        note: "Rigidez não é aterosclerose, mas caminham juntas — a VOP mede a rigidez."
+      },
+      {
+        k: "Fisiologia · a chave",
+        t: "Vaso rígido → ↑PAS, ↓PAD, pressão de pulso larga = HAS sistólica isolada",
+        li: [
+          "Artéria jovem, complacente, amortece a ejeção: PAS ~120, PAD ~80, pressão de pulso ~40.",
+          "Idoso, artéria rígida, não amortece: PAS ↑168, PAD ↓72 → pressão de pulso 96.",
+          "↑PAS porque o vaso não amortece o jato sistólico; ↓PAD porque se perde o recuo elástico na diástole.",
+          "HSI = PAS ≥140 com PAD <90: a forma típica do idoso."
+        ],
+        note: "A pressão de pulso (PAS−PAD) é marcador de rigidez arterial e de risco."
+      },
+      {
+        k: "Fisiologia · coração",
+        t: "Ventrículo rígido, nó sinusal envelhecido e dependência de volume",
+        li: [
+          "Hipertrofia e fibrose: o VE relaxa mal, sobe a pressão de enchimento → IC com FE preservada (HFpEF).",
+          "Pequenas sobrecargas de volume ou a FA precipitam congestão — a falha é em encher, não em ejetar.",
+          "Nó sinusal perde células (até ~10% restam aos 75 anos) e a fibrose gera BAV, bloqueios de ramo e FA.",
+          "Menor resposta β-adrenérgica: o débito depende da pré-carga (Frank-Starling) — vulnerável a diurético e jejum."
+        ],
+        note: "Rim sódio-sensível acrescenta o componente volêmico: ajustar dose à função renal e cuidado com AINE."
+      },
+      {
+        k: "Fisiologia · barorreflexo",
+        t: "Barorreflexo lento: hipotensão ortostática e pós-prandial",
+        li: [
+          "Ortostática: queda ≥20 mmHg na PAS ou ≥10 mmHg na PAD em 3 min de pé.",
+          "Causa tontura, síncope, quedas e fraturas; piora com anti-HAS, diurético, levodopa e álcool.",
+          "Pós-prandial: queda da PA 30–60 min após as refeições (sequestro esplâncnico).",
+          "Conduta: refeições menores, evitar anti-HAS junto à refeição e sempre medir PA deitado E em pé."
+        ]
+      },
+      {
+        k: "Diagnóstico",
+        t: "Medir bem é o exame — e fugir das armadilhas",
+        li: [
+          "Técnica: repouso de 5 min, manguito adequado, 2 ou mais medidas, os dois braços na primeira vez.",
+          "Confirmar ≥140/90 no consultório (DBH 2020); MAPA/MRPA revelam avental branco e HAS mascarada.",
+          "Pseudo-hipertensão: artéria muito calcificada não colaba sob o manguito → PA falsamente alta (manobra de Osler).",
+          "Medir deitado (5 min) e em pé (1 e 3 min) — ESC 2024: rastrear ortostase antes de tratar."
+        ],
+        note: "Antes da meta: lesão de órgão-alvo (HVE, DRC, retina), risco CV global e fragilidade (AGA breve)."
+      },
+      {
+        k: "Classificação",
+        t: "Limiares: DBH 2020, ESC 2024 e a nova AHA/ACC 2025",
+        li: [
+          "DBH 2020 (Brasil): HAS ≥140/90 no consultório; pré-HAS 130–139/85–89; no idoso, individualizar.",
+          "ESC/ESH 2024: HAS ≥140/90, alvo de PAS 120–129; nova faixa “Elevated BP” 120–139/70–89.",
+          "AHA/ACC 2025: alvo <130/80 (estimula <120); trata ≥140/90, ou ≥130/80 se alto risco, guiada pelo PREVENT.",
+          "No idoso todas convergem: individualizar pela fragilidade e pela tolerância."
+        ],
+        note: "No Brasil, use a DBH 2020 (≥140/90). A meta não é “um número para todos”."
+      },
+      {
+        k: "Metas",
+        t: "O coração da aula: a meta é individualizada",
+        li: [
+          "Idoso hígido (<80a): alvo geral <140/90; <130 em selecionados, se bem tolerado; reduzir gradualmente.",
+          "Muito idoso (≥80a): tratar se PAS ≥160 (HYVET); alvo ~<140–150; evitar <120–130 se frágil.",
+          "Frágil/dependente: meta mais branda, “a mais baixa tolerável”; prioridade é evitar quedas e hipotensão.",
+          "Se a PA cai com a progressão da fragilidade, considerar desprescrição; vigiar ortostase a cada ajuste."
+        ],
+        note: "Regra de ouro: redução gradual, sempre checando a PA em pé e os sintomas. Condição funcional pesa mais que idade. (DBH 2020; ESC 2024)"
+      },
+      {
+        k: "Evidência",
+        t: "O que os grandes ensaios mostram — e seus limites",
+        li: [
+          "HYVET (2008): ≥80a com PAS ≥160 → alvo <150/80; ↓AVC, ↓mortalidade e ↓IC (indapamida ± perindopril).",
+          "SPRINT (2015): <120 vs <140 reduziu eventos CV e mortalidade, mas excluiu DM, AVC, ILPI e demência.",
+          "STEP (2021): 60–80 anos, 110–130 vs 130–150, ↓eventos CV; população asiática e menos frágil.",
+          "O benefício de metas mais baixas é real, mas não extrapole o alvo intensivo ao idoso frágil."
+        ]
+      },
+      {
+        k: "Tratamento",
+        t: "Primeira linha: tiazídico, BCC e IECA/BRA — start low, go slow",
+        li: [
+          "Tiazídico/símile: HCTZ 12,5–25 mg, clortalidona, indapamida — ótimo na HSI; vigiar Na, K, ácido úrico e volemia.",
+          "BCC di-hidropiridínico: anlodipino 2,5–10 mg — eficaz na HSI; vigiar edema maleolar.",
+          "IECA/BRA: enalapril, losartana 50, ramipril — proteção renal e cardíaca; vigiar K e creatinina; não associar IECA+BRA.",
+          "Começar com monoterapia em dose baixa (ou dupla em dose baixa se PA muito alta) e reavaliar em 2–4 semanas, com PA em pé."
+        ],
+        note: "Faixas usuais; individualizar por função renal, K e interações. Preferir 1x/dia para adesão."
+      },
+      {
+        k: "Combinar e evitar",
+        t: "Combinar com lógica — e evitar o que derruba o idoso",
+        li: [
+          "Combinar bem: IECA/BRA + BCC ou IECA/BRA + tiazídico; melhor dose baixa combinada que 1 fármaco em dose alta.",
+          "HAS resistente: acrescentar espironolactona (vigiar K); 1 comprimido combinado melhora a adesão.",
+          "Evitar de rotina: α-bloqueador (doxazosina) → ortostase e quedas; ação central (clonidina, α-metildopa) → sedação e rebote.",
+          "β-bloqueador não é primeira linha sem outra indicação; AINE eleva a PA e lesa o rim."
+        ],
+        note: "Curva J: baixar demais a PAD reduz perfusão coronariana e cerebral — risco no frágil com pressão de pulso larga. Retirar 1 fármaco por vez."
+      },
+      {
+        k: "Take-home",
+        t: "Cardiogeriatria e HAS na palavra “IDOSO”",
+        li: [
+          "I — Individualizar a meta (hígido <140; ≥80 anos ou frágil, mais branda).",
+          "D — Diagnóstico correto: técnica, MAPA/MRPA, descartar pseudo-HAS.",
+          "O — Ortostática: medir deitado E em pé, antes e durante o tratamento.",
+          "S — Start low, go slow: tiazídico, BCC, IECA/BRA.",
+          "O — Observar fragilidade e desprescrever (curva J, quedas)."
+        ],
+        note: "O vaso que endurece define a meta — e a meta protege quem está em pé."
+      }
+    ],
+    quiz: [
+      {
+        enun: "Idoso, PA 165/70, pressão de pulso 95. Qual a forma de HAS?",
+        alts: [
+          "HAS diastólica isolada",
+          "HAS sistólica isolada",
+          "HAS do avental branco",
+          "Normal"
+        ],
+        certa: 1,
+        fb: "Pressão de pulso alargada (PAS alta, PAD baixa) = HAS sistólica isolada."
+      },
+      {
+        enun: "Mulher de 84 anos, frágil, cai ao levantar. Qual a conduta quanto à meta pressórica?",
+        alts: [
+          "Alvo <120",
+          "Meta mais branda + medir em pé + rever fármacos",
+          "Suspender tudo sempre",
+          "Ignorar a ortostase"
+        ],
+        certa: 1,
+        fb: "Frágil: meta branda, medir em pé e rever a polifarmácia."
+      },
+      {
+        enun: "Qual fármaco EVITAR de rotina no idoso por ortostase e quedas?",
+        alts: [
+          "Anlodipino",
+          "Losartana",
+          "Doxazosina (α-bloqueador)",
+          "Hidroclorotiazida"
+        ],
+        certa: 2,
+        fb: "O α-bloqueador causa ortostase e quedas — evitar de rotina."
+      },
+      {
+        enun: "Sra. M., 82 anos, PA 168/72, tonta ao levantar, 1 queda, independente e lúcida, já usa doxazosina à noite. Conduta?",
+        alts: [
+          "Suspender doxazosina (ortostase); iniciar BCC ou IECA em dose baixa; meta ~<150 e gradual; medir em pé",
+          "Alvo intensivo <120 já, com 2 fármacos",
+          "Não tratar — “PAD baixa, deixa quieto”"
+        ],
+        certa: 0,
+        fb: "Retirar o que causa ortostase, tratar a HAS sistólica isolada com meta prudente e gradual, vigiando a PA em pé."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/cardiogeri-has.pdf"
+      },
+      {
+        nome: "Resumo de 1 página (PDF)",
+        arquivo: "docs/aulas/resumo-cardiogeriatria.pdf"
+      }
+    ]
+  },
+  {
+    id: "tto-farmaco",
+    titulo: "Tratamento farmacológico no idoso: demência, delirium e depressão",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-08",
+    ch: "50 min",
+    desc: "Farmacoterapia da demência, do delirium e da depressão no idoso — do início ao fim. Ao final, você prescreve as três classes com indicação, dose e segurança, aplicando start low/go slow, Beers/STOPP-START e desprescrição.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso fio-condutor",
+        t: "Sr. P., 79 anos — três decisões farmacológicas",
+        li: [
+          "Alzheimer moderado; humor rebaixado. Internado por ITU, ficou confuso (delirium). Usa 7 medicamentos",
+          "Demência: anticolinesterásico/memantina — indica? dose?",
+          "Delirium: prevenir e tratar a causa (ITU) — fármaco é exceção",
+          "Depressão: tratar? qual ISRS? o que evitar?",
+          "Polifarmácia: o que desprescrever?"
+        ],
+        note: "Um único idoso pode precisar (ou NÃO) das três classes — e errar a dose custa caro. O Sr. P. atravessa os 3 blocos e mostra que \"mais remédio\" nem sempre é a resposta."
+      },
+      {
+        k: "Princípios",
+        t: "Start low, go slow — o idoso responde e adoece diferente",
+        li: [
+          "Farmacocinética: ↓ clearance renal/hepático; ↑ meia-vida; ↑ gordura (lipossolúveis acumulam)",
+          "Farmacodinâmica: ↑ sensibilidade do SNC (sedação, confusão, quedas, extrapiramidal)",
+          "Start low, go slow: menor dose eficaz; titular devagar; um fármaco por vez",
+          "Metas realistas: funcionalidade/qualidade de vida; alvo e prazo definidos",
+          "O ciclo completo: indicação → escolha → dose → monitorizar → reavaliar/desprescrever"
+        ],
+        note: "Antes de adicionar um fármaco, pergunte: \"este sintoma é doença ou é remédio?\" (cascata). O passo 5 é o mais esquecido: prescrever também é saber a hora de PARAR."
+      },
+      {
+        k: "Princípios",
+        t: "Beers e STOPP/START: o que evitar e o que não esquecer",
+        li: [
+          "Evitar: benzodiazepínicos (quedas, confusão, dependência)",
+          "Evitar: anticolinérgicos (ADT, anti-H1 de 1ª geração, oxibutinina)",
+          "Evitar: antipsicóticos para BPSD de rotina (black box); AINEs crônicos; relaxantes; \"Z-drugs\"",
+          "Some a CARGA anticolinérgica total (piora cognição/quedas)",
+          "STOPP: suspender o inapropriado. START: não esquecer o indicado (ex.: tratar depressão, dor)",
+          "Revisar a lista a cada consulta"
+        ],
+        note: "Fonte: AGS Beers Criteria 2023; O'Mahony et al. STOPP/START."
+      },
+      {
+        k: "Demência",
+        t: "Anticolinesterásicos: leve a moderada — titular sempre",
+        li: [
+          "Donepezila 5 mg → 10 mg (1x/dia); titular após ~4 semanas; à noite",
+          "Rivastigmina oral 1,5 → 6 mg 2x; adesivo 4,6 → 9,5 → 13,3 mg/24h (adesivo: menos GI)",
+          "Galantamina 8 → 16 → 24 mg/dia; ER 1x/dia; titular mensal",
+          "Indicação: AD leve-moderada; DCL e demência de Parkinson (ótima resposta)",
+          "Adversos: GI (náusea, vômito, diarreia, anorexia/perda de peso), bradicardia, síncope, cãibras, sonhos vívidos",
+          "Cautela: bradiarritmia/BAV, síncope, DPOC/asma grave, úlcera péptica ativa, baixo peso. Monitorar FC e peso"
+        ],
+        note: "Armadilha: anticolinesterásico + anticolinérgico (ex.: oxibutinina) = antagonismo — revise a lista! Efeito modesto; manter enquanto houver benefício."
+      },
+      {
+        k: "Demência",
+        t: "Memantina: moderada a grave — boa tolerância, pode combinar",
+        li: [
+          "Memantina 5 mg → 20 mg/dia (↑5 mg/semana); ajuste se ClCr baixo",
+          "Antagonista NMDA; indicação na AD moderada a grave",
+          "Bem tolerada (não-colinérgica): menos GI/bradicardia",
+          "Adversos: tontura, cefaleia, confusão/constipação",
+          "Combinação memantina + anticolinesterásico na moderada-grave",
+          "Reduzir dose na insuficiência renal"
+        ]
+      },
+      {
+        k: "Demência",
+        t: "A farmacoterapia muda conforme o subtipo",
+        li: [
+          "Alzheimer: anticolinesterásico (leve-mod) ± memantina (mod-grave); anti-amiloide selecionado",
+          "Corpos de Lewy / Parkinson: anticolinesterásico ajuda (cognição/alucinação); EVITAR antipsicótico típico",
+          "Vascular: sem fármaco específico — controlar fatores (HAS/DM/lipídios/antiagregação)",
+          "Frontotemporal: SEM benefício de anticolinesterásico; foco comportamental (ISRS para sintomas)"
+        ]
+      },
+      {
+        k: "Demência",
+        t: "Anti-amiloide: promessa real, indicação estreita, risco de ARIA",
+        li: [
+          "Anticorpos anti-amiloide IV: lecanemabe (FDA 2023), donanemabe (FDA 2024)",
+          "Indicação ESTREITA: CCL/demência LEVE por AD, com amiloide confirmado (PET/LCR)",
+          "Benefício: retardo MODESTO do declínio (semanas-meses); não revertem",
+          "ARIA: edema/micro-hemorragia; exige RM seriada; pior em ApoE4 homozigoto",
+          "Alto custo, infusão e RM seriada, critérios rígidos — acesso limitado"
+        ],
+        note: "Conferir status no Brasil/ANVISA. Detalhe de BPSD na aula própria: não-farmacológico 1º, ache o gatilho (DICE); se medicar, atípico em dose baixa e curto prazo."
+      },
+      {
+        k: "Delirium",
+        t: "A melhor \"farmacologia\" é a prevenção — e evitar precipitantes",
+        li: [
+          "Orientação/cognição: relógio, calendário, óculos/aparelho, presença familiar",
+          "Sono, mobilidade, hidratação/eliminação, correção sensorial e ambiente calmo",
+          "Evitar contenção e sondas desnecessárias (\"tethers\": sondas, cateteres, restrição ao leito)",
+          "Benzodiazepínicos precipitam e prolongam — evitar (exceto abstinência)",
+          "Opioides: titular, preferir não-opioide quando possível. Anticolinérgicos: ADT, anti-H1, oxibutinina",
+          "Polifarmácia: revisar TUDO; suspender o não essencial"
+        ],
+        note: "Pacotes multicomponentes (tipo HELP) previnem ~1/3 dos casos — sem nenhum fármaco (NICE 2023). Metade do delirium é iatrogênica."
+      },
+      {
+        k: "Delirium",
+        t: "Fármaco no delirium: exceção, para agitação grave com risco",
+        li: [
+          "Só se agitação grave com risco a si/outros ou que impede cuidado vital",
+          "Antipsicótico em dose mínima, curtíssimo prazo. Haloperidol 0,25–0,5 mg; ou atípico (quetiapina/risperidona) baixo",
+          "Reavaliar a cada dose; suspender assim que possível",
+          "Abstinência (álcool/benzo): BENZODIAZEPÍNICO é o tratamento",
+          "DCL/Parkinson: evitar antipsicótico típico (preferir quetiapina baixa). CTI: dexmedetomidina pode reduzir delirium/ventilação",
+          "Antipsicótico NÃO encurta o delirium nem previne"
+        ],
+        note: "Erros que prolongam: sedar \"de horário\", benzodiazepínico fora da abstinência, contenção física, não procurar a causa, ignorar sono/ambiente, alta sem revisar fármacos."
+      },
+      {
+        k: "Depressão",
+        t: "ISRS são a 1ª linha — começar baixo, titular, esperar resposta",
+        li: [
+          "Sertralina 25 → 50–100 (até 200) mg: boa 1ª escolha; poucas interações",
+          "Escitalopram 5 → 10 (máx 10–20) mg: atenção QT em dose alta",
+          "Citalopram ≤ 20 mg no idoso: limite por prolongamento de QT",
+          "Resposta em 2–4 semanas; efeito pleno 6–12 semanas; aguardar 4–6 semanas na dose-alvo antes de julgar",
+          "Manter ≥ 6–12 meses (mais se recorrente); retirar gradual (descontinuação)",
+          "Resposta parcial/nula: otimizar dose → trocar de classe → considerar combinação/potencialização"
+        ],
+        note: "Grave/refratária/psicótica: encaminhar; ECT é eficaz e segura no idoso. Depressão pode ser pseudodemência OU pródromo de demência — reavaliar."
+      },
+      {
+        k: "Depressão",
+        t: "O que evitar, o que vigiar e as outras opções",
+        li: [
+          "Evitar: tricíclicos (anticolinérgico, cardio, quedas — Beers); paroxetina; associações serotoninérgicas",
+          "Vigiar em todos os ISRS: hiponatremia/SIADH (checar Na, esp. 1ª semana); sangramento (↑ com AINE/anticoagulante)",
+          "Vigiar: quedas, QT (citalopram), bradicardia/insônia; risco de SUICÍDIO — reavaliar em 1–2 semanas no início",
+          "Mirtazapina 7,5/15 → 30–45 mg (noite): insônia + inapetência/perda de peso; pouco efeito sexual",
+          "Venlafaxina/duloxetina (IRSN): depressão + DOR neuropática; vigiar PA (venlafaxina)",
+          "Bupropiona 150 → 300 mg: apatia/fadiga; evitar se convulsão. Trazodona 25–50 mg noite: auxílio do SONO"
+        ]
+      },
+      {
+        k: "Take-home",
+        t: "A farmacoterapia das 3 condições em uma régua",
+        li: [
+          "Indicação → Escolha → Dose (start low, go slow) → Monitorizar → Reavaliar/DESPRESCREVER",
+          "Demência: anticolinesterásico (leve-mod) ± memantina (mod-grave); anti-amiloide é exceção; trate humor/dor",
+          "Delirium: prevenir > medicar; tratar a causa; fármaco só para agitação grave; benzo só na abstinência",
+          "Depressão: ISRS 1ª linha; perfil define 2ª; evitar ADT/paroxetina e citalopram alto (QT)",
+          "Quatro vigilâncias: QT longo, hiponatremia, quedas/sedação e interações",
+          "Reconcilie a medicação a cada transição de cuidado (internação/alta)"
+        ],
+        note: "A melhor intervenção farmacológica do idoso muitas vezes é RETIRAR um fármaco — desprescrever melhora cognição, quedas e mortalidade em estudos de polifarmácia."
+      }
+    ],
+    quiz: [
+      {
+        enun: "Alzheimer leve-moderada, FC normal. Qual a 1ª linha farmacológica?",
+        alts: [
+          "Memantina",
+          "Anticolinesterásico (ex.: donepezila)",
+          "Antipsicótico",
+          "ADT"
+        ],
+        certa: 1,
+        fb: "Anticolinesterásico é 1ª linha na AD leve-moderada (e DCL/PDD)."
+      },
+      {
+        enun: "Idoso com delirium por ITU, agitado mas sem risco grave. Conduta?",
+        alts: [
+          "Haloperidol fixo",
+          "Tratar causa + não-farmacológico; antipsicótico só se grave",
+          "Benzodiazepínico",
+          "Difenidramina"
+        ],
+        certa: 1,
+        fb: "Causa + não-farmacológico; antipsicótico só se agitação grave/risco."
+      },
+      {
+        enun: "Depressão no idoso. Qual antidepressivo EVITAR?",
+        alts: [
+          "Sertralina",
+          "Mirtazapina",
+          "Amitriptilina (ADT)",
+          "Escitalopram"
+        ],
+        certa: 2,
+        fb: "ADT: anticolinérgico, cardiotóxico, quedas (Beers)."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/tto-farmaco.pdf"
+      }
+    ]
+  },
+  {
+    id: "aga-dominios",
+    titulo: "AGA — Avaliação Funcional, Nutricional e Psicossocial",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-07",
+    ch: "35 min",
+    desc: "As três dimensões da AGA aplicadas e interpretadas: funcional (Katz/Barthel, Lawton/Pfeffer, TUG), nutricional (MAN, IMC, panturrilha) e psicossocial (EGD-15, APGAR, Zarit). Ao final, você escolhe o cenário — ambulatorial × hospitalar — e propõe a AGA breve no hospital de transição.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso-gancho",
+        t: "\"Doutor, é só fraqueza da idade\" — e o que a consulta tradicional não vê?",
+        li: [
+          "Sra. M., 82 anos, multimorbidade (HAS, DM2, artrose): veio \"porque está mais devagar e cansada\".",
+          "PA, glicemia e exames: \"dentro do esperado\".",
+          "Deixou de cozinhar e de pegar ônibus (perda de AIVD).",
+          "Perdeu 4 kg em 3 meses (risco nutricional).",
+          "Não sente mais prazer nas coisas (humor).",
+          "Mora sozinha; filha distante (suporte frágil)."
+        ],
+        note: "Pergunta-gancho: quantos diagnósticos importantes ficaram fora da consulta \"normal\"?"
+      },
+      {
+        k: "Conceito-chave",
+        t: "Funcionalidade é o desfecho que importa — não a lista de doenças",
+        li: [
+          "Senescência → Senilidade → Fragilidade → Incapacidade.",
+          "Robusto: envelhecimento fisiológico; reserva preservada.",
+          "Em risco: reserva reduzida — janela de prevenção.",
+          "Frágil: declínio funcional estabelecido; alta vulnerabilidade.",
+          "A AGA mede a funcionalidade nos sistemas funcionais principais: cognição, humor, mobilidade e comunicação."
+        ],
+        note: "Hoje: mobilidade (funcional) + estado nutricional + humor e suporte social."
+      },
+      {
+        k: "Quem precisa",
+        t: "Rastreie a vulnerabilidade primeiro; aprofunde com a AGA quando houver risco",
+        li: [
+          "Red flags: perda funcional recente (parou de fazer o que fazia); emagrecimento não intencional.",
+          "Red flags: polifarmácia (≥5 medicamentos); quedas, internações ou delirium; isolamento social / morar só.",
+          "Rastreio rápido — IVCF-20: instrumento brasileiro, 20 perguntas, aplicável por qualquer profissional.",
+          "O IVCF-20 identifica o idoso em risco de fragilização e o idoso frágil.",
+          "A AGA é um processo em três passos: rastrear → confirmar → intervir.",
+          "Intervir = plano de cuidados multiprofissional com metas funcionais."
+        ]
+      },
+      {
+        k: "Funcional",
+        t: "Funcionalidade é o \"sinal vital\" do idoso — e as AIVD caem primeiro",
+        li: [
+          "AIVD (vida em comunidade, perdem-se PRIMEIRO): telefone, compras, preparar refeições, tarefas domésticas.",
+          "AIVD (continuação): lavar roupa, transporte, medicamentos, finanças.",
+          "ABVD (autocuidado, perdem-se DEPOIS — dependência maior): banho, vestir-se, uso do banheiro.",
+          "ABVD (continuação): transferência, continência, alimentar-se.",
+          "Regra de ouro: pergunte sempre \"o que ele deixou de fazer?\" — a perda de AIVD é o alarme mais precoce."
+        ]
+      },
+      {
+        k: "Funcional · ABVD",
+        t: "Katz dá o retrato rápido; Barthel gradua a intensidade",
+        li: [
+          "Índice de Katz: 6 atividades, independente (0) × dependente (1). Escore 0 = totalmente independente; 6 = totalmente dependente.",
+          "Katz é rápido à beira-leito e ótimo para acompanhar a evolução no internamento.",
+          "Avalie o DESEMPENHO real (o que faz), não a habilidade declarada.",
+          "Índice de Barthel (0–100): 100 independente; 60–95 dependência leve; 40–55 moderada.",
+          "Barthel (continuação): 20–35 dependência grave; <20 dependência total."
+        ],
+        note: "Fonte: instrumento AGA-SBGG; Katz 1963; Mahoney & Barthel 1965."
+      },
+      {
+        k: "Funcional · AIVD",
+        t: "Lawton mede o que a pessoa faz; Pfeffer ouve o informante",
+        li: [
+          "Escala de Lawton-Brody: 9 atividades instrumentais, cada item 1–3 pontos (escore 9–27).",
+          "Lawton: 25–27 independente; 10–24 parcialmente dependente; 9 totalmente dependente.",
+          "Questionário de Pfeffer: respondido por familiar/cuidador; sensível a declínio funcional ligado a demência.",
+          "Pfeffer: <6 normal; ≥6 comprometido.",
+          "Lawton e Pfeffer se complementam — desempenho observado + olhar de quem convive."
+        ],
+        note: "Fonte: instrumento AGA-SBGG; Lawton & Brody 1969; Pfeffer 1982."
+      },
+      {
+        k: "Funcional · Quedas",
+        t: "Três testes objetivos dizem quem tem maior risco de cair",
+        li: [
+          "TUG (Timed Up and Go): levantar, andar 3 m, voltar e sentar. ≥12–20 s sinaliza maior risco de quedas.",
+          "SPPB: equilíbrio + velocidade da marcha + sentar-levantar 5×. Escore baixo = pior desempenho físico.",
+          "Tinetti (POMA): equilíbrio e marcha; quanto menor o escore, maior o risco de queda.",
+          "Queda não é \"normal da idade\": toda queda no último ano é red flag — investigue causas, medicamentos e ambiente.",
+          "A queda prediz nova queda, fratura e perda de independência."
+        ]
+      },
+      {
+        k: "Nutricional",
+        t: "Rastreie nutrição com a MAN, apoiada por IMC e circunferência da panturrilha",
+        li: [
+          "Mini Avaliação Nutricional (MAN/MNA): triagem + avaliação global; instrumento mais usado no idoso.",
+          "MAN (versão completa): ≥24 estado nutricional normal; 17–23,5 risco de desnutrição; <17 desnutrido.",
+          "Perda de peso não intencional ≥5% em 3–6 meses é sinal de alarme.",
+          "IMC no idoso: faixa de corte mais alta que no adulto.",
+          "Circunferência da panturrilha <31 cm sugere baixa massa muscular (sarcopenia)."
+        ],
+        note: "Fonte: instrumento AGA-SBGG; Guigoz/Vellas (MNA)."
+      },
+      {
+        k: "Nutricional",
+        t: "Desnutrição não é \"magreza\": separe-a da sarcopenia",
+        li: [
+          "Desnutrição: déficit de energia/proteína e micronutrientes; pode ocorrer com IMC normal ou alto.",
+          "Desnutrição — rastreio: MAN, perda de peso, ingesta. Conduta: aporte calórico-proteico e tratar causas (boca, deglutição, depressão).",
+          "Sarcopenia: perda de massa E força/função muscular; panturrilha baixa, força de preensão ↓, marcha lenta.",
+          "Sarcopenia — rastreio: SARC-F, dinamometria, velocidade da marcha. Conduta: exercício resistido + proteína; é potencialmente reversível.",
+          "Coexistem com frequência (desnutrição agrava sarcopenia) — avalie as duas."
+        ]
+      },
+      {
+        k: "Psicossocial · Humor",
+        t: "Depressão no idoso se disfarça — rastreie com a EGD/Yesavage-15",
+        li: [
+          "Escala de Depressão Geriátrica (15 itens): ≤5 normal; ≥7 provável depressão; ≥11 moderada a grave.",
+          "Versão validada e prática; existe ainda a EGD-5 para triagem ultrarrápida.",
+          "Apresentação atípica — queixas somáticas (dor, fadiga, insônia).",
+          "\"Pseudodemência\": parece declínio cognitivo.",
+          "Anorexia e perda de peso; anedonia e perda de iniciativa, sem dizer \"triste\"."
+        ],
+        note: "Fonte: instrumento AGA-SBGG; Yesavage 1982; validação BR Almeida & Almeida 1999."
+      },
+      {
+        k: "Psicossocial · Rede",
+        t: "O idoso é tão forte quanto sua rede: família, cuidador e sobrecarga",
+        li: [
+          "APGAR da Família: 5 itens — Adaptação, Participação, Crescimento, Afeto, Resolução.",
+          "APGAR: >6 boa funcionalidade familiar; 4–6 disfunção moderada; <3 disfunção acentuada.",
+          "O cuidador importa: vínculo (formal/informal), conflitos e capacidade. Rastrear sinais de abuso/negligência.",
+          "Zarit: mede a sobrecarga do cuidador. Sobrecarga alta → risco para o idoso e para o cuidador; gatilho para rede formal.",
+          "Humor e suporte se influenciam: rede frágil piora o humor; humor rebaixado isola ainda mais."
+        ],
+        note: "Fonte: instrumento AGA-SBGG; APGAR de Smilkstein 1978; Zarit 1980."
+      },
+      {
+        k: "Síntese",
+        t: "As três dimensões somam no diagnóstico funcional global — e viram plano",
+        li: [
+          "Sra. M.: perda de AIVD + TUG 16 s + 1 queda; −4 kg com MAN em faixa de risco; anedonia com EGD elevada; mora só e APGAR baixo.",
+          "Diagnóstico funcional global: idosa em risco de fragilização — declínio instrumental, risco nutricional, provável depressão, suporte frágil.",
+          "Plano multiprofissional: médico (fármacos, depressão, metas), fisioterapia, nutrição, serviço social, fono/TO.",
+          "Evidência: AGA hospitalar ↑ a chance de o idoso estar vivo e no próprio domicílio (RR ~1,06; IC95% 1,01–1,10).",
+          "Pouca ou nenhuma diferença na mortalidade (RR 1,00).",
+          "Cenário: a AGA completa é ambulatorial; no agudo registre a funcionalidade BASAL e reavalie após estabilizar.",
+          "Hospital de transição = janela ideal para a AGA breve: estabilizado + tempo + meta de alta; Barthel/Lawton medem o ganho.",
+          "Take-home: o idoso se mede pelo que FAZ (funcional), pelo que COME (nutricional) e por COM QUEM CONTA (psicossocial)."
+        ],
+        note: "Fonte: Ellis G, et al. Cochrane Database Syst Rev. 2017;CD006211 (29 ensaios; 13.766 participantes)."
+      }
+    ],
+    quiz: [
+      {
+        enun: "Sra. M.: Katz 0 (independente nas básicas), Lawton 16 (parcial) — parou de cozinhar e usar ônibus —, TUG 16 s e 1 queda no último ano. Qual a melhor leitura?",
+        alts: [
+          "\"É da idade\": orientar repouso e reavaliar em 1 ano",
+          "Declínio instrumental + risco de queda: investigar causas e iniciar plano (reabilitação, revisão de fármacos, ambiente)",
+          "Solicitar tomografia de crânio antes de qualquer conduta"
+        ],
+        certa: 1,
+        fb: "A conduta muda antes de qualquer exame."
+      },
+      {
+        enun: "Mulher, 78a, multimorbidade. Diz que \"toma banho sozinha\", mas a filha relata dar banho há 3 meses. Qual a conduta correta na AGA?",
+        alts: [
+          "Registrar independente, pois ela afirma",
+          "Registrar dependente: vale o desempenho real",
+          "Ignorar a queixa do familiar",
+          "Repetir só daqui a 1 ano"
+        ],
+        certa: 1,
+        fb: "Katz/Barthel medem desempenho real; \"habilidade\" declarada engana. As demais alternativas ignoram o relato e a perda funcional."
+      },
+      {
+        enun: "Homem, 80a, perdeu 5 kg em 3 meses e parou de cozinhar. Qual o melhor instrumento de rastreio nutricional?",
+        alts: [
+          "Escala de Barthel",
+          "MEEM",
+          "Mini Avaliação Nutricional (MAN)",
+          "Índice de Katz"
+        ],
+        certa: 2,
+        fb: "A MAN é o rastreio nutricional. Barthel/Katz = funcional; MEEM = cognição."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/aga-dominios.pdf"
+      },
+      {
+        nome: "Resumo de 1 página (PDF)",
+        arquivo: "docs/aulas/resumo-aga.pdf"
+      }
+    ]
+  },
+  {
+    id: "aga-completa",
+    titulo: "Avaliação Geriátrica Ampla (AGA) — a avaliação multidimensional completa",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-07",
+    ch: "35 min",
+    desc: "A AGA completa organizada em quatro pilares: FUNÇÃO, MENTE, CORPO e REDE. Ao final, você conduz uma AGA completa, integra os achados no diagnóstico funcional global e escolhe o cenário de aplicação.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso-gancho",
+        t: "\"Doutor, é só fraqueza da idade\" — quantos diagnósticos a consulta tradicional perde?",
+        li: [
+          "Sra. M., 82 anos, multimorbidade (HAS, DM2, artrose): veio \"porque está mais devagar e cansada\".",
+          "PA, glicemia e exames: \"dentro do esperado\".",
+          "FUNÇÃO — parou de cozinhar e de pegar ônibus.",
+          "MENTE — esquecimentos e humor rebaixado.",
+          "CORPO — perdeu 4 kg; não escuta bem.",
+          "REDE — mora só; filha distante."
+        ],
+        note: "A mesma paciente atravessa os quatro pilares da AGA nesta aula."
+      },
+      {
+        k: "Conceito-chave",
+        t: "Funcionalidade é o desfecho que importa — a AGA mede a reserva e a fragilidade",
+        li: [
+          "Senescência → Senilidade → Fragilidade → Incapacidade.",
+          "Robusto: envelhecimento fisiológico; reserva preservada.",
+          "Em risco: reserva reduzida — janela de prevenção.",
+          "Frágil: declínio funcional estabelecido; alta vulnerabilidade.",
+          "A AGA avalia os sistemas funcionais principais — os 4 pilares: FUNÇÃO, MENTE, CORPO e REDE."
+        ],
+        note: "CORPO é o pilar mais largo — concentra os domínios \"silenciosos\" que mais escapam."
+      },
+      {
+        k: "Método",
+        t: "Como a AGA funciona: rastrear → confirmar → intervir",
+        li: [
+          "1. Rastrear: gatilhos + IVCF-20 (20 itens, aplicável por qualquer profissional).",
+          "2. Confirmar: instrumento dirigido no domínio que positivou.",
+          "3. Intervir: plano multiprofissional com metas funcionais.",
+          "Red flags que indicam a AGA: perda funcional recente, emagrecimento, polifarmácia (≥5).",
+          "Também indicam AGA: quedas, internação ou delirium; isolamento ou morar só; queixa de memória."
+        ],
+        note: "IVCF-20 — rastreio brasileiro de fragilidade, validado."
+      },
+      {
+        k: "Função · AVD",
+        t: "ABVD com Katz/Barthel; AIVD com Lawton/Pfeffer",
+        li: [
+          "Índice de Katz: 6 atividades, independente × dependente (0–6). 0 = totalmente independente; 1–5 parcial; 6 = totalmente dependente.",
+          "Barthel (0–100): gradua a intensidade — 100 independente; <20 dependência total. Ideal para medir evolução na reabilitação.",
+          "Lawton-Brody: 9 atividades instrumentais, cada item 1–3 (escore 9–27). 25–27 independente; 10–24 parcial; 9 totalmente dependente.",
+          "Pfeffer: respondido pelo informante; sensível ao declínio ligado à demência (≥6 = comprometido).",
+          "Avalie o DESEMPENHO real (o que faz), não a habilidade declarada. Perda de ABVD = dependência maior, vem depois das AIVD.",
+          "Pergunte \"o que ele deixou de fazer?\" — telefone, compras, finanças, transporte ou medicação é o alarme mais precoce."
+        ],
+        note: "Fonte: instrumento AGA-SBGG; Katz 1963; Mahoney & Barthel 1965; Lawton & Brody 1969; Pfeffer 1982."
+      },
+      {
+        k: "Função · Quedas",
+        t: "Mobilidade e quedas: testes objetivos dizem quem vai cair",
+        li: [
+          "TUG (instrumento de escolha): levantar, andar 3 m, voltar e sentar. Tempos altos (~≥12–20 s) = maior risco.",
+          "SPPB: equilíbrio + marcha + sentar-levantar 5×; escore de desempenho físico.",
+          "Tinetti (POMA): equilíbrio e marcha; quanto menor o escore, maior o risco.",
+          "Queda não é \"normal da idade\": toda queda no último ano é red flag — investigue causas, fármacos e ambiente.",
+          "A queda prediz nova queda, fratura e perda de independência."
+        ]
+      },
+      {
+        k: "Mente",
+        t: "Cognição (MEEM) e humor (GDS-15) sempre andam juntos",
+        li: [
+          "MEEM: rastreio; interpretar pela escolaridade — não há corte único.",
+          "Alternativas: MoCA (mais sensível ao comprometimento leve), fluência verbal, desenho do relógio, lista de palavras (CERAD).",
+          "Escala de Depressão Geriátrica (15 itens): ≤5 normal; ≥7 provável depressão; ≥11 moderada a grave.",
+          "Alternativas: EGD-5 (triagem ultrarrápida), PHQ-9, Cornell (na demência).",
+          "Depressão pode simular demência (pseudodemência) — rastreie o humor junto com a cognição.",
+          "Apresentação atípica: queixas somáticas, insônia, anorexia e anedonia, sem \"tristeza\" explícita."
+        ],
+        note: "Fonte: instrumento AGA-SBGG; Folstein 1975; Brucki et al. 2003 (normas BR); Yesavage 1982; validação BR Almeida & Almeida 1999."
+      },
+      {
+        k: "Corpo · Nutrição",
+        t: "Nutrição: rastreie com a MAN, apoiada por peso e panturrilha",
+        li: [
+          "Mini Avaliação Nutricional (MAN): triagem + avaliação global. ≥24 nutrido; 17–23,5 risco; <17 desnutrido.",
+          "Apoio objetivo: perda ≥5% do peso em 3–6 meses; IMC com corte mais alto no idoso.",
+          "Circunferência da panturrilha <31 cm sugere baixa massa muscular.",
+          "Desnutrição ≠ magreza — pode haver IMC normal ou alto.",
+          "Diferencie de sarcopenia (força/massa ↓; reversível com exercício + proteína)."
+        ],
+        note: "Fonte: instrumento AGA-SBGG; Guigoz/Vellas (MNA)."
+      },
+      {
+        k: "Corpo · Silenciosos",
+        t: "Sentidos, continência, sono e boca: ninguém conta — pergunte ativamente",
+        li: [
+          "Visão: tabela de Snellen; corrigir refração e catarata melhora função, humor e quedas.",
+          "Audição: teste do sussurro; a perda associa-se a declínio cognitivo, depressão e isolamento.",
+          "Déficit sensorial não corrigido simula demência no MEEM — cheque óculos e aparelho antes de rotular cognição.",
+          "Continência: pergunte sobre perdas urinárias/fecais; investigue causas reversíveis e funcionais.",
+          "Sono: insônia, sonolência diurna, ronco/apneia, pernas inquietas. Antes do hipnótico: higiene do sono e revisão de fármacos.",
+          "Saúde bucal: dentes/próteses, mastigação, xerostomia, lesões. Boca ruim → desnutrição e infecção."
+        ]
+      },
+      {
+        k: "Corpo · Fármacos",
+        t: "Polifarmácia: revise com Beers/STOPP-START e cace a cascata",
+        li: [
+          "Polifarmácia = ≥5 medicamentos de uso contínuo.",
+          "Beers: evitar no idoso. STOPP: suspender inapropriados. START: iniciar o que falta.",
+          "Atenção à carga anticolinérgica e sedativa; risco de hipotensão, quedas, ↓Na, ↑QTc.",
+          "Cascata de prescrição: efeito adverso tratado como nova doença. Pergunte sempre \"este sintoma é da doença ou do remédio?\"."
+        ],
+        note: "Fonte: AGS Beers Criteria 2023; O'Mahony et al. STOPP/START."
+      },
+      {
+        k: "Rede",
+        t: "O idoso é tão forte quanto sua rede: família, cuidador e sobrecarga",
+        li: [
+          "APGAR da Família: 5 itens (Adaptação, Participação, Crescimento, Afeto, Resolução).",
+          "APGAR — interpretação: >6 boa; 4–6 disfunção moderada; <3 disfunção acentuada.",
+          "O cuidador: vínculo (formal/informal), conflitos, capacidade. Rastrear abuso/negligência.",
+          "Zarit: mede a sobrecarga do cuidador. Alta → risco para idoso e cuidador; aciona rede formal de apoio."
+        ],
+        note: "Fonte: instrumento AGA-SBGG; APGAR de Smilkstein 1978; Zarit 1980."
+      },
+      {
+        k: "Cenário",
+        t: "A AGA completa é, por excelência, ambulatorial — no hospital agudo tem limites",
+        li: [
+          "Ambulatório: paciente estável, desempenho \"real\" mensurável; tempo e múltiplas consultas; longitudinalidade; foco em prevenção.",
+          "Hospital agudo: doença aguda e delirium distorcem o desempenho; no acamado as escalas subestimam a função basal.",
+          "No agudo há tempo curto e risco de \"rotular\" dependência transitória — registre a funcionalidade BASAL e reavalie após estabilizar.",
+          "Hospital de transição é a janela ideal: paciente estabilizado + tempo de permanência + meta de alta.",
+          "Ali cabe a AGA breve: direciona a reabilitação, planeja alta segura e é o momento de ouro da desprescrição.",
+          "Barthel/Lawton na entrada e na saída mostram o ganho funcional."
+        ]
+      },
+      {
+        k: "Síntese",
+        t: "Do achado à conduta — e o take-home dos quatro pilares",
+        li: [
+          "Sra. M.: AIVD↓ + TUG 16 s + 1 queda; esquecimentos e anedonia; −4 kg e hipoacusia; mora só, filha distante.",
+          "Diagnóstico funcional global: idosa EM RISCO DE FRAGILIZAÇÃO — declínio instrumental, risco de quedas, risco nutricional.",
+          "Ainda no diagnóstico global: provável depressão e suporte frágil.",
+          "A Escala Clínica de Fragilidade (1 muito ativo → 9 doente terminal) orienta metas e intensidade.",
+          "A AGA só vale se vira plano multiprofissional: médico, fisioterapia, nutrição, serviço social, fono/TO.",
+          "Evidência: AGA hospitalar ↑ a chance de o idoso estar vivo e no próprio domicílio (RR ~1,06; IC95% 1,01–1,10).",
+          "Pouca ou nenhuma diferença na mortalidade (RR 1,00) — o desfecho que importa é funcionalidade e independência.",
+          "Take-home: avalie sempre os quatro pilares — o que escapa quase sempre está no CORPO (sentidos, boca, sono, fármacos)."
+        ],
+        note: "Fonte: Ellis G, et al. Cochrane Database Syst Rev. 2017;CD006211 (29 ensaios; 13.766 participantes)."
+      }
+    ],
+    quiz: [
+      {
+        enun: "Idosa diz \"tomo banho sozinha\", mas a filha dá banho há 3 meses. Como registrar na AGA?",
+        alts: [
+          "Independente",
+          "Dependente (desempenho real)",
+          "Ignorar a filha",
+          "Reavaliar em 1 ano"
+        ],
+        certa: 1,
+        fb: "Mede-se desempenho real; \"habilidade\" declarada engana."
+      },
+      {
+        enun: "Paciente com MEEM \"baixo\", porém 2 anos de escolaridade. Conduta?",
+        alts: [
+          "Já é demência",
+          "Interpretar o corte pela escolaridade",
+          "Iniciar anticolinesterásico",
+          "Ignorar"
+        ],
+        certa: 1,
+        fb: "MEEM não tem corte único: interpretar pela escolaridade."
+      },
+      {
+        enun: "Idoso sem \"tristeza\", com dor difusa, insônia e anorexia. Qual o rastreio de humor?",
+        alts: [
+          "Barthel",
+          "MAN",
+          "EGD/Yesavage-15",
+          "Katz"
+        ],
+        certa: 2,
+        fb: "Depressão atípica: somatização, insônia, anorexia, anedonia."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/aga-completa.pdf"
+      },
+      {
+        nome: "Resumo de 1 página (PDF)",
+        arquivo: "docs/aulas/resumo-aga-completa.pdf"
+      }
+    ]
+  },
+  {
+    id: "neuropsico",
+    titulo: "Avaliação Neuropsicológica",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-07",
+    ch: "35 min",
+    desc: "Da queixa de memória ao diagnóstico sindrômico na pessoa idosa. Quando rastrear, como aplicar e interpretar MEEM, MoCA, relógio, fluência e Mini-Cog, e como diferenciar normal, CCL e demência dos 3 D.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso fio-condutor",
+        t: "Sr. J., 74 anos: \"Doutor, ando esquecendo nomes\"",
+        li: [
+          "Aposentado, 4 anos de escolaridade; esquece nomes e compromissos há ~1 ano",
+          "Filha: \"está mais quieto e desanimado\"",
+          "Mudou em relação ao que ele era? (declínio)",
+          "Atrapalha a vida diária? (funcionalidade)",
+          "Há humor rebaixado junto? (depressão)",
+          "A escolaridade pode enganar o teste?"
+        ],
+        note: "É Alzheimer, é da idade ou é depressão? O Sr. J. atravessa toda a aula — a cada etapa você decide."
+      },
+      {
+        k: "Conceito-chave",
+        t: "Rastreio cognitivo ≠ avaliação neuropsicológica formal",
+        li: [
+          "Rastreio: breve (minutos), à beira-leito, feito pelo médico/equipe",
+          "Instrumentos de rastreio: MEEM, MoCA, relógio, Mini-Cog",
+          "Rastreio responde: há comprometimento? precisa aprofundar?",
+          "Avaliação formal: extensa (horas), testes padronizados, feita pelo neuropsicólogo",
+          "Avaliação formal quantifica cada domínio com normas e responde: qual o perfil cognitivo?"
+        ],
+        note: "São complementares: o rastreio levanta a suspeita; a avaliação formal caracteriza o perfil."
+      },
+      {
+        k: "Diferenciais",
+        t: "O espectro: normal → DCS → CCL → demência",
+        li: [
+          "Normal: sem queixa, sem declínio objetivo; AVD instrumentais preservadas",
+          "DCS: queixa subjetiva, testes normais",
+          "CCL: declínio objetivo, testes alterados (leve), AVD instrumentais preservadas",
+          "Demência: declínio + perda funcional progressiva da independência",
+          "O eixo decisivo é a funcionalidade, não só o escore do teste"
+        ],
+        note: "A pergunta que separa CCL de demência: a alteração cognitiva já compromete a independência nas AVD? Se NÃO → CCL. Se SIM → demência (TNC maior, DSM-5)."
+      },
+      {
+        k: "Diferenciais",
+        t: "Os 3 D: antes de dizer demência, exclua delirium e depressão",
+        li: [
+          "Delirium: início AGUDO, curso flutuante, atenção prejudicada, nível de consciência altera",
+          "Delirium: causa orgânica (infecção, fármaco, metabólico); emergência, reversível se tratado",
+          "Depressão: humor rebaixado, anedonia, \"não sei / não tento\"; memória melhora com pistas; tratável",
+          "Demência: início INSIDIOSO, progressivo; atenção/consciência preservadas no início",
+          "Demência: esquece e não recupera com pistas; crônica e progressiva"
+        ],
+        note: "Coexistem! Delirium pode sobrepor demência; depressão e demência andam juntas. Reavalie após tratar o reversível."
+      },
+      {
+        k: "Diferenciais",
+        t: "Pseudodemência depressiva: a depressão que se veste de demência",
+        li: [
+          "Depressão: início mais definido, piora rápida; queixa exagerada (\"não consigo nada\")",
+          "Depressão: respostas \"não sei\", baixo esforço; memória melhora com pistas/reconhecimento",
+          "Depressão: humor rebaixado precede o déficit",
+          "Demência: início insidioso, progressão lenta; queixa minimizada (anosognosia)",
+          "Demência: tenta responder, confabula/erra; pistas NÃO recuperam a memória"
+        ],
+        note: "Na dúvida: trate a depressão e reavalie a cognição. Depressão e demência também podem coexistir."
+      },
+      {
+        k: "Domínios",
+        t: "A cognição tem 6 domínios (DSM-5) — avalie todos, não só memória",
+        li: [
+          "Atenção complexa: foco, atenção dividida, velocidade",
+          "Função executiva: planejar, inibir, flexibilidade",
+          "Aprendizado e memória: episódica, operacional, semântica",
+          "Linguagem: nomeação, fluência, compreensão",
+          "Perceptomotor: visuoespacial, praxia, construção",
+          "Cognição social: reconhecer emoções, comportamento"
+        ],
+        note: "A episódica é a 1ª a cair no Alzheimer. Padrão executivo/atenção predominante sugere vascular ou frontotemporal."
+      },
+      {
+        k: "Rastreio",
+        t: "MEEM: o mais usado — mas SEMPRE ajustado à escolaridade",
+        li: [
+          "0–30 pontos: orientação, memória, atenção, linguagem, praxia",
+          "NÃO há corte único: mais anos de escola, corte mais alto; menos anos, corte mais baixo",
+          "Limitação: pouco sensível ao CCL e ao déficit executivo/visuoespacial",
+          "Sofre forte efeito de escolaridade e idade",
+          "Use os cortes ajustados (Brucki et al., 2003) e a trajetória"
+        ],
+        note: "Cravar demência pelo número, ignorando a escolaridade, é o erro nº 1. Fonte: Folstein 1975; normas brasileiras Brucki et al., Arq Neuropsiquiatr 2003."
+      },
+      {
+        k: "Rastreio",
+        t: "MoCA: mais sensível ao CCL e ao comprometimento executivo",
+        li: [
+          "0–30 pontos; avalia melhor executivo, atenção e visuoespacial",
+          "≥ 26 frequentemente normal; < 26 sugere comprometimento",
+          "Somar +1 ponto se ≤ 12 anos de estudo",
+          "Bom para detectar CCL e perfis disexecutivos; útil em alta escolaridade (efeito teto do MEEM)",
+          "Também sofre escolaridade: conferir normas/validação brasileira antes de cravar corte"
+        ],
+        note: "Fonte: Nasreddine et al. 2005; conferir validação brasileira (cortes locais)."
+      },
+      {
+        k: "Rastreio",
+        t: "Testes rápidos e o informante",
+        li: [
+          "Desenho do relógio: planejamento + visuoespacial; rápido e sensível, alterado cedo em várias demências",
+          "Fluência verbal: animais/min (semântica) ou FAS (fonêmica); baixa = executivo/linguagem",
+          "Mini-Cog: evocação de 3 palavras + relógio; triagem ultrarrápida na primária",
+          "IQCODE/história colateral: compara o desempenho de HOJE com o de 10 anos atrás",
+          "IQCODE é pouco afetado pela escolaridade do paciente e detecta declínio mesmo com teste \"no corte\"",
+          "Perguntas que valem ouro: repete perguntas? esquece remédios, panela no fogo? parou de fazer algo que fazia bem?"
+        ],
+        note: "Combine, não dependa de um só. Um teste rápido alterado indica aprofundar — não fecha diagnóstico sozinho."
+      },
+      {
+        k: "Armadilhas",
+        t: "O teste mente quando você esquece o contexto do paciente",
+        li: [
+          "Escolaridade: baixa derruba o escore; alta mascara déficit (efeito teto)",
+          "Sensorial: visão/audição ruins simulam déficit — corrija antes",
+          "Idioma/cultura: itens enviesados; analfabetismo afeta leitura/escrita",
+          "Estado momentâneo: ansiedade, dor, delirium, fármacos, sono ruim"
+        ],
+        note: "Regra de ouro: o escore é um dado, não o diagnóstico. Interprete com escolaridade, sentidos, humor, contexto — e a trajetória contada pelo informante."
+      },
+      {
+        k: "Diagnóstico",
+        t: "Do rastreio ao diagnóstico",
+        li: [
+          "1. Síndrome: normal × CCL × demência (DSM-5/NIA-AA)",
+          "2. Perfil cognitivo: qual domínio domina",
+          "3. Excluir causas secundárias: TSH, B12, Na, função renal/hepática, sífilis/HIV se indicado",
+          "4. Neuroimagem (TC/RM) para vascular, atrofia, lesões",
+          "5. Etiologia (Alzheimer, vascular, FTD, Lewy...)",
+          "Red flags para investigar mais: início rápido (<6–12 meses), idade < 65 anos, sinais focais/marcha/quedas, flutuação, alucinações"
+        ],
+        note: "O rastreio levanta a hipótese; o diagnóstico é clínico e sindrômico."
+      },
+      {
+        k: "Take-home",
+        t: "A régua do diagnóstico cognitivo",
+        li: [
+          "Antes de dizer DEMÊNCIA: exclua os 3 D (Delirium, Depressão, Demência)",
+          "E os 3 que enganam o teste: Escolaridade, Sentidos, Ânimo",
+          "Funcionalidade decide: o que separa normal × CCL × demência é o impacto nas AVD, não o escore",
+          "MEEM/MoCA se interpretam por escolaridade; baixa engana. Use o informante",
+          "Rastreio ≠ diagnóstico: o teste levanta hipótese; o diagnóstico é clínico, sindrômico e exclui o reversível"
+        ]
+      }
+    ],
+    quiz: [
+      {
+        enun: "Homem, 75 anos, 3 anos de escola, MEEM 22. Conduta?",
+        alts: [
+          "Demência já definida",
+          "Interpretar pelo corte de escolaridade",
+          "Iniciar donepezila",
+          "Ignorar"
+        ],
+        certa: 1,
+        fb: "MEEM não tem corte único; 22 com 3 anos de escola pode ser normal."
+      },
+      {
+        enun: "Início agudo, atenção flutuante, após infecção urinária. Diagnóstico mais provável?",
+        alts: [
+          "Alzheimer",
+          "Delirium",
+          "Depressão",
+          "CCL"
+        ],
+        certa: 1,
+        fb: "Início agudo + atenção flutuante + causa orgânica = delirium."
+      },
+      {
+        enun: "Memória ruim que MELHORA com pistas, humor rebaixado, queixa exagerada. Pensar em?",
+        alts: [
+          "Demência avançada",
+          "Pseudodemência depressiva",
+          "Delirium",
+          "Afasia"
+        ],
+        certa: 1,
+        fb: "Melhora com pistas + humor + queixa exagerada = pseudodemência."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/neuropsico.pdf"
+      },
+      {
+        nome: "Resumo de 1 página (PDF)",
+        arquivo: "docs/aulas/resumo-avaliacao-neuropsicologica.pdf"
+      }
+    ]
+  },
+  {
+    id: "bpsd",
+    titulo: "BPSD — sintomas neuropsiquiátricos nas demências: achar o gatilho, DICE e segurança",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-07",
+    ch: "35 min",
+    desc: "Comportamento é comunicação — antes do remédio, ache o gatilho. Manejo dos sintomas psicológicos e comportamentais da demência (SPCD/BPSD) com método: avaliação pelo NPI, busca ativa da causa, ciclo DICE não-farmacológico e uso seguro de fármaco.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso-gancho",
+        t: "Agitada e agressiva ao entardecer — \"é da doença, doutor?\"",
+        li: [
+          "Sra. R., 80 anos, Alzheimer moderado: toda tarde grita, quer \"ir embora\", empurra a filha.",
+          "A filha, exausta, pede \"um calmante\".",
+          "Antes de prescrever, pergunte: o que exatamente acontece? (descrever)",
+          "Tem dor, fome, bexiga cheia, infecção?",
+          "Que horas / o que dispara? (entardecer)",
+          "Há risco para ela ou para a filha?"
+        ],
+        note: "\"Calmante\" não é a 1ª resposta — o gatilho é."
+      },
+      {
+        k: "Por que importam",
+        t: "BPSD: quase universais — e o maior motor de sofrimento e institucionalização",
+        li: [
+          "~90% dos pacientes têm BPSD ao longo da doença.",
+          "↑ sobrecarga do cuidador e burnout.",
+          "↑ institucionalização e custo de cuidado.",
+          "Os BPSD pioram cognição e funcionalidade, precipitam quedas, hospitalização e contenção, e adoecem o cuidador.",
+          "Manejá-los é cuidar do paciente E de quem cuida."
+        ],
+        note: "BPSD = Behavioral and Psychological Symptoms of Dementia (SPCD em português)."
+      },
+      {
+        k: "Domínios",
+        t: "Os BPSD são muitos — agrupe para reconhecer e medir (NPI)",
+        li: [
+          "Agitação/agressão: inquietude, gritos, resistência, hetero/auto.",
+          "Psicose: delírios (roubo, infidelidade), alucinações.",
+          "Depressão/ansiedade: tristeza, choro, medo, \"grudado\".",
+          "Apatia: perda de iniciativa e interesse (a mais comum).",
+          "Sono / sundowning: inversão dia-noite, piora ao entardecer.",
+          "Perambulação/desinibição: vagar, sair, condutas sociais/sexuais."
+        ],
+        note: "Instrumento de escolha: NPI (Inventário Neuropsiquiátrico) — também mede o impacto no cuidador."
+      },
+      {
+        k: "Avaliar",
+        t: "Caracterize o sintoma antes de agir — 4 perguntas",
+        li: [
+          "O QUÊ / quanto: sintoma exato, frequência e gravidade (NPI).",
+          "QUANDO / ONDE: horário, local, quem está presente (padrão).",
+          "GATILHO: o que precede? (dor, demanda, ruído, troca).",
+          "RISCO: perigo para o paciente/cuidador → prioridade.",
+          "Use o cuidador como \"sensor\": um diário de comportamento (hora, gatilho, o que ajudou) vale ouro."
+        ]
+      },
+      {
+        k: "Achar a causa",
+        t: "\"Comportamento é comunicação\": procure a causa antes do rótulo",
+        li: [
+          "Dor: a causa nº 1 esquecida — trate empiricamente se houver suspeita.",
+          "Delirium/doença: infecção (ITU, pneumonia), metabólico — exclua!",
+          "Fármacos: anticolinérgicos, recém-introduzidos, abstinência.",
+          "Desconforto: fome, sede, constipação, bexiga cheia, frio/calor.",
+          "Ambiente: ruído, excesso/falta de estímulo, mudanças, escuro.",
+          "Comunicação/demanda: tarefa difícil, abordagem apressada, não entender."
+        ],
+        note: "Boa parte dos BPSD \"some\" quando a dor, a infecção, a constipação ou o fármaco-gatilho são tratados."
+      },
+      {
+        k: "DICE",
+        t: "Método DICE: um ciclo para manejar BPSD com o cuidador",
+        li: [
+          "D — Describe: descrever o comportamento (o quê, quando, quem, contexto, impacto).",
+          "I — Investigate: investigar causas — dor, doença, fármacos, ambiente, demanda, cuidador.",
+          "C — Create: criar o plano (não-farmacológico primeiro; ações combinadas com o cuidador).",
+          "E — Evaluate: avaliar se funcionou; ajustar; reavaliar e desprescrever.",
+          "É um CICLO: se não melhora, volte a Describe/Investigate — não pule direto para o fármaco."
+        ]
+      },
+      {
+        k: "Não-farmacológico",
+        t: "1ª linha: o que realmente funciona — e custa pouco",
+        li: [
+          "Ambiente e rotina: rotina previsível; ambiente calmo e iluminado; reduzir ruído/superestimulação; sinalização.",
+          "Segurança: travas, retirar riscos (perambulação).",
+          "Atividade e abordagem: atividade significativa, música, reminiscência; exercício/luz natural; higiene do sono.",
+          "Comunicação simples, validar, não confrontar.",
+          "Cuidador: psicoeducação (o sintoma é da doença); técnicas de manejo e de desescalada.",
+          "Cuidador: apoio, pausa (respiro), tratar a sobrecarga. Medidas não-farmacológicas e centradas na pessoa têm o melhor risco-benefício."
+        ]
+      },
+      {
+        k: "Por sintoma",
+        t: "Agitação/agressão e psicose",
+        li: [
+          "Agitação: postura calma; um interlocutor; tom baixo; distrair/redirecionar; remover o gatilho.",
+          "Agitação: tratar dor empiricamente se houver suspeita; garantir segurança (espaço, retirar objetos).",
+          "Fármaco só se: sofrimento intenso OU risco à segurança, após falha das medidas não-farmacológicas — alvo claro, dose baixa, prazo definido.",
+          "Psicose: nem todo delírio/alucinação precisa de fármaco. Não confronte; valide o sentimento, reoriente suave.",
+          "Psicose: cheque visão/audição e delirium (alucinação nova). Trate se há sofrimento, agressão ou risco.",
+          "Alerta DCL: alucinação visual precoce sugere DCL — HIPERSENSIBILIDADE a antipsicóticos; evitar típicos.",
+          "No DCL, se necessário: atípico em dose mínima; considerar inibidor de colinesterase (pode ajudar)."
+        ]
+      },
+      {
+        k: "Por sintoma",
+        t: "Humor, sono e sundowning",
+        li: [
+          "Depressão: tristeza, choro, anedonia, culpa. Rastrear (Cornell na demência); ISRS se moderada-grave; psicossocial.",
+          "Apatia: perda de iniciativa SEM tristeza (≠ depressão); a mais comum e muito subdiagnosticada.",
+          "Apatia — conduta: estímulo e atividade estruturada; evitar \"forçar\".",
+          "Ansiedade: inquietude, \"grudado\", perguntas repetidas. Buscar gatilho/insegurança; rotina; evitar benzodiazepínico de rotina.",
+          "Higiene do sono: luz natural de dia, atividade; quarto escuro/silencioso à noite.",
+          "Sundowning: iluminar o fim de tarde; reduzir ruído/estímulo; atividade calmante; evitar cochilos longos.",
+          "Perambulação: ambiente seguro (travas, alarmes, ID); permitir caminhar com supervisão.",
+          "Evitar: hipnótico/benzo de rotina, cafeína à tarde e contenção física."
+        ],
+        note: "Apatia ≠ depressão: forçar atividade na apatia frustra; tratar como depressão (ISRS) costuma não ajudar."
+      },
+      {
+        k: "Fármaco seguro",
+        t: "Princípios inegociáveis e o risco real dos antipsicóticos",
+        li: [
+          "Alvo claro: sintoma definido (ex.: agressão), não \"sedar\". Start low, go slow: menor dose; titular devagar; um de cada vez.",
+          "Prazo definido: reavaliar em dias-semanas; tentativa de retirada. Consentimento: risco × benefício com a família; documentar.",
+          "Reavaliar/desprescrever: BPSD flutuam e remitem; não perpetue. Fármaco é adjuvante — nunca substitui achar a causa.",
+          "Black box (FDA): ↑ mortalidade e AVC em idosos com demência — vale para típicos e atípicos.",
+          "CATIE-AD: benefício modesto; efeitos adversos frequentemente anulam o ganho.",
+          "Indicação restrita: agressão/psicose com sofrimento ou risco, após falha não-farmacológica.",
+          "Monitorar: sedação, quedas, extrapiramidal, metabólico, QT; reavaliar sempre."
+        ],
+        note: "Fonte: FDA boxed warning (2005/2008); CATIE-AD (Schneider et al., NEJM 2006)."
+      },
+      {
+        k: "Opções e erros",
+        t: "O que usar com parcimônia — e o que não fazer",
+        li: [
+          "Brexpiprazol: 1º aprovado pela FDA (2023) para agitação na DA; mantém black box.",
+          "Risperidona: atípico mais estudado para agressão; curto prazo, dose baixa.",
+          "Citalopram (ISRS): agitação (estudo CitAD); cuidado com QT (≤20 mg no idoso).",
+          "Inibidor de colinesterase/memantina: efeito modesto; pode ajudar (especialmente no DCL).",
+          "EVITAR: antipsicótico típico no DCL, benzodiazepínico de rotina, anticolinérgico.",
+          "Erros: antipsicótico de 1ª linha sem investigar causa; benzo de rotina (↑ confusão, quedas, dependência, desinibição paradoxal).",
+          "Erros: anticolinérgicos (pioram cognição, podem causar delirium); contenção física (↑ agitação, lesão, imobilidade).",
+          "Erros: empilhar psicotrópicos sem reavaliar; perpetuar o fármaco sem tentativa de retirada."
+        ],
+        note: "Doses e escolhas dependem de função renal/hepática, interações, QT e protocolo local — individualize."
+      },
+      {
+        k: "Cuidador e síntese",
+        t: "O cuidador é coterapeuta — e o take-home",
+        li: [
+          "Psicoeducação: entender que o sintoma é da doença reduz culpa e conflito.",
+          "Treino de manejo: comunicação, rotina, desescalada, segurança em casa.",
+          "Apoio e respiro: rede, grupos, pausa; rastrear e tratar a SOBRECARGA (Zarit).",
+          "Prevenir crise: plano escrito — o que fazer, quem chamar, sinais de alarme.",
+          "Na agressão física com risco: 1) segurança imediata; 2) excluir causa aguda (dor, ITU, retenção, delirium).",
+          "Na agressão física com risco: 3) desescalar; 4) se persiste risco/sofrimento, fármaco-alvo em dose baixa e prazo definido.",
+          "Take-home: comportamento é COMUNICAÇÃO — antes do remédio, ache o GATILHO. Use o ciclo DICE.",
+          "Fármaco com segurança: alvo/dose baixa/prazo; black box; brexpiprazol/citalopram; EVITAR no DCL."
+        ]
+      }
+    ],
+    quiz: [
+      {
+        enun: "Idoso com demência subitamente agitado, sem outra causa óbvia. Qual o 1º passo?",
+        alts: [
+          "Antipsicótico",
+          "Procurar causa (dor/ITU/constipação/fármaco)",
+          "Benzo",
+          "Contenção"
+        ],
+        certa: 1,
+        fb: "Comportamento é comunicação: ache a causa antes do fármaco."
+      },
+      {
+        enun: "Demência com alucinações visuais precoces e parkinsonismo, paciente agitado. O que evitar?",
+        alts: [
+          "ISRS",
+          "Antipsicótico típico (risco no DCL)",
+          "Medidas ambientais",
+          "Inibidor de colinesterase"
+        ],
+        certa: 1,
+        fb: "DCL: hipersensibilidade a antipsicótico típico (reação grave)."
+      },
+      {
+        enun: "Qual a 1ª linha para a maioria dos BPSD?",
+        alts: [
+          "Antipsicótico",
+          "Benzodiazepínico",
+          "Não-farmacológico (DICE)",
+          "Contenção"
+        ],
+        certa: 2,
+        fb: "Não-farmacológico (DICE) é 1ª linha na maioria dos BPSD."
+      },
+      {
+        enun: "Sra. R.: agitação só ao entardecer, casa escura e barulhenta nesse horário, constipada há 4 dias, sem febre e sem risco imediato de agressão grave. Qual o primeiro passo?",
+        alts: [
+          "Iniciar risperidona ao entardecer",
+          "DICE: tratar constipação + iluminar/reduzir ruído à tarde + rotina/atividade calmante; reavaliar",
+          "Benzodiazepínico \"de horário\""
+        ],
+        certa: 1,
+        fb: "Causas (constipação/ambiente) + não-farmacológico antes do fármaco."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/bpsd.pdf"
+      },
+      {
+        nome: "Resumo de 1 página (PDF)",
+        arquivo: "docs/aulas/resumo-bpsd.pdf"
+      }
+    ]
+  },
+  {
+    id: "demencias-dif",
+    titulo: "Diagnóstico diferencial das demências — confronto a confronto",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-07",
+    ch: "35 min",
+    desc: "Como decidir qual demência é, com método: o 1º corte cortical × subcortical, a separação dos mimetizadores (normal, delirium, depressão), os confrontos difíceis (AD×vascular, AD×DCL, DFT×psiquiátrico), as demências rápidas e a árvore de decisão à beira-leito.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso-gancho",
+        t: "Dois idosos, \"mesma\" queixa de memória — mas NÃO são a mesma doença",
+        li: [
+          "Sr. A., 72 anos: esquece fatos recentes; some palavras; se perde em lugares conhecidos. → Cortical?",
+          "Sra. B., 72 anos: lenta, \"preguiçosa\", desatenta; esquece mas LEMBRA com pistas; anda devagar. → Subcortical?"
+        ]
+      },
+      {
+        k: "Por que importa",
+        t: "O subtipo muda tratamento, prognóstico e segurança",
+        li: [
+          "Tratamento difere: anticolinesterásico (AD/DCL) × controle vascular × derivação (HPN).",
+          "Segurança: neuroléptico pode ser perigoso no DCL; anticoagulação na vascular.",
+          "Prognóstico/curso: rápido (DCJ) × degraus (vascular) × lento (AD).",
+          "Aconselhamento familiar/genético (FTD precoce); planejamento de cuidado.",
+          "\"Tudo é Alzheimer\" é o erro que custa caro — o rótulo errado leva à conduta errada."
+        ]
+      },
+      {
+        k: "1º corte",
+        t: "Primeiro decida: o padrão é CORTICAL ou SUBCORTICAL?",
+        li: [
+          "CORTICAL: amnésia (esquece e NÃO recupera com pistas); afasia, apraxia, agnosia (os \"4 A\").",
+          "CORTICAL: marcha normal no início. Ex.: Alzheimer, frontotemporal.",
+          "SUBCORTICAL: lentificação + déficit executivo + desatenção; memória melhora COM pistas (recuperação).",
+          "SUBCORTICAL: humor/movimento — apatia, parkinsonismo. Ex.: vascular, Parkinson/DCL, HPN.",
+          "Teste prático: dê pistas na evocação. Recuperou → subcortical/recuperação. Não recuperou → cortical/consolidação (Alzheimer)."
+        ]
+      },
+      {
+        k: "Mimetizadores",
+        t: "Não confunda demência com seus 3 grandes imitadores",
+        li: [
+          "Envelhecimento normal: esquecimentos leves, sem perda funcional; queixa sem declínio objetivo; não progride para incapacidade.",
+          "Delirium: início AGUDO, atenção flutuante; causa orgânica; reversível. Sempre excluir primeiro.",
+          "Depressão: pseudodemência (melhora com pistas); humor rebaixado, \"não tento\"; tratável → cognição melhora.",
+          "Regra: exclua delirium e depressão (e reveja fármacos) ANTES de classificar a demência."
+        ]
+      },
+      {
+        k: "Mapa de bolso",
+        t: "Quadro-resumo: a 1ª queixa aponta o caminho",
+        li: [
+          "Alzheimer — cortical; 1ª queixa memória episódica; marca: amnésia sem recuperação.",
+          "Vascular — subcortical; 1ª queixa executivo/lentidão; marca: degraus + fatores/lacunas.",
+          "Frontotemporal — cortical (frontal); 1ª queixa conduta ou linguagem; marca: jovem, desinibição/apatia.",
+          "Corpos de Lewy — mista/subcortical; 1ª queixa flutuação + alucinação; marca: parkinsonismo, REM, ↑sensibilidade a neuroléptico.",
+          "HPN — subcortical; 1ª queixa marcha + urina; marca: tríade + ventrículos ↑ (DESH)."
+        ]
+      },
+      {
+        k: "Confronto",
+        t: "Alzheimer × Demência vascular",
+        li: [
+          "Alzheimer: cortical — amnésia que NÃO melhora com pistas; início insidioso, declínio LENTO e contínuo.",
+          "Alzheimer: RM com atrofia hipocampal/temporal medial; marcha preservada no início.",
+          "Vascular: subcortical — executivo/lentidão; memória melhora com pistas; curso em DEGRAUS ou pós-AVC; flutua.",
+          "Vascular: RM com lacunas, leucoaraiose, infartos; fatores vasculares; marcha/sinais focais precoces.",
+          "Como decidir: curso (degraus × lento) + memória (com × sem pistas) + RM (vascular × hipocampo).",
+          "No idoso, frequentemente MISTA."
+        ]
+      },
+      {
+        k: "Confronto",
+        t: "Alzheimer × Corpos de Lewy — o par que mais engana",
+        li: [
+          "Alzheimer: memória episódica domina desde o início; cognição estável ao longo do dia.",
+          "Alzheimer: alucinações tardias (fase avançada); sem parkinsonismo precoce.",
+          "Corpos de Lewy: FLUTUAÇÃO cognitiva marcante (dia a dia); alucinações visuais PRECOCES e bem formadas.",
+          "Corpos de Lewy: parkinsonismo, quedas, disautonomia; transtorno do sono REM; ↑sensibilidade a neurolépticos.",
+          "Como decidir: flutuação + alucinação visual precoce + parkinsonismo + REM = Lewy.",
+          "Atenção: NÃO dar neuroléptico típico."
+        ]
+      },
+      {
+        k: "Confronto",
+        t: "Frontotemporal × transtorno psiquiátrico (e × Alzheimer)",
+        li: [
+          "bvFTD: MUDANÇA de personalidade/conduta; desinibição/apatia; início <65 anos; perda de empatia, hiperoralidade.",
+          "bvFTD: memória relativamente poupada no início; RM com atrofia frontal/temporal anterior.",
+          "Psiquiátrico (depressão/bipolar): o humor é o eixo; responde a tratamento; sem atrofia frontal focal; curso conforme o humor.",
+          "Histórico psiquiátrico prévio favorece psiquiátrico. No Alzheimer, a memória domina (≠ conduta).",
+          "Como decidir: mudança de PERSONALIDADE/conduta em <65 com memória poupada e atrofia frontal = pense FTD, não \"depressão\"."
+        ]
+      },
+      {
+        k: "Sobreposições",
+        t: "Vascular × mista — e os parkinsonismos lado a lado",
+        li: [
+          "Vascular \"pura\": relação temporal com AVC/lacunas; predomínio executivo.",
+          "Mista: amnésia (Alzheimer) + carga vascular — muito comum no idoso. Avalie o PESO de cada componente e trate os dois.",
+          "DCL: demência ANTES/junto do parkinsonismo (regra do 1 ano).",
+          "Parkinson-demência (PDD): parkinsonismo ANTES (anos).",
+          "Atípicos (PSP/AMS/DCB): quedas precoces, olhar vertical, rigidez axial.",
+          "A ORDEM e o TEMPO dos sintomas (cognição × movimento) e os sinais atípicos separam DCL, PDD e atípicos. Atípico → encaminhar."
+        ]
+      },
+      {
+        k: "Rápidas",
+        t: "Demência rapidamente progressiva e as red flags que desviam a rota",
+        li: [
+          "Quando suspeitar de DCJ: declínio em semanas–meses (não anos); mioclonias; ataxia.",
+          "DCJ — apoio diagnóstico: RM (DWI) com restrição cortical/\"ribboning\" e núcleos da base; RT-QuIC no LCR; EEG (complexos periódicos).",
+          "Não esquecer o tratável: autoimune/paraneoplásica, tireoide (Hashimoto), B12, infecções, tóxico-metabólico.",
+          "Red flags: evolução rápida (semanas–meses); início precoce (<65 anos); mioclonias/convulsões (priônica, autoimune).",
+          "Red flags: marcha/quedas precoces (HPN, atípicos, DCL); sinais focais (vascular, tumor, HSD); flutuação de consciência (delirium, DCL).",
+          "Red flags: sintomas sistêmicos (autoimune, infeccioso); história familiar forte (genético — FTD/AD precoce)."
+        ],
+        note: "Qualquer red flag → ampliar investigação e/ou encaminhar ao especialista."
+      },
+      {
+        k: "Imagem",
+        t: "A imagem decide — e os biomarcadores dirimem",
+        li: [
+          "Atrofia hipocampal/temporal medial → Alzheimer. Lacunas, leucoaraiose, infartos → vascular/mista.",
+          "Atrofia frontal/temporal anterior → frontotemporal. Restrição cortical em DWI → DCJ (priônica).",
+          "Ventrículos ↑ desproporcionais / DESH → HPN (tratável!). A imagem flagra o que é cirúrgico/tratável (HPN, HSD, tumor).",
+          "LCR/PET (ATN): Aβ42, p-tau; PET amiloide/tau → confirma Alzheimer em casos incertos.",
+          "DAT-SPECT: transportador de dopamina ↓ → apoia DCL/parkinsonismo (vs. AD). RT-QuIC (LCR): alta especificidade para DCJ.",
+          "Autoimune/paraneoplásico: anticorpos no soro/LCR → encefalite tratável. Não são rastreio: peça quando o resultado MUDA a conduta."
+        ]
+      },
+      {
+        k: "Síntese",
+        t: "A árvore do diferencial e a régua do take-home",
+        li: [
+          "Declínio cognitivo → excluir delirium, depressão e reversível (HPN, B12, tireoide).",
+          "Rápido (semanas–meses)? → DCJ/autoimune. Senão, classifique o padrão.",
+          "CORTICAL → amnésia sem pistas = Alzheimer; conduta/linguagem = FTD.",
+          "SUBCORTICAL → degraus/vascular; flutuação + alucinação = DCL; marcha + urina = HPN.",
+          "A régua: 1º CORTICAL ou SUBCORTICAL? → 2º a 1ª QUEIXA (curso) → 3º a IMAGEM confirma.",
+          "Conduta: anticolinesterásico (AD/DCL); controle vascular; DVP na HPN após tap test.",
+          "Conduta: no DCL EVITAR neurolépticos típicos e ter cautela com atípicos; na FTD, manejo comportamental, segurança e suporte ao cuidador.",
+          "E sempre: integrar à AGA (funcionalidade, humor, fármacos, rede) e comunicar com a família."
+        ]
+      }
+    ],
+    quiz: [
+      {
+        enun: "Esquece e LEMBRA com pistas, lento e desatento, anda devagar. Qual o padrão?",
+        alts: [
+          "Cortical",
+          "Subcortical",
+          "Delirium",
+          "Normal"
+        ],
+        certa: 1,
+        fb: "Memória que melhora com pistas = subcortical (recuperação)."
+      },
+      {
+        enun: "Flutuação + alucinações visuais + parkinsonismo + sono REM. Qual o diagnóstico e o que evitar?",
+        alts: [
+          "AD",
+          "DCL — evitar neuroléptico típico",
+          "Vascular",
+          "HPN"
+        ],
+        certa: 1,
+        fb: "DCL; neuroléptico típico pode causar reação grave."
+      },
+      {
+        enun: "Mudança de personalidade/desinibição aos 60 anos, memória poupada. Diagnóstico?",
+        alts: [
+          "Depressão",
+          "Alzheimer",
+          "Frontotemporal",
+          "Delirium"
+        ],
+        certa: 2,
+        fb: "Conduta/desinibição em <65 com memória poupada = FTD."
+      },
+      {
+        enun: "Idoso com cognição que flutua muito no mesmo dia, alucinações visuais bem formadas, parkinsonismo recente com quedas e relato de \"falar/lutar dormindo\". Qual a hipótese e a conduta?",
+        alts: [
+          "Alzheimer; iniciar haloperidol p/ alucinação",
+          "Corpos de Lewy; EVITAR neuroléptico típico, tratar com cautela",
+          "Transtorno psicótico primário; antipsicótico em dose alta"
+        ],
+        certa: 1,
+        fb: "Quadro de DCL; neuroléptico típico pode causar reação grave."
+      },
+      {
+        enun: "Homem de 68 anos, declínio em 3 meses com mioclonias e ataxia, sem fatores vasculares e com piora visível a cada semana. Próximo passo?",
+        alts: [
+          "Rotular Alzheimer e observar por 1 ano",
+          "Demência rápida: RM (DWI) + LCR (RT-QuIC) + investigar autoimune/reversível",
+          "Iniciar anticolinesterásico e alta"
+        ],
+        certa: 1,
+        fb: "Demência rapidamente progressiva exige investigação urgente (DCJ × tratável)."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/demencias-dif.pdf"
+      },
+      {
+        nome: "Resumo de 1 página (PDF)",
+        arquivo: "docs/aulas/resumo-diagnostico-diferencial-demencias.pdf"
+      }
+    ]
+  },
+  {
+    id: "tnc-diagnostico",
+    titulo: "Diagnóstico dos Transtornos Neurocognitivos — subtipos, reversíveis e investigação",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-06-07",
+    ch: "35 min",
+    desc: "Diferenciar os subtipos de transtorno neurocognitivo — e não perder o que é tratável. Do eixo do DSM-5 (maior × leve) ao fluxo síndrome → excluir reversível → imagem → etiologia, com destaque para a HPN e para os biomarcadores (ATN).",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso-gancho",
+        t: "Idoso que esquece E começou a andar \"travado\" e a perder urina — só Alzheimer?",
+        li: [
+          "Sr. A., 76 anos: declínio cognitivo há 1 ano.",
+          "Marcha lenta, \"grudada no chão\".",
+          "Incontinência urinária recente.",
+          "Três perguntas, nesta ordem: 1. É transtorno neurocognitivo? (síndrome)",
+          "2. É REVERSÍVEL? (não perca o tratável!)",
+          "3. Qual o subtipo? (diferencial)"
+        ],
+        note: "A tríade do Sr. A. (cognição + marcha + incontinência) deveria acender uma luz."
+      },
+      {
+        k: "DSM-5",
+        t: "Transtorno neurocognitivo MAIOR × LEVE — a funcionalidade decide",
+        li: [
+          "TNC LEVE: declínio modesto em ≥1 domínio, documentado (preocupação + teste).",
+          "TNC LEVE: NÃO compromete a independência. Equivale ao conceito de CCL.",
+          "TNC MAIOR: declínio substancial em ≥1 domínio, documentado por relato + testes.",
+          "TNC MAIOR: COMPROMETE a independência (AVD). Equivale ao conceito de demência.",
+          "Depois do eixo (leve/maior) vem o ESPECIFICADOR ETIOLÓGICO: Alzheimer, vascular, FTD, Lewy/Parkinson, HPN etc."
+        ]
+      },
+      {
+        k: "Fluxo",
+        t: "Quatro passos: síndrome → excluir reversível → imagem → etiologia",
+        li: [
+          "1. Síndrome: há TNC? leve ou maior? (clínica + testes + informante).",
+          "2. Excluir reversível: labs + imagem para o tratável (inclui HPN).",
+          "3. Neuroimagem: TC/RM — atrofia, vascular, HPN, lesões estruturais.",
+          "4. Etiologia: padrão clínico + imagem (± biomarcadores) → subtipo.",
+          "Regra de ouro: todo paciente com TNC merece, ao menos uma vez, exames básicos + neuroimagem estrutural."
+        ],
+        note: "Excluir o reversível vem ANTES de rotular a etiologia degenerativa."
+      },
+      {
+        k: "Reversíveis",
+        t: "Antes de \"é demência\", exclua as causas tratáveis",
+        li: [
+          "B12 / folato: dosar e repor. Tireoide (TSH): hipotireoidismo.",
+          "Depressão: pseudodemência. Fármacos: anticolinérgicos, sedativos.",
+          "Metabólico/infeccioso: Na, Ca, hepático; sífilis/HIV.",
+          "Hematoma subdural: trauma, anticoagulação. Álcool/nutricional: tiamina (B1).",
+          "Hidrocefalia de pressão normal: tríade de Hakim.",
+          "Reversíveis são minoria dos casos — mas é inaceitável perder um."
+        ]
+      },
+      {
+        k: "HPN",
+        t: "Hidrocefalia de pressão normal: \"molhado, trôpego e esquecido\"",
+        li: [
+          "Marcha apráxica/magnética — costuma ser a 1ª manifestação e a que mais melhora.",
+          "Incontinência urinária (urgência → incontinência).",
+          "Cognição disexecutiva/lentificação (padrão subcortical).",
+          "RM: ventrículos ↑ desproporcional à atrofia; Evans >0,3; DESH; ângulo caloso estreito.",
+          "Tap test (punção lombar de alívio) prediz resposta.",
+          "Tratamento: derivação ventrículo-peritoneal (DVP). Pense em HPN em todo idoso com declínio + alteração de marcha + incontinência."
+        ]
+      },
+      {
+        k: "Subtipos",
+        t: "Cada subtipo tem uma \"primeira queixa\" característica",
+        li: [
+          "Alzheimer — 1ª manifestação: memória episódica. Pista: amnésia que não melhora com pistas.",
+          "Vascular — 1ª manifestação: executivo/lentificação. Pista: curso em degraus; fatores vasculares.",
+          "Frontotemporal — 1ª manifestação: comportamento OU linguagem. Pista: jovem (<65); desinibição/apatia.",
+          "Corpos de Lewy — 1ª manifestação: flutuação + alucinação visual. Pista: parkinsonismo; sono REM; ↑sensibilidade a neurolépticos."
+        ]
+      },
+      {
+        k: "Alzheimer × Vascular",
+        t: "O protótipo amnéstico e o de degraus e disexecução",
+        li: [
+          "Alzheimer — 1ª manifestação: memória episódica recente (esquece e não recupera com pistas).",
+          "Alzheimer — curso: início insidioso, progressão lenta; depois linguagem e visuoespacial.",
+          "Alzheimer — RM: atrofia hipocampal/temporal medial; ATN: amiloide + tau +.",
+          "Alzheimer — red flag: anosognosia; preservação da marcha no início (≠ HPN).",
+          "Vascular — 1ª manifestação: função executiva e velocidade de processamento (subcortical).",
+          "Vascular — curso em DEGRAUS ou relação temporal com AVC; flutua. RM: infartos, lacunas, leucoaraiose.",
+          "Vascular — red flag: HAS/DM/FA; sinais focais, marcha alterada precoce."
+        ],
+        note: "Fonte: NIA-AA (McKhann 2011); ATN (Jack 2018); VASCOG/NINDS-AIREN; Gorelick (AHA/ASA) 2011; ABN 2022."
+      },
+      {
+        k: "FTD × Lewy",
+        t: "Muda o comportamento/linguagem — ou flutua, alucina e enrijece",
+        li: [
+          "Frontotemporal — 1ª manifestação: comportamento (desinibição/apatia) OU linguagem (APP).",
+          "Frontotemporal — início mais jovem (<65); memória relativamente poupada no início. RM: atrofia frontal e/ou temporal anterior (assimétrica).",
+          "Frontotemporal — red flag: mudança de personalidade/conduta; hiperoralidade; perda de empatia.",
+          "Corpos de Lewy — 1ª manifestação: flutuação cognitiva + alucinações visuais bem formadas.",
+          "Corpos de Lewy — parkinsonismo; atenção/visuoespacial > memória no início. RM pouco específica.",
+          "Corpos de Lewy — red flag: HIPERSENSIBILIDADE a neurolépticos; transtorno comportamental do sono REM."
+        ],
+        note: "Fonte: Rascovsky 2011 (bvFTD); Gorno-Tempini 2011 (APP); McKeith 2017 (consenso DLB); MDS (Emre 2007, PDD); ABN."
+      },
+      {
+        k: "Mista e atípicos",
+        t: "No idoso, pense mista — e fique atento aos sinais atípicos",
+        li: [
+          "Demência mista: coexistência de patologias (ex.: Alzheimer + vascular); muito comum no muito idoso.",
+          "Quadro \"híbrido\": amnéstico + executivo/vascular. Conduta: tratar o que é tratável em cada eixo.",
+          "Red flags de atípico: início <65 anos ou evolução rápida (<6–12 meses).",
+          "Red flags: sinais focais, mioclonias, convulsões; marcha/quedas precoces; parkinsonismo atípico.",
+          "Red flag: predomínio psiquiátrico/comportamental.",
+          "Atípico = encaminhar ao especialista e investigar (incl. priônica, autoimune etc.)."
+        ]
+      },
+      {
+        k: "Investigação",
+        t: "Laboratório e neuroimagem: baratos, e podem mudar o diagnóstico",
+        li: [
+          "Painel mínimo a todo TNC: TSH (hipotireoidismo); B12 (± folato); hemograma, Na, Ca.",
+          "Painel mínimo: função renal/hepática (encefalopatia); glicemia/HbA1c; sífilis/HIV se fatores de risco.",
+          "Exames adicionais (autoimune, líquor, EEG) são dirigidos pela suspeita clínica e pelas red flags.",
+          "Neuroimagem exclui o tratável: tumor, hematoma subdural, HPN (ventriculomegalia/DESH).",
+          "Neuroimagem mostra doença vascular (infartos, lacunas, leucoaraiose) e padrão de atrofia (hipocampo = Alzheimer; frontotemporal = FTD).",
+          "RM > TC quando: início precoce, foco, dúvida de subtipo, atípicos."
+        ]
+      },
+      {
+        k: "Biomarcadores",
+        t: "O modelo ATN: útil em casos selecionados",
+        li: [
+          "A — Amiloide: PET amiloide; Aβ42 (ou Aβ42/40) no líquor.",
+          "T — Tau: p-tau no líquor; PET tau.",
+          "N — Neurodegeneração: atrofia (RM), FDG-PET, tau total.",
+          "Quando usar: diagnóstico incerto, início precoce, pesquisa/uso de terapias específicas.",
+          "NÃO são rastreio populacional. O diagnóstico segue clínico; biomarcadores aumentam a certeza etiológica (ex.: Alzheimer A+T+)."
+        ],
+        note: "Fonte: estrutura ATN (Jack et al. 2018); NIA-AA."
+      },
+      {
+        k: "Síntese",
+        t: "Fechar o diagnóstico é começar o cuidado — e a régua dos TNC",
+        li: [
+          "Comunicar com empatia e incluir família/cuidador; diretivas antecipadas enquanto há capacidade.",
+          "Segurança: direção, finanças, medicações.",
+          "Tratar o reversível (HPN → DVP; repor déficits); não-farmacológico primeiro; antidemenciais conforme o tipo.",
+          "Integrar à AGA: funcionalidade, humor, fármacos, rede.",
+          "Nos corpos de Lewy, evitar/ter extrema cautela com neurolépticos típicos (risco grave).",
+          "A régua: 1) É TNC? (leve × maior = funcionalidade) 2) É REVERSÍVEL? (HPN, B12, tireoide...) 3) QUAL SUBTIPO?",
+          "No idoso, pense mista — a sobreposição é a regra."
+        ]
+      }
+    ],
+    quiz: [
+      {
+        enun: "Sr. A.: declínio + marcha magnética + incontinência, sem fatores vasculares marcantes e com cognição disexecutiva. Qual a conduta mais correta?",
+        alts: [
+          "Diagnosticar Alzheimer e iniciar anticolinesterásico",
+          "Neuroimagem pensando em HPN (ventriculomegalia/DESH) → tap test",
+          "Iniciar antipsicótico para \"agitação\""
+        ],
+        certa: 1,
+        fb: "A tríade pede investigação de HPN (reversível) antes de rotular degenerativa."
+      },
+      {
+        enun: "Idoso com declínio + marcha magnética + incontinência urinária. Pensar primeiro em?",
+        alts: [
+          "Alzheimer",
+          "HPN",
+          "Depressão",
+          "FTD"
+        ],
+        certa: 1,
+        fb: "Tríade de Hakim = HPN, reversível; investigue antes de rotular."
+      },
+      {
+        enun: "Declínio cognitivo + alucinações visuais + flutuação + parkinsonismo. Qual o subtipo?",
+        alts: [
+          "Vascular",
+          "Alzheimer",
+          "Corpos de Lewy",
+          "HPN"
+        ],
+        certa: 2,
+        fb: "Flutuação + alucinação visual + parkinsonismo = Lewy."
+      },
+      {
+        enun: "O que define TNC MAIOR (vs. leve) no DSM-5?",
+        alts: [
+          "Escore do MEEM",
+          "Idade",
+          "Perda de independência nas AVD",
+          "Atrofia na RM"
+        ],
+        certa: 2,
+        fb: "Maior = perde independência nas AVD; leve = preserva."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/tnc-diagnostico.pdf"
+      },
+      {
+        nome: "Resumo de 1 página (PDF)",
+        arquivo: "docs/aulas/resumo-diagnostico-tnc.pdf"
+      }
+    ]
+  },
+  {
+    id: "sca-emergencia",
+    titulo: "Síndrome Coronariana Aguda na Emergência",
+    area: "Urgência e Emergência",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-05-26",
+    ch: "1h",
+    desc: "Da dor torácica à reperfusão: raciocínio prático para a porta de entrada. Fundamentos, dor torácica, ECG como núcleo, terapêutica e fluxo assistencial.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Conceito",
+        t: "O que é Síndrome Coronariana Aguda",
+        li: [
+          "Angina instável: isquemia sem necrose; troponina normal e ECG variável.",
+          "IAMSSST (NSTEMI): necrose sem supra persistente; troponina elevada, infra ou inversão de T.",
+          "IAMCSST (STEMI): oclusão com supra persistente; reperfusão imediata é a meta.",
+          "Substrato comum: ruptura ou erosão de placa aterosclerótica com trombose coronariana.",
+          "Oclusão parcial gera NSTE; oclusão total, STEMI.",
+          "Doença isquêmica do coração lidera a mortalidade global (OMS); tipo 1 predomina."
+        ]
+      },
+      {
+        k: "Dor torácica",
+        t: "Equivalentes anginosos e o fim do “atípica”",
+        li: [
+          "Idosos (> 75 a): queda, síncope, delirium, mal-estar. Diabéticos: neuropatia mascara a dor.",
+          "Mulheres e doença renal crônica: apresentações menos clássicas e atípicas frequentes.",
+          "Dispneia isolada pode ser equivalente anginoso; fadiga e fraqueza também.",
+          "Chest Pain 2021: abandonar “típica/atípica” — o termo era ambíguo e subestimava risco.",
+          "Nova classificação: cardíaca, possivelmente cardíaca ou não cardíaca.",
+          "Descreva o achado, não rotule o paciente."
+        ]
+      },
+      {
+        k: "Escores",
+        t: "HEART × GRACE × TIMI — quando usar",
+        li: [
+          "HEART: dor torácica indiferenciada na porta de entrada; decidir alta × observação.",
+          "HEART 0–3 baixo → alta segura; 4–6 moderado; 7–10 alto. Prediz MACE em 6 semanas.",
+          "Combinar HEART com troponina seriada (HEART Pathway).",
+          "GRACE: NSTE confirmado; define risco e timing da estratégia invasiva.",
+          "TIMI: NSTE/STEMI; estratificação de risco complementar.",
+          "Regra de ouro: ECG alterado ou troponina elevada → angiografia, não escore."
+        ]
+      },
+      {
+        k: "Diferenciais",
+        t: "Não esquecer as causas letais",
+        li: [
+          "Dissecção de aorta: dor dilacerante, assimetria de pulsos/PA, mediastino alargado.",
+          "Tromboembolismo pulmonar: dispneia súbita, hipoxemia, sinais de TVP, S1Q3T3.",
+          "Pneumotórax hipertensivo: dispneia, redução do MV unilateral, instabilidade.",
+          "Tamponamento cardíaco: hipotensão, turgência jugular, bulhas abafadas.",
+          "Rotura esofágica: dor após vômito, enfisema subcutâneo.",
+          "Red flag: dor torácica + déficit neurológico sugere dissecção com extensão de carótida."
+        ],
+        note: "Supra de ST com choque: ativar hemodinâmica imediatamente."
+      },
+      {
+        k: "ECG",
+        t: "Critérios de supra e imagem em espelho",
+        li: [
+          "STEMI clássico: supra convexo (“em lápide”), podendo englobar a onda T; onda Q em evolução.",
+          "Reconhecido o supra que preenche critério, ativar reperfusão imediatamente.",
+          "O infradesnível recíproco em parede oposta aumenta a especificidade do supra para isquemia.",
+          "Sua presença reforça SCA; sua ausência não a exclui.",
+          "Supra inferior (DII, DIII, aVF) → espelho em DI/aVL. Supra anterior (V1–V4) → espelho inferior.",
+          "Supra em aVR + infra difuso sugere lesão de tronco da coronária esquerda ou DA proximal."
+        ],
+        note: "Repetir o ECG seriado quando a suspeita persiste e comparar sempre com traçado prévio."
+      },
+      {
+        k: "Mimetizadores",
+        t: "Nem todo supra é isquêmico",
+        li: [
+          "Pericardite: supra côncavo para cima e difuso, com infradesnível do segmento PR.",
+          "Repolarização precoce: supra côncavo com entalhe do ponto J; comum em jovens assintomáticos.",
+          "Bloqueio de ramo esquerdo ou ritmo de marca-passo.",
+          "Hipertrofia de VE com sobrecarga.",
+          "Padrão de Brugada; aneurisma de VE; hipercalemia.",
+          "Morfologia ajuda: isquêmico tende a convexo/retilíneo; pericardite, côncavo difuso."
+        ]
+      },
+      {
+        k: "OMI",
+        t: "De “STEMI” para oclusão (OMI)",
+        li: [
+          "OMI = Occlusion Myocardial Infarction.",
+          "O alvo é a oclusão coronariana aguda, não apenas o critério milimétrico de supra.",
+          "Alguns OMI NÃO preenchem critério clássico de STEMI.",
+          "Reconhecê-los abre indicação de reperfusão precoce.",
+          "Exemplos: de Winter, posterior, Sgarbossa+, T hiperaguda."
+        ]
+      },
+      {
+        k: "Padrões",
+        t: "de Winter, Wellens, posterior e Sgarbossa",
+        li: [
+          "de Winter: infra ascendente do ponto J em precordiais + ondas T altas e simétricas.",
+          "de Winter equivale a oclusão proximal de DA — tratar como STEMI; angiografia urgente.",
+          "Wellens: T bifásica (tipo A) ou profundamente invertida e simétrica (tipo B) em V2–V3, sem dor.",
+          "IAM posterior: infra V1–V3 + onda R alta (espelho). Confirmar com V7–V9 e tratar como STEMI.",
+          "Sgarbossa/Smith no BRE: supra concordante, infra concordante V1–V3 ou supra discordante desproporcional.",
+          "Critérios no BRE: alta especificidade, baixa sensibilidade — o negativo não exclui."
+        ]
+      },
+      {
+        k: "Regras",
+        t: "Quando NÃO lisar / cuidados",
+        li: [
+          "T hiperaguda (apiculada, larga e simétrica): ECG seriado e vigilância, não trombólise imediata.",
+          "Wellens: angiografia urgente; NÃO fibrinólise nem teste de esforço.",
+          "BRE novo isolado não é, por si só, equivalente de STEMI.",
+          "Infra isolado: não lisar — exceto quando representa STEMI posterior."
+        ]
+      },
+      {
+        k: "Definição universal",
+        t: "Infarto × injúria miocárdica e os cinco tipos",
+        li: [
+          "Injúria: troponina acima do percentil 99, SEM evidência de isquemia (aguda ou crônica).",
+          "Causas de injúria: IC, miocardite, sepse, TEP, DRC, taquiarritmia.",
+          "Infarto: injúria + evidência de isquemia (sintomas, ECG, imagem ou trombo na angiografia).",
+          "Tipo 1: aterotrombose (ruptura/erosão de placa) — predomina. Tipo 2: desequilíbrio oferta/demanda.",
+          "Tipo 3: morte súbita antes da elevação dos marcadores. Tipo 4: relacionado a ICP, stent ou reestenose.",
+          "Tipo 5: relacionado a cirurgia de revascularização (CRM)."
+        ],
+        note: "A troponina diz que houve dano; o contexto diz se foi isquêmico."
+      },
+      {
+        k: "Terapêutica",
+        t: "Medidas iniciais e o fim do “MONA”",
+        li: [
+          "O mnemônico não reflete a evidência atual: oxigênio e morfina deixaram de ser rotina.",
+          "Oxigênio apenas se SatO₂ < 90% — hiperóxia pode ser deletéria.",
+          "Nitrato: alívio sintomático; cuidado em hipotensão, VD e uso de inibidor de PDE5.",
+          "Morfina com parcimônia: atrasa a absorção do P2Y12 oral.",
+          "AAS: ataque 150–300 mg mastigável, manutenção 75–100 mg/dia, o mais precocemente possível.",
+          "DAPT (AAS + P2Y12) por ≥ 12 meses, salvo alto risco de sangramento."
+        ],
+        note: "ISIS-2: AAS reduziu mortalidade vascular de forma independente e aditiva à estreptoquinase."
+      },
+      {
+        k: "Adjuvantes",
+        t: "Enoxaparina, betabloqueador e estatina",
+        li: [
+          "Enoxaparina no STEMI + fibrinólise, < 75 anos: 30 mg IV em bólus + 1 mg/kg SC 12/12 h.",
+          "≥ 75 anos: SEM bólus IV; 0,75 mg/kg SC 12/12 h (máx. 75 mg nas 2 primeiras doses).",
+          "ClCr < 30 mL/min: 1 mg/kg SC 24/24 h. NSTE: 1 mg/kg SC 12/12 h.",
+          "Betabloqueador VO nas primeiras 24 h se não houver contraindicação; suspender em choque/IC aguda.",
+          "REDUCE-AMI: sem benefício se FE preservada; manter em FE reduzida / IC.",
+          "Estatina de alta intensidade para todos, o quanto antes; intensificar conforme a meta de LDL."
+        ]
+      },
+      {
+        k: "Reperfusão",
+        t: "ICP primária, fibrinólise e fármaco-invasiva",
+        li: [
+          "ICP primária (preferida): porta-balão < 90 min, acesso radial, janela do 1º contato ≤ 120 min.",
+          "Fibrinólise se ICP inviável: porta-agulha ≤ 30 min e sempre checar contraindicações.",
+          "Tenecteplase: bólus único por peso (< 60 kg → 30 mg … ≥ 90 kg → 50 mg); METADE da dose se ≥ 75 a.",
+          "Alteplase: regime acelerado (bólus + infusão peso-ajustada).",
+          "Contraindicações absolutas: HIC prévia, AVCi < 3 meses, sangramento ativo, suspeita de dissecção, TCE grave < 3 meses.",
+          "Após lisar: transferir sempre, angiografia 2–24 h, ICP de resgate se falha (~⅓ não reperfundem)."
+        ],
+        note: "O relógio começa no primeiro contato médico. Defina a via mais rápida disponível."
+      },
+      {
+        k: "Síntese",
+        t: "Mensagens para levar para o plantão",
+        li: [
+          "ECG em ≤ 10 min e seriado; comparar com prévio.",
+          "Reconhecer equivalentes de oclusão (OMI) além do supra clássico.",
+          "STEMI → reperfusão o mais rápido possível: ICP ≤ 120 min ou fibrinólise ≤ 30 min.",
+          "NSTE → estratificar (GRACE/troponina) e definir o tempo da invasiva.",
+          "Não lisar infra isolado, exceto STEMI posterior.",
+          "Doses são faixas — individualizar por função renal, peso, idade e protocolo local."
+        ]
+      }
+    ],
+    quiz: [],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/sca-emergencia.pdf"
+      }
+    ]
+  },
+  {
+    id: "risco-cirurgico",
+    titulo: "Avaliação Pré-Operatória Geriátrica",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-05-14",
+    ch: "30 min",
+    desc: "Risco cirúrgico no idoso, do raciocínio à beira do leito: estruturar a avaliação em 4 eixos (priorização, procedimento, paciente e conduta), aplicar escores e biomarcadores e otimizar antes de operar.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Caso 1",
+        t: "Sr. José, 78 anos: por onde você começa?",
+        li: [
+          "HAS, DM2, DAC (IAM há 4 anos, stent farmacológico); DPOC GOLD 2, ex-tabagista (60 maços-ano).",
+          "Sobe 1 lance de escada com dispneia leve. Caiu 2x no último ano. Esquecimento recente.",
+          "Uso: AAS 100, clopidogrel 75, atorvastatina 40, metformina, enalapril, salbutamol.",
+          "Proposta: colecistectomia videolaparoscópica eletiva. Que exames pediria hoje? Que medicações suspenderia?"
+        ]
+      },
+      {
+        k: "Magnitude",
+        t: "O idoso cirúrgico é o paciente do século XXI",
+        li: [
+          "1 em 3 cirurgias no mundo é em paciente ≥65 anos.",
+          "≥20% dos >65 cirúrgicos têm injúria miocárdica perioperatória (MINS).",
+          "5–25% de incidência de delirium pós-operatório no idoso — preditor de mortalidade.",
+          "≈50% dos óbitos perioperatórios poderiam ser evitados com avaliação adequada."
+        ],
+        note: "Avaliar bem antes é a intervenção de maior impacto que o clínico oferece ao paciente cirúrgico."
+      },
+      {
+        k: "Eixos 1 e 2",
+        t: "Quanto tempo eu tenho? Qual o risco do procedimento?",
+        li: [
+          "Priorização: emergência <6 h (vai; otimização intra-op); urgência 6–24 h (estratificação abreviada: ECG, troponina, eletrólitos).",
+          "Tempo-sensível (dias–semanas, ex.: oncológica): janela curta. Eletiva (adiável): estratificação completa e otimização.",
+          "Risco do procedimento (MACE em 30 d, Fleisher/SBC 2024) — baixo <1%: catarata, endoscopia, mama, hérnia.",
+          "Intermediário 1–5%: intraperitoneal, intratorácica, cabeça e pescoço, ortopédica maior, endarterectomia carotídea.",
+          "Alto >5%: aórtica e grandes vasos, vascular periférica, CRVM, transplantes, cirurgias prolongadas."
+        ],
+        note: "A avaliação se estrutura em 4 eixos: priorização, procedimento, paciente e conduta (SBC 2024 / ACC-AHA 2024 / ESC 2022). Em emergência, NUNCA atrase a cirurgia por exames que não mudam conduta."
+      },
+      {
+        k: "Eixo 3",
+        t: "Capacidade funcional: o exame mais barato do mundo",
+        li: [
+          "4 METs é o ponto de corte clássico (Classe I-B): subir 2 lances de escada.",
+          "Escala: 1 MET comer/vestir-se; 2 MET andar dentro de casa; 6 MET caminhada rápida; >10 MET corrida.",
+          "DASI (Duke Activity Status Index): 12 perguntas, pontuação direta em METs. DASI <34 = maior MACE e morte em 30 d (estudo METS, Lancet 2018).",
+          "Não conseguiu estimar 4 METs? Peça DASI ou parta para biomarcadores e prova funcional se a cirurgia for ≥ intermediária."
+        ],
+        note: "O DASI é superior ao “olhômetro” do médico."
+      },
+      {
+        k: "Eixo 4 · escores",
+        t: "Risco cardiovascular: use 2 escores em paralelo",
+        li: [
+          "RCRI (Lee): 6 fatores, ≥2 = risco aumentado. Simples e universal, mas subestima vasculares.",
+          "ACS-NSQIP MICA (Gupta): prediz IAM/PCR em 30 d — padrão atual em cirurgia não-cardíaca.",
+          "ACS-NSQIP Surgical Risk: visão global de morbimortalidade (inclui ASA, fragilidade, idade, comorbidades).",
+          "AUB-HAS2: validado em coorte brasileira, citado pela SBC. VSG-CRI: específico e mais acurado em cirurgia vascular.",
+          "Heart-Kidney Team: decisão multiprofissional em transplante renal (I-C)."
+        ],
+        note: "RCRI é a porta de entrada — confirme com NSQIP-MICA quando o risco é intermediário/alto. RCRI sozinho subestima (SBC 2024)."
+      },
+      {
+        k: "Eixo 4 · biomarcadores",
+        t: "Biomarcadores: o upgrade da SBC 2024 (Classe I-B)",
+        li: [
+          "BNP/NT-proBNP: dosar em >65 anos em cirurgia intermediária/alta, ou 45–64 anos com fator de risco (DM, HAS, DAC, FA, obesidade).",
+          "Corte de risco: NT-proBNP >300 pg/mL — prediz MACE e óbito em 30 d, superando o RCRI isolado.",
+          "Troponina ultrassensível: pré-operatório + 1º DPO + 2º DPO no risco intermediário/alto.",
+          "Diagnostica MINS, que dobra a mortalidade em 30 d e é geralmente silencioso. NÃO dosar em cirurgia de baixo risco — Classe III."
+        ]
+      },
+      {
+        k: "Eixo 4 · pulmonar",
+        t: "Risco pulmonar: ARISCAT e STOP-Bang",
+        li: [
+          "ARISCAT (Canet), 7 variáveis: idade, SpO2, infecção respiratória recente, anemia, tipo e duração da cirurgia, emergência.",
+          "Estratos: <26 baixo (1,6%); 26–44 intermediário (13%); ≥45 alto (42%).",
+          "STOP-Bang (apneia obstrutiva do sono): ronco, sonolência, apneia observada, pressão (HAS), IMC >35, idade >50, pescoço >40 cm, sexo masculino.",
+          "STOP-Bang ≥3 → triagem positiva → polissonografia/CPAP perioperatório."
+        ],
+        note: "Complicações pulmonares são tão letais quanto as cardíacas, mas menos lembradas."
+      },
+      {
+        k: "Eixo 4 · renal e delirium",
+        t: "Dois domínios esquecidos no parecer do idoso",
+        li: [
+          "Renal: TFG por CKD-EPI 2021 (sem coeficiente racial — KDIGO); escore de Mehta/Kheterpal para IRA em não-cardíaca.",
+          "Sinalizadores renais: TFG <60, proteinúria, contraste recente; tríplice nefrotóxica IECA/BRA + diurético + AINE; evitar PAM <65 mmHg.",
+          "Delirium — predisponentes: idade ≥70, déficit cognitivo, fragilidade, polifarmácia, déficit sensorial.",
+          "Delirium — precipitantes: dor, BZD, anticolinérgicos, opioides, infecção, hipóxia, sondagem.",
+          "Triagem AWOL ou 4AT no pré e CAM no pós; profilaxia com HELP bundle (Classe I). Haloperidol profilático NÃO é recomendado."
+        ]
+      },
+      {
+        k: "Eixo 4 · fragilidade",
+        t: "Fragilidade: o eixo que muda o desfecho do idoso",
+        li: [
+          "Clinical Frailty Scale (Rockwood), 1 a 9: de “em ótima forma” a “doente terminal” — Classe IIa, SBC 2024.",
+          "CFS ≥5 = idoso frágil → mortalidade em 30 dias e em 1 ano significativamente maior.",
+          "Outras ferramentas: FRAIL (5 itens), fenótipo de Fried (peso, fadiga, força, lentidão, atividade), Edmonton FS (validada no Brasil).",
+          "Sarcopenia: dinamometria, marcha <0,8 m/s, SARC-F."
+        ]
+      },
+      {
+        k: "Eixo 4 · TEV e ASA",
+        t: "TEV, sangramento e risco anestésico",
+        li: [
+          "Caprini: risco de TEV pós-operatório; ≥5 = alto → profilaxia farmacológica + mecânica. Padrão em cirurgia geral.",
+          "Padua: risco de TEV no paciente clínico/leito; ≥4 = alto. IMPROVE-Bleed: risco de sangramento — define se é seguro anticoagular.",
+          "ASA-PS: classificação anestésica I a VI; subjetiva, mas exigida. Compõe, não substitui, o risco.",
+          "Dose de enoxaparina: padrão 40 mg/dia; 20 mg só se ClCr <30 ou peso <50 kg."
+        ]
+      },
+      {
+        k: "Conduta",
+        t: "Medicações, exames por gatilho e pré-habilitação: onde está o ganho",
+        li: [
+          "Exames: não peça rotina, peça por gatilho — em cirurgia de baixo risco raramente mudam conduta (Classe III, Choosing Wisely).",
+          "Stent farmacológico: respeite a janela de DAPT — 1 mês se não-complicado, 6 meses para eletiva, 12 meses pós-SCA.",
+          "Pré-habilitação (2–4 semanas mudam desfecho): exercício (caminhada, força, respiratório) e nutrição (MNA, albumina, proteína, imunonutrição).",
+          "Cognição e sono: triar delirium prévio, HELP bundle, higiene do sono, rever BZD e anticolinérgicos.",
+          "Desprescrever por STOPP/START e Beers (polifarmácia ≥5 = sinal vermelho); vacinas (SBIm); cessação de tabagismo ≥4 semanas.",
+          "Discutir objetivo de cuidado e diretivas de vontade; documentar o destino pós-op (enfermaria/semi/UTI)."
+        ],
+        note: "PREHAB trials: a pré-habilitação multimodal reduz complicações no idoso frágil cirúrgico."
+      },
+      {
+        k: "Mensagens-chave",
+        t: "Saia daqui levando 5 ideias",
+        li: [
+          "O parecer de risco não é um número — é um PLANO perioperatório individualizado.",
+          "Comece pela URGÊNCIA. Em emergência, não atrase para confirmar o que você já sabe.",
+          "RCRI sozinho subestima: combine com NSQIP-MICA + biomarcadores (BNP, troponina us).",
+          "O idoso tem 3 eixos próprios: fragilidade (CFS), delirium (4AT/AWOL) e desprescrição. Otimizar antes vale mais que pedir mais exames."
+        ],
+        note: "“A melhor decisão é a tomada antes da cirurgia, não dentro dela.”"
+      }
+    ],
+    quiz: [
+      {
+        enun: "Mulher, 82 anos, fratura de quadril por queda. Demência leve, ICC NYHA II, cirurgia em 24 h. PA 140/85, FC 88, SpO2 94%, NT-proBNP 1200 pg/mL. Qual a conduta MAIS adequada?",
+        alts: [
+          "Adiar 4 semanas para investigar a IC com cintilografia miocárdica",
+          "Operar em 24–48 h após otimizar volemia, manter betabloqueador e estatina, dosar troponina pré-op + 1º e 2º DPO, prevenir delirium",
+          "Cancelar a cirurgia: risco proibitivo pelo NT-proBNP elevado",
+          "Operar agora, em emergência, sem novos exames"
+        ],
+        certa: 1,
+        fb: "Fratura de quadril é tempo-sensível: operar em até 48 h supera o risco do retardo."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/risco-cirurgico.pdf"
+      }
+    ]
+  },
+  {
+    id: "sca-avc",
+    titulo: "Síndrome Coronariana Aguda e AVC",
+    area: "Urgência e Emergência",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-04-10",
+    ch: "1h",
+    desc: "Urgência e emergência para o internato: reconhecer cedo, priorizar risco e tratar sem perder tempo. Aula integrada de SCA e AVC do 9º período.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Objetivos",
+        t: "Objetivos de aprendizagem",
+        li: [
+          "SCA: diferenciar dor torácica sugestiva de isquemia de diagnósticos fatais alternativos.",
+          "SCA: abordagem inicial guiada por ECG em até 10 min, troponina e risco clínico.",
+          "SCA: escolher reperfusão, antiagregação, anticoagulação e monitorização.",
+          "AVC: ativar código AVC, aplicar NIHSS, solicitar imagem sem atraso e selecionar reperfusão.",
+          "AVC: critérios práticos para trombólise IV, trombectomia e cuidados pós-reperfusão.",
+          "AVC: conectar fase aguda à etiologia, prevenção secundária e reabilitação precoce."
+        ],
+        note: "Ao final da aula, o aluno deve conseguir reconhecer, priorizar e iniciar conduta segura."
+      },
+      {
+        k: "Epidemiologia",
+        t: "Por que esta aula importa?",
+        li: [
+          "85% das mortes cardiovasculares globais ocorrem por infarto e AVC.",
+          "1 em 4 adultos tem risco ao longo da vida de sofrer AVC.",
+          "93,8 milhões de pessoas viviam com AVC no mundo em 2021; 11,9 milhões de novos AVCs.",
+          "No IAM, o atraso amplia necrose, insuficiência cardíaca e arritmias.",
+          "No AVC, o atraso reduz chance de independência funcional e aumenta incapacidade.",
+          "Não basta “saber conduta”: é preciso fazer o sistema funcionar sem atrito."
+        ]
+      },
+      {
+        k: "SCA",
+        t: "Classificação clínica da SCA",
+        li: [
+          "IAM com supra (STEMI): oclusão coronária aguda com necessidade de reperfusão imediata.",
+          "Estratégia preferencial no STEMI: angioplastia primária em tempo adequado.",
+          "Se PCI não for viável em tempo hábil, considerar fibrinólise quando elegível.",
+          "IAM sem supra / angina instável: troponina e risco orientam a urgência da estratégia invasiva.",
+          "Nem todo paciente precisa cateterismo imediato; risco manda no timing.",
+          "Angina instável persiste como diagnóstico quando há isquemia sem necrose detectável."
+        ]
+      },
+      {
+        k: "Diferenciais",
+        t: "Dor torácica: o que você não pode perder",
+        li: [
+          "Diagnósticos fatais: dissecção aguda de aorta, TEP, pneumotórax hipertensivo.",
+          "Também: tamponamento/pericardite complicada e ruptura esofágica.",
+          "Pistas pró-SCA: sintoma opressivo ou equivalente isquêmico.",
+          "Pistas pró-SCA: fatores de risco + história compatível.",
+          "Pistas pró-SCA: ECG/troponina favoráveis ao diagnóstico."
+        ],
+        note: "Erro clássico: assumir que toda dor “forte” é infarto. Pense em aorta antes do antitrombótico."
+      },
+      {
+        k: "Tempo",
+        t: "Os primeiros 10 minutos definem o resto do caso",
+        li: [
+          "0–10 min: ABC, monitorização, acesso, AAS se elegível e ECG de 12 derivações.",
+          "10–20 min: interpretar ECG e decidir se há STEMI/oclusão coronariana aguda.",
+          "20–60 min: troponina, analgesia racional e acionamento da reperfusão.",
+          "1–3 h: troponina seriada e estratégia invasiva conforme risco.",
+          "Registrar hora de início dos sintomas e tempo total de isquemia.",
+          "Buscar contraindicações para nitrato, fibrinólise e antitrombóticos."
+        ],
+        note: "Erro clássico: esperar biomarcador antes do ECG. O relógio começa no sintoma, não no laboratório."
+      },
+      {
+        k: "ECG",
+        t: "Localização eletrocardiográfica: pense em território",
+        li: [
+          "Anterior: V1–V4. Lateral: DI, aVL, V5–V6. Inferior: II, III, aVF.",
+          "Posterior: infra em V1–V3 / derivações V7–V9.",
+          "Supra em III > II favorece coronária direita em IAM inferior.",
+          "Suspeite infarto de VD em IAM inferior com hipotensão e campos limpos.",
+          "ECG direito (V3R/V4R) é subutilizado e muda conduta com nitrato.",
+          "Anterior extenso: mais choque, IC e disfunção ventricular. Inferior/VD: bradiarritmia."
+        ]
+      },
+      {
+        k: "Troponina",
+        t: "Troponina ultrassensível: ótima, mas precisa contexto",
+        li: [
+          "Valor acima do percentil 99 = lesão miocárdica.",
+          "Elevação/queda = lesão aguda.",
+          "Para chamar IAM: precisa contexto isquêmico clínico, eletrocardiográfico ou de imagem.",
+          "Sepse, taquiarritmia, IC, TEP e insuficiência renal também elevam troponina.",
+          "Use algoritmo validado localmente do ensaio (0/1 h ou 0/2 h quando disponível).",
+          "O número isolado vale menos do que a curva + a história."
+        ]
+      },
+      {
+        k: "Tratamento",
+        t: "Tratamento inicial: o que realmente entra cedo",
+        li: [
+          "AAS mastigado 162,5–325 mg se não houver contraindicação.",
+          "Segundo antiagregante conforme estratégia; estatina de alta intensidade na internação.",
+          "Anticoagulação conforme cenário (fibrinólise, PCI ou NSTE-ACS).",
+          "Nitrato para alívio se sem hipotensão, VD ou PDE-5 recente; PA < 90 contraindica.",
+          "Betabloqueador oral precoce (< 24 h) se sem IC aguda, choque ou BAV importante.",
+          "Morfina não é rotina. Oxigênio só se hipoxemia (< 90%), desconforto respiratório ou choque."
+        ]
+      },
+      {
+        k: "Reperfusão",
+        t: "Reperfusão: a decisão mais importante no STEMI",
+        li: [
+          "FMC: reconhecer STEMI/OCA, interpretar ECG e ativar a rede.",
+          "≤ 90 min: meta prática de PCI primária no centro capaz.",
+          "≤ 120 min: se PCI não é viável desde o 1º contato, considerar fibrinólise.",
+          "Porta-agulha ≤ 30 min e metas de reperfusão da rede devem ser perseguidas ativamente.",
+          "Pós-lise: reavaliar sucesso e programar estratégia invasiva.",
+          "Fibrinólise não é “segunda classe”: salva tempo e miocárdio quando não há PCI oportuna."
+        ]
+      },
+      {
+        k: "Fibrinólise",
+        t: "Fibrinólise no IAM com supra",
+        li: [
+          "STEMI/oclusão coronariana aguda dentro da janela e sem acesso oportuno à PCI.",
+          "Maior benefício quanto mais cedo após o início dos sintomas.",
+          "Sempre excluir contraindicações absolutas ao fibrinolítico.",
+          "Alteplase no IAM: 15 mg IV em bolus.",
+          "Depois 0,75 mg/kg em 30 min (máx. 50 mg) e 0,5 mg/kg em 60 min (máx. 35 mg).",
+          "Dose total máxima: 100 mg."
+        ],
+        note: "Tenecteplase é preferida em muitos serviços por bolo único e logística mais simples."
+      },
+      {
+        k: "AVC",
+        t: "Primeira hora do código AVC",
+        li: [
+          "Chegada: ABC, glicemia, NIHSS e last known well.",
+          "≤ 20 min: TC/RM inicial.",
+          "≤ 45 min: interpretação e decisão.",
+          "≤ 60 min: porta-agulha para trombólise IV.",
+          "Registrar anticoagulante em uso, cirurgia recente, sangramento, PA e glicemia.",
+          "Se houver suspeita de grande vaso, angio-TC/angio-RM deve entrar cedo."
+        ],
+        note: "A imagem inicial serve sobretudo para excluir hemorragia e selecionar reperfusão."
+      },
+      {
+        k: "AVC",
+        t: "Alteplase no AVC – dose que precisa sair automática",
+        li: [
+          "0,9 mg/kg: dose total IV para AVC isquêmico agudo.",
+          "10% da dose total em bolus IV em 1 minuto.",
+          "90% em infusão contínua ao longo de 60 minutos.",
+          "Dose máxima: 90 mg.",
+          "Monitorar PA e exame neurológico com vigilância estreita.",
+          "Sem AAS, outro antiagregante ou anticoagulante nas primeiras 24 h; repetir imagem em 24 h."
+        ],
+        note: "Aqui a dose não é a do IAM."
+      },
+      {
+        k: "Reperfusão",
+        t: "Tenecteplase e trombectomia",
+        li: [
+          "A diretriz 2026 reforça espaço crescente para tenecteplase em cenários selecionados.",
+          "Tenecteplase tem vantagem logística por administração em bolo.",
+          "A escolha depende do protocolo institucional e da rede.",
+          "Trombectomia: pense cedo quando houver oclusão de grande vaso e perfil favorável.",
+          "Imagem vascular e seleção adequada são decisivas.",
+          "Em muitos pacientes, o benefício funcional supera qualquer outra medida isolada da fase aguda."
+        ]
+      },
+      {
+        k: "Take-home",
+        t: "SCA e AVC lado a lado: o que levar",
+        li: [
+          "Igual: síndrome tempo-dependente, ativação precoce de protocolo e pré-notificação.",
+          "Muda: SCA usa ECG e reperfusão coronária; AVC usa neuroimagem, NIHSS e seleção neurovascular.",
+          "Oxigênio: corte prático mais baixo na SCA; no AVC, manter > 94%.",
+          "SCA: ECG cedo, risco cedo, reperfusão cedo.",
+          "AVC: código cedo, imagem cedo, seleção cedo, reabilitação cedo.",
+          "Protocolo não substitui clínica; ele organiza a clínica."
+        ],
+        note: "A urgência bem feita é a soma de reconhecimento, prioridade, sistema e timing."
+      }
+    ],
+    quiz: [
+      {
+        enun: "Paciente de 62 anos com dor opressiva há 40 min. Qual falha causa mais perda de oportunidade?",
+        alts: [
+          "Esperar troponina antes do ECG",
+          "Dar oxigênio para todos",
+          "Chamar cardiologia antes do AAS",
+          "Pedir TC de tórax primeiro"
+        ],
+        certa: 0,
+        fb: "Na SCA, o ECG vem antes da biomarcador-dependência. Erro clássico é esperar biomarcador antes do ECG: o relógio começa no sintoma, não no laboratório."
+      },
+      {
+        enun: "Paciente de 74 anos com afasia súbita e hemiparesia há 55 min. Qual falha é mais grave?",
+        alts: [
+          "Fazer glicemia capilar",
+          "Esperar o neurologista chegar para pedir TC",
+          "Aplicar NIHSS",
+          "Registrar last known well"
+        ],
+        certa: 1,
+        fb: "No AVC, imagem e elegibilidade para reperfusão não podem esperar. Glicemia, NIHSS e last known well fazem parte do fluxo de chegada."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/sca-avc.pdf"
+      }
+    ]
+  },
+  {
+    id: "tnc-guarda-chuva",
+    titulo: "Transtornos Cognitivos e Demências",
+    area: "Saúde do Idoso",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-04-06",
+    ch: "1h",
+    desc: "Aula panorâmica de abertura do módulo: da avaliação ao tratamento, com evidências, raciocínio clínico e cuidado centrado na pessoa. Percorre anamnese, diagnóstico sindrômico, nosológico e etiológico até o tratamento e a reabilitação.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Panorâmica",
+        t: "Por que este tema importa",
+        li: [
+          "≈55 milhões de pessoas vivem com demência no mundo",
+          "Até 40% dos casos podem ter fatores de risco modificáveis",
+          "Biomarcadores e terapias iniciais mudam o valor do diagnóstico precoce",
+          "No pré-geriátrico, apresentações atípicas e causas tratáveis ganham mais peso"
+        ],
+        note: "Diagnosticar corretamente é o que separa cuidado banal de cuidado transformador. Fontes: NIA-AA 2024; WHO 2023; Lancet 2024; NIA 2025."
+      },
+      {
+        k: "Conceitos",
+        t: "Síndrome, nosologia e etiologia",
+        li: [
+          "Síndrome: conjunto de sinais e sintomas (ex.: transtorno neurocognitivo maior)",
+          "Nosologia: entidade clínica (ex.: doença de Alzheimer, DCL, DFT)",
+          "Etiologia: processo causal/biológico (ex.: amiloidopatia, doença vascular, autoimune)",
+          "Síntese em 3 linhas: sindrômico → nosológico → etiológico"
+        ],
+        note: "Regra de ouro: \"demência\" é ponto de partida; o alvo é fechar a formulação final em 3 linhas."
+      },
+      {
+        k: "Consultório",
+        t: "Quando pensar, e a anamnese com informante",
+        li: [
+          "Queixa cognitiva + prejuízo funcional = alerta forte; piora progressiva relatada por informante vale muito",
+          "Triggers práticos: dificuldade recente com finanças, receitas, medicações e direção",
+          "Checklist: início, curso, domínio afetado primeiro, impacto em AIVDs/ABVDs",
+          "Checklist: humor, sono REM, alucinações, quedas, marcha, incontinência, fármacos, álcool, anticolinérgicos",
+          "Red flags na história: idade <65 anos, evolução em semanas–meses, crises epilépticas, cefaleia, febre",
+          "Red flags: alteração comportamental muito precoce, alucinações visuais + flutuação, marcha desproporcional"
+        ],
+        note: "Pergunta inicial de alto valor: \"o que ele fazia antes e agora não faz mais?\" Sem informante, o diagnóstico fica mais frágil."
+      },
+      {
+        k: "Sindrômico",
+        t: "DCS × CCL × demência: a fronteira é funcional",
+        li: [
+          "Declínio cognitivo subjetivo: queixa sem comprovação objetiva consistente; função preservada",
+          "CCL/MCI: déficit cognitivo objetivo em ≥1 domínio; independência relativa",
+          "Demência / TNC maior: déficit cognitivo + prejuízo funcional, com impacto em AIVDs/ABVDs",
+          "A fronteira prática entre CCL e demência é funcional"
+        ]
+      },
+      {
+        k: "Diferencial",
+        t: "Visão panorâmica: o padrão inicial informa mais que o rótulo",
+        li: [
+          "Alzheimer: amnésico progressivo",
+          "DCL: flutuação + alucinação visual + REM",
+          "DFT: comportamento/linguagem primeiro",
+          "Vascular: executivo-lento + marcha + degraus",
+          "HPN: marcha > cognição + urgência",
+          "Rápida / secundária: semanas–meses, red flags sistêmicas"
+        ],
+        note: "Se a memória NÃO é o sintoma dominante, o que sobe no seu ranking etiológico?"
+      },
+      {
+        k: "Diferencial",
+        t: "Alzheimer e demência com corpos de Lewy",
+        li: [
+          "Alzheimer: início insidioso, progressão lenta; repetição de perguntas, esquecimento de fatos recentes",
+          "Alzheimer: reconhecimento também falha quando o armazenamento está comprometido",
+          "Imagem no Alzheimer: atrofia hipocampal/mesial temporal; padrão temporoparietal",
+          "DCL: flutuação cognitiva, alucinações visuais complexas e bem formadas, sono REM, parkinsonismo espontâneo",
+          "DCL: sensibilidade a antipsicóticos e quedas precoces; padrão atencional-visuoespacial mais que amnésico"
+        ],
+        note: "Clínica primeiro; biomarcador quando muda a conduta. Fontes: McKhann/NIA-AA; DLB Consortium 2017; ABN 2022."
+      },
+      {
+        k: "Diferencial",
+        t: "Frontotemporal, vascular e outros red flags",
+        li: [
+          "DFT: desinibição, apatia, perda de empatia, compulsões, hiperoralidade, pobre crítica; APP nas variantes linguísticas",
+          "DFT: atrofia frontal e/ou temporal anterior, muitas vezes assimétrica",
+          "Vascular: início após AVC/AIT ou piora em degraus; perfil disexecutivo-lento > amnésico puro",
+          "Vascular: lesão \"incidental\" não explica todo quadro — use temporalidade + fenótipo + imagem",
+          "Outros: HPN (marcha > cognição + urgência urinária); priônica (semanas–meses, mioclonias, ataxia)",
+          "Outros: autoimune/infecciosa (convulsões, febre, LCR alterado); depressão, apneia e anticolinérgicos"
+        ],
+        note: "Quando a família diz \"ele virou outra pessoa\", pense DFT. Se o curso é muito rápido, mude o seu trilho mental imediatamente."
+      },
+      {
+        k: "Investigação",
+        t: "Triagem, neuropsicologia, laboratório e imagem",
+        li: [
+          "Triagem: MEEM (5–7 min), MoCA (10 min), teste do relógio (3 min), fluência verbal (2–3 min)",
+          "Teste normal NÃO exclui CCL ou doença inicial; escolaridade, humor e reserva cognitiva mudam a interpretação",
+          "Neuropsicologia descreve o perfil: amnésico de armazenamento → Alzheimer; disexecutivo-lento → vascular/subcortical",
+          "Laboratório inicial: hemograma, TSH, B12, glicemia/HbA1c, função renal e hepática, sódio, potássio, cálcio",
+          "RM de encéfalo sem contraste é o exame estrutural inicial preferido; TC sem contraste se RM não é factível",
+          "Sequências úteis: T1 3D, T2, FLAIR, DWI, SWI/T2*"
+        ],
+        note: "Laboratório raramente \"fecha\" a demência; ele evita erro e identifica o que piora a cognição. Rastreio ≠ neuropsicologia formal."
+      },
+      {
+        k: "Investigação",
+        t: "Biomarcadores: quando eles entram",
+        li: [
+          "Considere em início precoce/pré-geriátrico, apresentação atípica e dúvida real entre etiologias",
+          "Considere na elegibilidade para terapias específicas e na necessidade de maior segurança prognóstica",
+          "LCR: Aβ42/Aβ40, tau total, p-tau",
+          "PET amiloide/tau em centros especializados",
+          "Biomarcadores sanguíneos: promissores, mas dependem de contexto clínico e disponibilidade"
+        ],
+        note: "Biomarcador não substitui fenótipo clínico."
+      },
+      {
+        k: "Tratamento",
+        t: "IAChE, memantina e outras opções",
+        li: [
+          "Donepezila 5 mg/noite (DA leve–grave); galantamina LP 8 mg/dia; rivastigmina oral 3 mg/dia; adesivo 5 cm²",
+          "Melhor evidência sintomática em DA leve–moderada; também úteis em DCL e Parkinson-demência",
+          "Memantina: antagonista NMDA; iniciar 5 mg/dia e titular até 20 mg/dia; Alzheimer moderado–grave; pode associar a IAChE",
+          "ISRS/trazodona: depressão, ansiedade ou desinibição em DFT selecionada; não tratam cognição",
+          "Antipsicóticos: só para risco/agitação refratária; extremo cuidado em DCL",
+          "Anti-amiloides (donanemabe, lecanemabe): casos iniciais selecionados, biomarcador e monitorização"
+        ],
+        note: "Troca de IAChE costuma ser por intolerância mais do que por \"falha\". Fontes: PCDT Alzheimer 2025; NICE NG97."
+      },
+      {
+        k: "Reabilitação",
+        t: "Reabilitação é tratamento, não acessório",
+        li: [
+          "Atividade física é recomendação forte para pessoas com demência (WHO 2023)",
+          "Ganhos em marcha, equilíbrio, função, qualidade de vida e sintomas cognitivos globais",
+          "Programas 3–4x/semana, 30–45 min, >12 semanas têm melhor suporte",
+          "Fisioterapia (marcha, força, equilíbrio, quedas); TO (AIVDs, adaptação); fono (linguagem, deglutição)",
+          "Estimulação cognitiva com metas realistas; cuidadores: educação, rotina, segurança, sobrecarga, diretivas"
+        ],
+        note: "Exemplo de prescrição útil: \"fisioterapia 2–3x/semana com foco em marcha, dupla tarefa e prevenção de quedas\"."
+      },
+      {
+        k: "Take-home",
+        t: "Se o aluno lembrar destes 6 pontos, a aula cumpriu sua missão",
+        li: [
+          "Demência é síndrome; o alvo final é fechar nosologia e etiologia",
+          "Função é a fronteira prática entre CCL e demência",
+          "O padrão cognitivo orienta o diferencial mais do que o escore isolado",
+          "RM + laboratório evitam erros e refinam o diagnóstico, mas não substituem clínica",
+          "IAChE e memantina ajudam, porém a magnitude costuma ser modesta",
+          "Reabilitação, exercício e cuidado multidisciplinar mudam desfechos do mundo real"
+        ],
+        note: "Investigar bem e reabilitar cedo vale tanto quanto medicar."
+      }
+    ],
+    quiz: [
+      {
+        enun: "Dona Lúcia, 72 anos, professora aposentada: 18 meses de repetição de perguntas, perda de contas e dificuldade com receitas novas. Mantém higiene e marcha preservadas, sem flutuação importante. MoCA 19/30; TSH, B12 e glicemia normais; RM com atrofia hipocampal bilateral predominante. Qual a formulação mais provável?",
+        alts: [
+          "TNC maior leve (demência leve), provável doença de Alzheimer típica",
+          "TNC maior leve, provável demência com corpos de Lewy",
+          "TNC maior leve, provável demência frontotemporal",
+          "Declínio cognitivo subjetivo"
+        ],
+        certa: 0,
+        fb: "Sindrômico: demência leve / TNC maior leve. Nosológico: provável doença de Alzheimer típica. Etiológico: processo neurodegenerativo compatível com Alzheimer, sem causa alternativa dominante. Conduta inicial: AChEI + orientação familiar + revisão de segurança/finanças + atividade física/reabilitação."
+      },
+      {
+        enun: "Homem, 79 anos, com DCL provável: alucinações visuais, sonolência diurna, distúrbio comportamental do sono REM e lentificação de marcha. Familiares relatam quedas e sensibilidade importante a haloperidol. AIVDs já comprometidas; humor estável. Qual o plano terapêutico?",
+        alts: [
+          "Haloperidol para controlar as alucinações visuais",
+          "Rivastigmina ou donepezila, evitar neurolépticos sempre que possível e plano intenso de mobilidade, sono, quedas e cuidador",
+          "Memantina isolada, sem reabilitação",
+          "Cannabis medicinal como tratamento cognitivo de base"
+        ],
+        certa: 1,
+        fb: "Resposta esperada: rivastigmina/donepezila + evitar neurolépticos sempre que possível + plano intenso de mobilidade, sono, quedas e cuidador. Antipsicóticos exigem extremo cuidado na DCL; a cannabis medicinal não tem evidência robusta como tratamento cognitivo de base."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/tnc-guarda-chuva.pdf"
+      }
+    ]
+  },
+  {
+    id: "ic-idoso-full",
+    titulo: "Insuficiência Cardíaca — o essencial no idoso",
+    area: "Cardiogeriatria",
+    prof: "u-igor",
+    status: "publicada",
+    semana: "2026-02-25",
+    ch: "20 min",
+    desc: "Reconhecer a IC no idoso, inclusive nas apresentações atípicas, classificar por estágio, NYHA e fração de ejeção, e tratar com evidência: 4 pilares na IC FEr e iSGLT2 na IC FEp.",
+    videoUrl: "",
+    deck: [
+      {
+        k: "Por que importa",
+        t: "IC no idoso: alta prevalência, alta hospitalização, alta vulnerabilidade",
+        li: [
+          "Alta prevalência e alta taxa de hospitalização.",
+          "Alta polifarmácia e alta vulnerabilidade (fragilidade).",
+          "No idoso, a IC pode parecer “cansaço do envelhecimento”.",
+          "Sua missão: separar o normal do patológico. Dominar “o básico bem feito” salva internações."
+        ]
+      },
+      {
+        k: "Conceito",
+        t: "O que é insuficiência cardíaca? Definição prática para a vida real",
+        li: [
+          "IC é uma síndrome clínica: o coração não consegue atender às demandas do corpo…",
+          "…ou só consegue às custas de pressões de enchimento elevadas.",
+          "Resultado: sintomas (dispneia, fadiga) + sinais (congestão)."
+        ]
+      },
+      {
+        k: "Classificar",
+        t: "Estágio (A–D), NYHA e fração de ejeção",
+        li: [
+          "Estágios (AHA/ACC): A risco, sem doença estrutural ou sintomas; B doença estrutural/biomarcadores, sem sintomas.",
+          "Estágios: C sintomática (atual ou prévia); D avançada/refratária (especialista, paliativos, dispositivos).",
+          "NYHA mede a vida diária: I sem limitação, II leve, III importante, IV em repouso.",
+          "FEVE: IC FEr ≤40%, IC FElr 41–49%, IC FEp ≥50%; IC FEm >40% (era <40%)."
+        ],
+        note: "Atalho de prova: “IC FEm” continua como IC FEp — não suspender o tratamento."
+      },
+      {
+        k: "Fisiopatologia",
+        t: "Pense em 2 problemas: congestão × baixo débito",
+        li: [
+          "Congestão: dispneia, ortopneia, edema, turgência jugular.",
+          "Baixo débito: fadiga, hipotensão, extremidades frias e confusão no idoso.",
+          "A ativação neuro-hormonal (SNS/RAAS) mantém no curto prazo e piora no longo prazo.",
+          "Congestão é clínica + imagem: no RX procure cardiomegalia, linhas B de Kerley, redistribuição vascular e derrame pleural."
+        ],
+        note: "No idoso, a congestão pode coexistir com DPOC/pneumonia — pense em “causa dupla”."
+      },
+      {
+        k: "Idoso",
+        t: "No idoso, a IC pode ser “silenciosa”",
+        li: [
+          "Queda recente de capacidade funcional.",
+          "Dispneia aos esforços “menores”; edema ou ganho de peso.",
+          "Delirium/confusão, especialmente na descompensação.",
+          "Intolerância às medicações usuais (hipotensão, piora renal)."
+        ]
+      },
+      {
+        k: "Diagnóstico",
+        t: "Três passos: suspeita → peptídeo natriurético → ecocardiograma",
+        li: [
+          "1) Suspeite: sintomas e sinais + ECG (no idoso, atenção ao atípico).",
+          "2) Peptídeos natriuréticos: baixo torna IC improvável; alto apoia o diagnóstico e estratifica.",
+          "Cortes úteis (ESC) — crônica: BNP <35 ou NT-proBNP <125; aguda: BNP <100 ou NT-proBNP <300.",
+          "3) Ecocardiograma: FEVE, valvas, pressão e causas estruturais."
+        ]
+      },
+      {
+        k: "IC FEr",
+        t: "A base do tratamento: os 4 pilares. Começar cedo, ajustar rápido",
+        li: [
+          "ARNI/IECA/BRA: remodelamento, reduz mortalidade.",
+          "Betabloqueador: reduz SNS, aumenta sobrevida.",
+          "MRA (antialdosterona): reduz eventos.",
+          "iSGLT2: benefício rápido, reduz internação. O diurético alivia sintomas de congestão, mas não substitui os 4 pilares."
+        ]
+      },
+      {
+        k: "Como iniciar",
+        t: "Iniciar no idoso sem “matar de hipotensão”: segurança primeiro",
+        li: [
+          "Antes de prescrever, cheque: pressão e sintomas de hipotensão; função renal e potássio; congestão (precisa de diurético?).",
+          "Comece 1–2 pilares já na primeira semana, em doses baixas.",
+          "Reavalie em 1–2 semanas e “complete” os 4 pilares.",
+          "Ajuste o diurético conforme sintomas e peso."
+        ]
+      },
+      {
+        k: "IC FEp",
+        t: "O que mudou de verdade: ESC 2023 — iSGLT2 é Classe I (A)",
+        li: [
+          "Em IC FEp, os iSGLT2 (empagliflozina, dapagliflozina) reduzem internação e sintomas.",
+          "Diurético para sintomas e controle da pressão arterial.",
+          "Tratar FA, DM, obesidade e apneia.",
+          "Reabilitação e educação continuam essenciais no idoso."
+        ]
+      },
+      {
+        k: "Agudo",
+        t: "Descompensação: pense em “causa + congestão”",
+        li: [
+          "Três perguntas na sala: está congesto? Está mal perfundido? Qual o gatilho?",
+          "Gatilhos: infecção, IAM, FA, falta de diurético, anemia, TEP.",
+          "Ações iniciais: oxigênio/ventilação se necessário e diurético IV se congesto.",
+          "Tratar o gatilho: antibiótico, controle da FA, reperfusão etc."
+        ]
+      },
+      {
+        k: "Geriatria",
+        t: "O “plus” da geriatria na IC: checklist do dia a dia",
+        li: [
+          "Fragilidade e risco de quedas; polifarmácia (interações e adesão); hipotensão ortostática.",
+          "DRC e hipercalemia; anemia e ferropenia.",
+          "Amiloidose: idoso + IC FEp + hipertrofia.",
+          "Tratamento “invisível”: autocuidado (peso diário), reabilitação, vacinas (influenza, pneumococo, COVID-19), sódio/fluido individualizados."
+        ],
+        note: "Dispositivos na IC FEr: QRS largo + sintomas → ressincronizador; alto risco de morte súbita → CDI. No idoso, benefício × fragilidade × preferência."
+      },
+      {
+        k: "Take-home",
+        t: "Três frases para levar para a vida",
+        li: [
+          "IC no idoso pode ser atípica — suspeite cedo.",
+          "Diagnóstico = NT-proBNP + eco; congestão = clínica + imagem.",
+          "IC FEr: 4 pilares. IC FEp: iSGLT2 + controle das comorbidades."
+        ]
+      }
+    ],
+    quiz: [
+      {
+        enun: "Homem, 78 anos, HAS/DM, “cansaço” há 2 meses com piora em 1 semana, edema de MMII, ortopneia, crepitações bibasais, PA 106/62, FC 98, SatO2 93%. Qual o melhor próximo passo para confirmar a IC e guiar a conduta?",
+        alts: [
+          "RX",
+          "BNP/NT-proBNP",
+          "Eco",
+          "Todos (na ordem certa)"
+        ],
+        certa: 3,
+        fb: "Resposta esperada: D — suspeita → BNP → eco."
+      }
+    ],
+    materiais: [
+      {
+        nome: "Aula completa (PDF)",
+        arquivo: "docs/aulas/ic-idoso-full.pdf"
+      }
+    ]
+  }
 ];
 
 const SEED_NOTICIAS = [
@@ -495,7 +3850,7 @@ const DOWNLOADS = [
 ];
 
 /* ---------- storage ---------- */
-const DB_KEY = 'va_db_v3', SESS_KEY = 'va_sess_v1', PROG_KEY = 'va_prog_v1';
+const DB_KEY = 'va_db_v4', SESS_KEY = 'va_sess_v1', PROG_KEY = 'va_prog_v1';
 function loadJSON(k, fb) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? fb; } catch { return fb; } }
 function saveJSON(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
 let DB = loadJSON(DB_KEY, null);
@@ -620,7 +3975,7 @@ function courseCard(a) {
     </div>
     <div class="body">
       <h3>${esc(a.titulo)}</h3>
-      <div class="meta"><span class="pill">${esc(p.titulo)}</span><span class="pill">${esc(formatoDe(a))}</span><span class="pill">${esc(a.ch)} · pós-teste · certificado</span></div>
+      <div class="meta"><span class="pill">${esc(p.titulo)}</span><span class="pill">${esc(formatoDe(a))}</span><span class="pill">${esc(a.ch)}${a.quiz.length ? ' · pós-teste · certificado' : ''}</span></div>
       <p class="desc">${esc(a.desc)}</p>
       ${foot}
     </div></a>`;
@@ -657,7 +4012,8 @@ function vHome() {
   <section><div class="wrap">
     <p class="eyebrow">No catálogo</p>
     <h2>Últimas aulas publicadas.</h2>
-    <div class="cards c2">${pubs.map(courseCard).join('')}</div>
+    <div class="cards c2">${pubs.slice(0, 6).map(courseCard).join('')}</div>
+    <p style="margin-top:26px"><a class="btn-ghost btn-sm" href="#/aulas">Ver as ${pubs.length} aulas do catálogo</a></p>
     ${progs.length ? `<p class="lead" style="margin-top:30px">Próximas semanas: ${progs.slice(0, 3).map(a => esc(a.titulo)).join(' · ')}…</p>` : ''}
   </div></section>
 
