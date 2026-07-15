@@ -524,43 +524,43 @@ const SEED_AULAS = [
       {
         enun: "Paciente acamado de 80 anos, com sequela de AVC, sem febre, apresenta NOVO delirium hipoativo, FR 24, PAS 98 e enchimento capilar 4 s. Qual a conduta inicial mais adequada?",
         alts: [
-          "Aguardar surgir febre para considerar infecção",
-          "Reconhecer como possível sepse, aplicar o NEWS2 (rastreio) e escalonar imediatamente, registrando o horário do reconhecimento",
           "Apenas aumentar a frequência de aferição de sinais em 24 h",
-          "Suspender a dieta e reavaliar no dia seguinte"
+          "Suspender a dieta e reavaliar no dia seguinte",
+          "Reconhecer como possível sepse, aplicar o NEWS2 (rastreio) e escalonar imediatamente, registrando o horário do reconhecimento",
+          "Aguardar surgir febre para considerar infecção"
         ],
-        certa: 1,
+        certa: 2,
         fb: "Mudança vs. basal + sinais de hipoperfusão indicam possível sepse; acionar avaliação imediata e registrar o horário do reconhecimento."
       },
       {
         enun: "Sobre a ferramenta de RASTREIO de sepse recomendada à beira-leito (SSC), é correto afirmar que:",
         alts: [
-          "O qSOFA é a ferramenta de rastreio preferida",
           "A SSC recomenda NEWS/NEWS2/MEWS ou SIRS — e NÃO o qSOFA — como ferramenta única de rastreio, por maior sensibilidade",
-          "A febre é obrigatória para reconhecer a sepse",
-          "SIRS está proibido em qualquer cenário"
+          "SIRS está proibido em qualquer cenário",
+          "O qSOFA é a ferramenta de rastreio preferida",
+          "A febre é obrigatória para reconhecer a sepse"
         ],
-        certa: 1,
+        certa: 0,
         fb: "A SSC recomenda NEWS/NEWS2/MEWS ou SIRS em vez do qSOFA como rastreio único, por maior sensibilidade."
       },
       {
         enun: "Sobre a coleta de culturas na sepse, qual conduta está correta?",
         alts: [
-          "Coletar hemoculturas somente após 24 h de antibiótico",
-          "Coletar 2 hemoculturas preferencialmente ANTES do antibiótico, sem atrasar o ATB no choque",
           "Não coletar culturas se houver foco evidente",
-          "Coletar apenas urocultura em todos os casos"
+          "Coletar hemoculturas somente após 24 h de antibiótico",
+          "Coletar apenas urocultura em todos os casos",
+          "Coletar 2 hemoculturas preferencialmente ANTES do antibiótico, sem atrasar o ATB no choque"
         ],
-        certa: 1,
+        certa: 3,
         fb: "Culturas antes do antibiótico, sem atrasar o antibiótico no choque (prioridade tempo-dependente)."
       },
       {
         enun: "Segundo a estratificação de tempo do antibiótico da SSC 2026, no CHOQUE SÉPTICO o antibiótico deve ser administrado:",
         alts: [
-          "Em até 6 horas",
+          "Apenas após a tomografia",
           "Imediatamente, idealmente em até 1 hora",
-          "Somente após resultado de cultura",
-          "Apenas após a tomografia"
+          "Em até 6 horas",
+          "Somente após resultado de cultura"
         ],
         certa: 1,
         fb: "SSC 2026: no choque, antibiótico imediato, ideal em até 1 h."
@@ -569,66 +569,66 @@ const SEED_AULAS = [
         enun: "Na situação de POSSÍVEL sepse SEM choque (SSC 2026), a recomendação de tempo do antibiótico é:",
         alts: [
           "Antibiótico obrigatório em até 1 hora em todos os casos",
-          "Investigação rápida e, se a suspeita de infecção persistir, antibiótico em até 3 horas",
           "Nunca iniciar antibiótico sem cultura positiva",
-          "Transferir todos os pacientes imediatamente"
+          "Transferir todos os pacientes imediatamente",
+          "Investigação rápida e, se a suspeita de infecção persistir, antibiótico em até 3 horas"
         ],
-        certa: 1,
+        certa: 3,
         fb: "SSC 2026: possível sepse sem choque — investigar e antibiótico em até 3 h se a suspeita persistir."
       },
       {
         enun: "Sobre a ressuscitação volêmica no idoso frágil, cardiopata ou renal crônico, assinale a correta:",
         alts: [
-          "Infundir 30 mL/kg fixo e rápido em todos, sem reavaliação",
-          "O volume (~30 mL/kg em até 3 h, base SSC 2026) tem baixa certeza de evidência e deve ser INDIVIDUALIZADO, com reavaliação para evitar sobrecarga",
+          "O volume (pelo menos 30 mL/kg em até 3 h, base SSC 2026) tem baixa certeza de evidência e deve ser INDIVIDUALIZADO, com reavaliação para evitar sobrecarga",
           "Está contraindicado qualquer cristaloide",
+          "Infundir 30 mL/kg fixo e rápido em todos, sem reavaliação",
           "Usar coloides como primeira escolha sempre"
         ],
-        certa: 1,
-        fb: "~30 mL/kg tem baixa certeza de evidência; individualizar e reavaliar para evitar sobrecarga no idoso, cardiopata ou renal crônico."
+        certa: 0,
+        fb: "Pelo menos 30 mL/kg tem baixa certeza de evidência; individualizar e reavaliar para evitar sobrecarga no idoso, cardiopata ou renal crônico."
       },
       {
         enun: "Qual ferramenta de perfusão, adjuvante e de baixo custo, é especialmente útil onde não há laboratório imediato?",
         alts: [
+          "Débito cardíaco por termodiluição",
           "Pressão venosa central (PVC)",
           "Tempo de enchimento capilar",
-          "Saturação venosa central contínua",
-          "Débito cardíaco por termodiluição"
+          "Saturação venosa central contínua"
         ],
-        certa: 1,
+        certa: 2,
         fb: "Enchimento capilar — adjuvante de perfusão simples e de baixo custo (ANDROMEDA-SHOCK; SSC 2026)."
       },
       {
         enun: "Numa unidade sem CTI no local, qual achado é critério para acionar transferência ou escalonamento?",
         alts: [
-          "Melhora clínica com lactato em queda",
-          "Choque séptico/hipotensão refratária ao volume ou necessidade de vasopressor sem estrutura segura de infusão",
+          "Foco urinário já controlado com retirada da sonda",
           "NEWS2 = 1",
-          "Foco urinário já controlado com retirada da sonda"
+          "Melhora clínica com lactato em queda",
+          "Choque séptico/hipotensão refratária ao volume ou necessidade de vasopressor sem estrutura segura de infusão"
         ],
-        certa: 1,
+        certa: 3,
         fb: "Choque ou necessidade de vasopressor sem estrutura segura de infusão e monitorização é critério de transferência."
       },
       {
         enun: "Paciente com doença avançada e TETO DE CUIDADO definido (exclusivamente paliativo) desenvolve sepse. A conduta correta é:",
         alts: [
-          "Aplicar o bundle agressivo completo e transferir para CTI",
-          "Não fazer nada, pois é paliativo",
+          "Suspender toda hidratação e analgesia",
           "Priorizar o conforto (dispneia, dor, secreções, delirium) e usar antibiótico apenas se reduzir sofrimento, com decisão compartilhada documentada",
-          "Suspender toda hidratação e analgesia"
+          "Aplicar o bundle agressivo completo e transferir para CTI",
+          "Não fazer nada, pois é paliativo"
         ],
-        certa: 2,
+        certa: 1,
         fb: "Exclusivamente paliativo: priorizar conforto; antibiótico só se aliviar sofrimento; decisão compartilhada documentada."
       },
       {
         enun: "Sobre proporcionalidade terapêutica e registro, é correto afirmar que:",
         alts: [
-          "Limitar intervenções que apenas prolongam o morrer é omissão de socorro",
-          "A decisão de teto de cuidado não precisa ser registrada",
           "Limitar/suspender intervenções fúteis é boa prática, desde que decidida em equipe, comunicada e documentada em prontuário",
-          "Cuidado paliativo significa interromper o acompanhamento médico"
+          "Limitar intervenções que apenas prolongam o morrer é omissão de socorro",
+          "Cuidado paliativo significa interromper o acompanhamento médico",
+          "A decisão de teto de cuidado não precisa ser registrada"
         ],
-        certa: 2,
+        certa: 0,
         fb: "Limitar intervenções fúteis é boa prática quando decidida em equipe, comunicada e registrada."
       }
     ],
@@ -4151,7 +4151,7 @@ const DOWNLOADS = [
 ];
 
 /* ---------- storage ---------- */
-const DB_KEY = 'va_db_v5', SESS_KEY = 'va_sess_v1', PROG_KEY = 'va_prog_v1';
+const DB_KEY = 'va_db_v6', SESS_KEY = 'va_sess_v1', PROG_KEY = 'va_prog_v1';
 function loadJSON(k, fb) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? fb; } catch { return fb; } }
 function saveJSON(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
 let DB = loadJSON(DB_KEY, null);
