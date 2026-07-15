@@ -3890,6 +3890,21 @@ function certCode(userId, aulaId) {
   return 'VA-' + h.toString(36).toUpperCase().padStart(7, '0');
 }
 const NOTA_MINIMA = 70, MAX_TENTATIVAS = 3;
+// Ordem total explícita dos status visíveis fora do admin (rascunho nunca entra aqui — nomear por valor, não por negação).
+const STATUS_VISIVEIS = ['publicada', 'programada'];
+const STATUS_ORDEM = { publicada: 0, programada: 1 };
+// Rótulo do status na tabela admin: nomeado por valor (todos os 3 estados explícitos), nunca por eliminação.
+const STATUS_PILL_ADMIN = {
+  publicada: '<span class="pill ok">publicada</span>',
+  programada: '<span class="pill warn">programada</span>',
+  rascunho: '<span class="pill">rascunho</span>',
+};
+// Fonte única do vocabulário de status (achado 3 da Iva). Guard do form de aula e KPIs do
+// admin derivam daqui: acrescentar um status na Fase 2 exige só editar este mapa (+ a
+// <option> correspondente no select do form, que mantém rótulo PT-BR e ordem de fluxo
+// próprios — ver comentário em aulaForm/VA).
+const STATUS_TODOS = Object.keys(STATUS_PILL_ADMIN);
+const KPI_LABEL_STATUS = { publicada: 'Aulas publicadas', programada: 'Programadas', rascunho: 'Rascunhos' };
 </script>
 <script>
 'use strict';
@@ -3957,6 +3972,7 @@ $('#burger').addEventListener('click', () => {
 
 /* ---------- fragmentos ---------- */
 function courseCard(a) {
+  if (a.status === 'rascunho') return ''; // defesa extra: rascunho nunca vira card, mesmo se algum chamador futuro esquecer de filtrar
   const u = me(); const p = profDe(a);
   const publicada = a.status === 'publicada';
   const seteDias = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
@@ -3971,7 +3987,7 @@ function courseCard(a) {
     <div class="thumb">${MK}
       <span class="pill area">${esc(a.area)}</span>
       ${nova ? '<span class="pill gold nova">Nova da semana</span>' : ''}
-      ${!publicada ? `<span class="pill warn nova">Programada · ${esc(fmtData(a.semana))}</span>` : ''}
+      ${a.status === 'programada' ? `<span class="pill warn nova">Programada · ${esc(fmtData(a.semana))}</span>` : ''}
     </div>
     <div class="body">
       <h3>${esc(a.titulo)}</h3>
@@ -3988,6 +4004,7 @@ function newsItem(n) {
 function vHome() {
   const pubs = DB.aulas.filter(a => a.status === 'publicada').sort((a, b) => b.semana.localeCompare(a.semana));
   const progs = DB.aulas.filter(a => a.status === 'programada').sort((a, b) => a.semana.localeCompare(b.semana));
+  const noCatalogo = DB.aulas.filter(a => STATUS_VISIVEIS.includes(a.status)).length; // publicada + programada, igual ao que vAulas lista
   return `
   <header class="hero"><div class="wrap">
     <div>
@@ -4013,7 +4030,7 @@ function vHome() {
     <p class="eyebrow">No catálogo</p>
     <h2>Últimas aulas publicadas.</h2>
     <div class="cards c2">${pubs.slice(0, 6).map(courseCard).join('')}</div>
-    <p style="margin-top:26px"><a class="btn-ghost btn-sm" href="#/aulas">Ver as ${pubs.length} aulas do catálogo</a></p>
+    <p style="margin-top:26px"><a class="btn-ghost btn-sm" href="#/aulas">Ver as ${noCatalogo} aulas do catálogo</a></p>
     ${progs.length ? `<p class="lead" style="margin-top:30px">Próximas semanas: ${progs.slice(0, 3).map(a => esc(a.titulo)).join(' · ')}…</p>` : ''}
   </div></section>
 
@@ -4158,9 +4175,11 @@ function vAulas() {
   const filtro = (location.hash.split('?f=')[1] || '');
   const areas = ['Todas', ...AREAS];
   const lista = DB.aulas
+    .filter(a => STATUS_VISIVEIS.includes(a.status)) // whitelist: só entra o que É publicada/programada, nunca por exclusão
     .filter(a => !filtro || filtro === 'Todas' || a.area === dec(filtro))
     .sort((a, b) => {
-      if (a.status !== b.status) return a.status === 'publicada' ? -1 : 1;
+      const ra = STATUS_ORDEM[a.status] ?? 99, rb = STATUS_ORDEM[b.status] ?? 99; // ordem total explícita, não binária
+      if (ra !== rb) return ra - rb;
       return a.status === 'publicada' ? b.semana.localeCompare(a.semana) : a.semana.localeCompare(b.semana);
     });
   return `<section style="padding-top:44px"><div class="wrap">
@@ -4176,7 +4195,10 @@ function vAulas() {
 
 function vAula(id) {
   const a = DB.aulas.find(x => x.id === id);
-  if (!a) return v404();
+  // Whitelist, não blacklist (achado 1 da Iva): só os status em STATUS_VISIVEIS
+  // (publicada/programada) chegam ao corpo da função. Rascunho, ou um 4º status que a
+  // Fase 2 venha a criar, caem aqui — nunca no "else" permissivo de conteúdo liberado.
+  if (!a || !STATUS_VISIVEIS.includes(a.status)) return v404();
   const u = me(); const p = profDe(a);
   const bloqueada = a.status === 'publicada' && (!u || !assinante(u));
   const pr = u ? progDe(u.id, a.id) : null;
@@ -4352,7 +4374,7 @@ function vCerts() {
       <form class="form" id="fVerif" style="max-width:420px"><div><label for="vcod">Código (ex.: VA-XXXXXXX)</label><input id="vcod" required></div>
       <button class="btn btn-sm" type="submit" style="justify-self:start">Verificar</button></form>
       <p class="small" id="vres" style="margin-top:10px"></p>
-      <p class="small" style="margin-top:10px;opacity:.7">No MVP a verificação confere os certificados emitidos neste dispositivo; a verificação pública ocorrerá no servidor, na Fase 2.</p>
+      <p class="small" style="margin-top:10px;opacity:.7">No MVP a verificação confere, entre os certificados emitidos neste dispositivo, qual nome corresponde ao código informado (a mesma informação impressa no próprio certificado) — a verificação pública com abrangência de toda a plataforma ocorrerá no servidor, na Fase 2.</p>
     </div>
   </div></section>`;
 }
@@ -4437,7 +4459,7 @@ function vAdmin(sub) {
       <button class="btn btn-sm" data-act="aula-form">+ Nova aula</button></div>
       <div class="t-wrap"><table class="t"><thead><tr><th>Título</th><th>Área</th><th>Professor</th><th>Formato</th><th>Status</th><th>Semana</th><th></th></tr></thead><tbody>
       ${DB.aulas.map(a => `<tr><td>${esc(a.titulo)}</td><td>${esc(a.area)}</td><td>${esc(profDe(a).nome)}</td><td>${esc(formatoDe(a))}</td>
-        <td>${a.status === 'publicada' ? '<span class="pill ok">publicada</span>' : '<span class="pill warn">programada</span>'}</td><td>${esc(fmtData(a.semana))}</td>
+        <td>${Object.hasOwn(STATUS_PILL_ADMIN, a.status) ? STATUS_PILL_ADMIN[a.status] : `<span class="pill err">status desconhecido: ${esc(a.status)}</span>`}</td><td>${esc(fmtData(a.semana))}</td>
         <td style="white-space:nowrap"><button class="btn-ghost btn-sm" data-act="aula-form" data-id="${esc(a.id)}">Editar</button>
         <button class="btn-ghost btn-sm btn-danger" data-act="aula-del" data-id="${esc(a.id)}">Excluir</button></td></tr>`).join('')}
       </tbody></table></div>
@@ -4466,8 +4488,7 @@ function vAdmin(sub) {
     <p class="eyebrow">Administração</p>
     <h2>Gestão da plataforma.</h2>
     <div class="kpis">
-      <div class="kpi"><div class="n">${DB.aulas.filter(a => a.status === 'publicada').length}</div><div class="l">Aulas publicadas</div></div>
-      <div class="kpi"><div class="n">${DB.aulas.filter(a => a.status === 'programada').length}</div><div class="l">Programadas</div></div>
+      ${STATUS_TODOS.map(s => `<div class="kpi"><div class="n">${DB.aulas.filter(a => a.status === s).length}</div><div class="l">${esc(KPI_LABEL_STATUS[s] || s)}</div></div>`).join('')}
       <div class="kpi"><div class="n">${DB.users.filter(x => x.papel === 'aluno').length}</div><div class="l">Alunos</div></div>
       <div class="kpi"><div class="n">${certsTot}</div><div class="l">Certificados (dispositivo)</div></div>
     </div>
@@ -4542,16 +4563,22 @@ window.VA = {
   aulaForm(id) {
     const a = id ? DB.aulas.find(x => x.id === id) : null;
     const profs = DB.users.filter(x => x.papel === 'professor');
+    // As <option> de status abaixo ficam literais (valor + rótulo PT-BR + ordem de fluxo
+    // rascunho→programada→publicada, deliberadamente diferente da ordem de STATUS_PILL_ADMIN/
+    // STATUS_TODOS, que prioriza "publicada" nos KPIs). O vocabulário de VALIDADE não diverge
+    // disso: o guard do submit usa STATUS_TODOS (fonte única) — ao criar um status novo,
+    // acrescente a <option> aqui e ele já é aceito pelo guard automaticamente.
     modal(`<h3>${a ? 'Editar aula' : 'Nova aula'}</h3>
       <form class="form" id="fAula">
         <div><label>Título</label><input name="titulo" required value="${a ? esc(a.titulo) : ''}"></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
           <div><label>Área</label><select name="area">${AREAS.map(x => `<option ${a && a.area === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select></div>
           <div><label>Professor</label><select name="prof">${profs.map(pp => `<option value="${esc(pp.id)}" ${a && a.prof === pp.id ? 'selected' : ''}>${esc(pp.nome)}</option>`).join('')}</select></div>
-          <div><label>Status</label><select name="status"><option value="programada" ${a && a.status === 'programada' ? 'selected' : ''}>Programada</option><option value="publicada" ${a && a.status === 'publicada' ? 'selected' : ''}>Publicada</option></select></div>
+          <div><label>Status</label><select name="status"><option value="rascunho" ${!a || a.status === 'rascunho' ? 'selected' : ''}>Rascunho</option><option value="programada" ${a && a.status === 'programada' ? 'selected' : ''}>Programada</option><option value="publicada" ${a && a.status === 'publicada' ? 'selected' : ''}>Publicada</option></select></div>
           <div><label>Semana (data)</label><input name="semana" type="date" required value="${a ? esc(a.semana) : ''}"></div>
           <div><label>Carga horária</label><input name="ch" required value="${a ? esc(a.ch) : '1h'}"></div>
         </div>
+        <p class="small">Rascunho: invisível para todos, inclusive para você fora desta tela. Programada: aparece no catálogo com a data prevista, mas sem conteúdo liberado. Publicada: visível e liberada para assinantes.</p>
         <div><label>Descrição</label><textarea name="desc" required>${a ? esc(a.desc) : ''}</textarea></div>
         <div><label>URL de incorporação do vídeo (YouTube não listado / Vimeo)</label><input name="videoUrl" value="${a ? esc(a.videoUrl) : ''}" placeholder="https://www.youtube.com/embed/…"></div>
         <div><label>Conteúdo avançado — JSON com deck, quiz e materiais (opcional)</label>
@@ -4584,6 +4611,7 @@ window.VA = {
         av = { deck, quiz, materiais: mats };
       }
       delete v.avancado;
+      if (!STATUS_TODOS.includes(v.status)) { toast('Status de aula inválido.'); return; }
       if (a) { Object.assign(a, v); if (av) Object.assign(a, av); }
       else DB.aulas.push({ deck: [], quiz: [], materiais: [], ...v, ...(av || {}), id: uid() });
       saveDB(); hideModal(); toast('Aula salva.'); render();
