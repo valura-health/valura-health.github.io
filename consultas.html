@@ -3,6 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Resolve o tema ANTES do primeiro paint, evitando flash. Roda no <head>, então marca
+   o <html> (o <body> ainda não existe neste ponto do parsing). Prioridade: escolha salva
+   em localStorage > prefers-color-scheme do SO > claro (padrão da página — ver Vault:
+   Polaridade de tela e o olho que envelhece §7). */
+(function(){
+  var KEY='valura-theme';
+  try{
+    var saved=localStorage.getItem(KEY);
+    var theme=(saved==='light'||saved==='dark')?saved:
+      ((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');
+    if(theme==='light'){ document.documentElement.classList.add('theme-light'); }
+    document.documentElement.setAttribute('data-theme', theme);
+  }catch(e){
+    document.documentElement.classList.add('theme-light');
+    document.documentElement.setAttribute('data-theme','light');
+  }
+})();
+</script>
 <meta name="description" content="Consultas particulares com o Dr. Igor Morais (cardiogeriatria) e o Dr. Bernardo Tardin (saúde do idoso). Quem atende, onde e por quanto — agende pelo WhatsApp.">
 <meta property="og:title" content="Consultas particulares — Valura">
 <meta property="og:description" content="Quem atende, onde atende e quanto custa. Agende direto no WhatsApp.">
@@ -48,14 +67,23 @@
   nav .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
   nav .brand .mk{width:26px;height:26px}
   nav .brand b{font-family:var(--fd);letter-spacing:.26em;text-indent:.26em;font-size:17px;color:var(--gold);font-weight:500}
-  nav .links{margin-left:auto;display:flex;align-items:center;gap:8px}
+  nav .links{display:flex;align-items:center;gap:8px}
   nav .links a{font-family:var(--fl);font-size:12.5px;letter-spacing:.05em;color:var(--ash-dim);text-decoration:none;transition:color .2s,background .2s;display:inline-flex;align-items:center;min-height:24px;padding:10px 10px;border-radius:8px}
   nav .links a:hover{color:var(--gold-hi)}
   nav .links a[aria-current="page"]{color:var(--gold-hi)}
   nav .links a.navcta{font-weight:600;letter-spacing:.04em;color:#0B0B10;background:linear-gradient(180deg,var(--gold-hi),var(--gold));padding:10px 18px;margin-left:6px}
   nav .links a.navcta:hover{color:#0B0B10}
 
-  .hamburger{display:none;width:42px;height:42px;min-width:24px;min-height:24px;border-radius:10px;border:1px solid var(--line-soft);background:transparent;align-items:center;justify-content:center;flex-direction:column;gap:5px;cursor:pointer;padding:0}
+  /* Toggle de tema — SÓ nesta página. Fica fora de #navMenu (o painel colapsável do
+     mobile) de propósito: precisa continuar visível e alcançável sem abrir o hambúrguer
+     (o público é idoso). Recebe o margin-left:auto que antes era de nav .links, então o
+     bloco [toggle][hamburger/links] continua indo para a borda direita da nav, em
+     qualquer largura. */
+  .theme-toggle{margin-left:auto;font-family:var(--fl);font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--gold-hi);background:transparent;border:1px solid var(--line-soft);border-radius:999px;padding:8px 14px;min-height:24px;min-width:24px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;transition:border-color .2s,background .2s}
+  .theme-toggle:hover{border-color:var(--gold-deep);background:rgba(198,161,91,.08)}
+  .theme-toggle[aria-pressed="true"]{color:var(--gold-hi);border-color:var(--gold-deep);background:rgba(198,161,91,.10)}
+
+  .hamburger{display:none;flex-shrink:0;width:42px;height:42px;min-width:24px;min-height:24px;border-radius:10px;border:1px solid var(--line-soft);background:transparent;align-items:center;justify-content:center;flex-direction:column;gap:5px;cursor:pointer;padding:0}
   .hamburger span{display:block;width:20px;height:2px;background:var(--gold-hi);border-radius:2px;transition:transform .2s ease,opacity .2s ease}
   .hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .hamburger[aria-expanded="true"] span:nth-child(2){opacity:0}
@@ -63,6 +91,8 @@
 
   @media(max-width:760px){
     .hamburger{display:inline-flex}
+    nav .in{gap:12px}
+    .theme-toggle{padding:8px 10px;font-size:11px;letter-spacing:.02em}
     nav .links{position:fixed;top:var(--navh);left:0;right:0;margin-left:0;flex-direction:column;align-items:stretch;gap:0;background:var(--ground-2);border-bottom:1px solid var(--line-soft);max-height:0;overflow:hidden;visibility:hidden;transition:max-height .25s ease,visibility 0s linear .25s}
     nav .links.open{max-height:80vh;overflow-y:auto;visibility:visible;transition:max-height .25s ease,visibility 0s linear 0s}
     nav .links a{min-height:44px;border-top:1px solid var(--line-soft);border-radius:0;padding:14px clamp(20px,5vw,40px)}
@@ -84,7 +114,7 @@
   @media(min-width:900px){.hero .wrap{grid-template-columns:1.15fr .85fr}}
   .hero h1{font-size:clamp(34px,6vw,60px);line-height:1.08;color:#F1EBDC;letter-spacing:.005em}
   .hero h1 em{font-style:normal;color:transparent;background:linear-gradient(180deg,var(--gold-hi),var(--gold));-webkit-background-clip:text;background-clip:text}
-  .hero .sub{margin-top:22px;font-size:clamp(16px,2.1vw,19px);color:var(--ash-dim);max-width:58ch}
+  .hero .sub{margin-top:22px;font-size:clamp(18px,2.1vw,20px);color:var(--ash-dim);max-width:58ch}
   .hero .actions{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
   .doors{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
   .doors a{font-family:var(--fl);font-size:13px;font-weight:600;color:var(--gold-hi);border:1px solid var(--gold-deep);border-radius:10px;padding:12px 18px;text-decoration:none;display:inline-flex;align-items:center;gap:9px;min-height:24px;transition:border-color .2s,background .2s}
@@ -99,7 +129,7 @@
   section{padding:clamp(56px,9vw,110px) 0;position:relative}
   section.alt{background:linear-gradient(180deg,var(--ground),var(--ground-2) 50%,var(--ground))}
   section.tight{padding-top:clamp(36px,6vw,64px);padding-bottom:clamp(36px,6vw,64px)}
-  section .lead{font-size:clamp(16px,2vw,18.5px);color:var(--ash-dim);max-width:62ch;margin-top:14px}
+  section .lead{font-size:clamp(18px,2vw,20px);color:var(--ash-dim);max-width:62ch;margin-top:14px}
   .center{text-align:center;display:flex;flex-direction:column;align-items:center}
   .center .lead{margin-left:auto;margin-right:auto}
 
@@ -109,7 +139,7 @@
   .card{border:1px solid var(--line-soft);border-radius:16px;padding:26px;background:linear-gradient(180deg,rgba(18,19,42,.5),rgba(11,12,24,.3));display:flex;flex-direction:column}
   .card .k{font-family:var(--fl);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.85}
   .card h3{font-size:19px;color:#E9E3D4;margin:12px 0 8px;font-weight:500}
-  .card p{font-size:14px;color:var(--ash-dim);line-height:1.55}
+  .card p{font-size:18px;color:var(--ash-dim);line-height:1.6}
   .card .go{margin-top:18px}
   .card .go a{font-family:var(--fl);font-size:12.5px;font-weight:600;color:var(--gold-hi);text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:24px}
   .card .go a:hover{color:var(--gold)}
@@ -118,12 +148,12 @@
   @media(min-width:860px){.split{grid-template-columns:1fr 1fr;gap:56px}}
   .pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
   .pillar{border:1px solid var(--line-soft);border-radius:12px;padding:16px 18px;background:rgba(18,19,42,.35)}
-  .pillar b{font-family:var(--fd);color:var(--gold-hi);font-size:15px;display:block;margin-bottom:3px}
-  .pillar span{font-family:var(--fl);font-size:12.5px;color:var(--ash-dim);line-height:1.45}
+  .pillar b{font-family:var(--fd);color:var(--gold-hi);font-size:17px;display:block;margin-bottom:3px}
+  .pillar span{font-family:var(--fl);font-size:18px;color:var(--ash-dim);line-height:1.5}
 
   /* MANIFESTO */
   .manifesto{border:1px solid var(--gold-deep);border-radius:18px;padding:clamp(24px,5vw,44px);background:linear-gradient(180deg,rgba(198,161,91,.06),rgba(11,12,24,.2));margin-top:44px}
-  .manifesto p{font-family:var(--fd);font-size:clamp(17px,2.4vw,21px);line-height:1.6;color:#EDE7D8;font-style:italic}
+  .manifesto p{font-family:var(--fd);font-size:clamp(18px,2.4vw,22px);line-height:1.6;color:#EDE7D8;font-style:italic}
 
   /* TIMELINE */
   .timeline{margin-top:48px;display:grid;gap:14px}
@@ -145,7 +175,7 @@
   .virtue{border:1px solid #D9CFB6;border-radius:16px;padding:26px;background:#F5F1E6}
   .virtue .mk{width:30px;height:30px;color:var(--gold-deep)}
   .virtue h3{font-size:19px;color:var(--parch-ink);margin:14px 0 8px;font-weight:500}
-  .virtue p{font-size:14px;color:#5a5548;line-height:1.55}
+  .virtue p{font-size:18px;color:#5a5548;line-height:1.6}
   .rulebox{margin-top:34px;text-align:center;font-family:var(--fd);font-size:clamp(18px,2.6vw,24px);color:var(--parch-ink);font-style:italic}
   .rulebox b{color:var(--gold-deep);font-style:normal}
 
@@ -158,16 +188,19 @@
   .founder .flinks{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
   .founder .flinks a{font-family:var(--fl);font-size:12px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--gold-deep);border-radius:999px;padding:7px 14px;display:inline-flex;align-items:center;min-height:24px;transition:background .2s}
   .founder .flinks a:hover{background:rgba(198,161,91,.08)}
-  .founder .role{font-family:var(--fl);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.85}
+  .founder .role{font-family:var(--fl);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.85}
   .founder h3{font-size:20px;color:#EDE7D8;margin:4px 0 8px;font-weight:500}
-  .founder p{font-size:13.5px;color:var(--ash-dim);line-height:1.55}
-  .founder .meta-line{font-family:var(--fl);font-size:12.5px;color:var(--ash-dim);margin-top:12px;line-height:1.6}
+  .founder p{font-size:18px;color:var(--ash-dim);line-height:1.6}
+  .founder .meta-line{font-family:var(--fl);font-size:18px;color:var(--ash-dim);margin-top:12px;line-height:1.6}
   .founder .meta-line b{color:var(--ash);font-weight:600}
 
   /* CONTATO (compartilhado, mesma posição em todas as páginas) */
   section.contato{text-align:center;background:linear-gradient(180deg,var(--ground),var(--indigo) 120%)}
   section.contato h2{font-size:clamp(26px,4.2vw,38px)}
   section.contato .actions{margin-top:30px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .tel-alt{font-family:var(--fl);font-size:15px;color:var(--ash-dim);margin-top:18px}
+  .tel-alt a{color:var(--gold-hi);text-decoration:none;display:inline-flex;align-items:center;min-height:24px;padding:2px 3px}
+  .tel-alt a:hover{text-decoration:underline}
 
   footer{border-top:1px solid var(--line-soft);padding:48px 0 40px}
   footer .in{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
@@ -195,6 +228,50 @@
   @media (prefers-contrast:more){
     nav{background:var(--ground);backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom-color:var(--gold-deep)}
     .card,.founder,.pillar,.virtue,.manifesto{border-color:var(--gold-deep)}
+    .theme-toggle,.hamburger{border-color:var(--gold-deep)}
+  }
+
+  /* TEMA CLARO — só nesta página (porta do paciente idoso). Classe fica no <html> (não no
+     <body>): o script anti-flash roda no <head>, antes do <body> existir — ver comentário
+     no <head>. Nav e rodapé seguem escuros (mesma marca, mesmo lugar, 3.2.6 Consistent
+     Help). Todo token de texto abaixo foi medido sobre --parch #EDE7D6 (ver Vault:
+     Polaridade de tela e o olho que envelhece §7). */
+  html.theme-light{color-scheme:light}
+  html.theme-light body{background:var(--parch);color:var(--parch-ink)}
+  html.theme-light footer{background:var(--ground)}
+  html.theme-light nav{background:var(--ground);backdrop-filter:none;-webkit-backdrop-filter:none}
+
+  html.theme-light header.hero::before{background:none}
+  html.theme-light .hero h1{color:var(--parch-ink)}
+  html.theme-light .hero h1 em{background:none;-webkit-background-clip:initial;background-clip:initial;-webkit-text-fill-color:currentColor;color:var(--gold-deep)}
+  html.theme-light .hero .sub{color:var(--parch-dim)}
+
+  html.theme-light section.alt{background:linear-gradient(180deg,var(--parch),#F5F1E6 50%,var(--parch))}
+  html.theme-light section.contato{background:var(--parch)}
+
+  html.theme-light .eyebrow{color:var(--gold-deep);opacity:1}
+  html.theme-light h2{color:var(--parch-ink)}
+  html.theme-light section .lead{color:var(--parch-dim)}
+
+  html.theme-light .founder,html.theme-light .card{background:#F5F1E6;border-color:#D9CFB6}
+  html.theme-light .founder h3,html.theme-light .card h3{color:var(--parch-ink)}
+  html.theme-light .founder p,html.theme-light .card p{color:var(--parch-dim)}
+  html.theme-light .founder .role,html.theme-light .card .k{color:var(--gold-deep);opacity:1}
+  html.theme-light .founder .cred{color:var(--parch-dim)}
+  html.theme-light .founder .meta-line{color:var(--parch-dim)}
+  html.theme-light .founder .meta-line b{color:var(--parch-ink)}
+  html.theme-light .founder .flinks a{color:var(--gold-deep)}
+
+  html.theme-light .btn-ghost{color:var(--gold-deep)}
+  html.theme-light .btn-ghost:hover{border-color:var(--gold-deep);background:rgba(124,98,48,.10)}
+
+  html.theme-light .tel-alt{color:var(--parch-dim)}
+  html.theme-light .tel-alt a{color:var(--gold-deep)}
+
+  html.theme-light main :focus-visible{outline-color:var(--gold-deep)}
+
+  @media (prefers-contrast:more){
+    html.theme-light .card,html.theme-light .founder{border-color:var(--gold-deep)}
   }
 </style>
 </head>
@@ -211,6 +288,7 @@
 <nav>
   <div class="in">
     <a class="brand" href="./index.html"><svg class="mk" aria-hidden="true"><use href="#mark"/></svg><b>VALURA</b></a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">Tema escuro</button>
     <button class="hamburger" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Abrir menu">
       <span></span><span></span><span></span>
     </button>
@@ -231,7 +309,12 @@
     <div>
       <p class="eyebrow">Para pacientes</p>
       <h1 style="font-size:clamp(32px,5.6vw,52px)">Consultas <em>particulares</em>.</h1>
-      <p class="sub">Quem atende, onde atende e quanto custa — sem letra miúda. Agenda direto no WhatsApp do médico.</p>
+      <p class="sub">Coração e pressão, mesmo com a idade avançando: consulte o <b>Dr. Igor</b>. Idoso frágil, reabilitação e clínica geral: consulte o <b>Dr. Bernardo</b>. Onde atende e quanto custa, sem letra miúda.</p>
+      <div class="actions">
+        <a class="btn" href="https://wa.me/5531982873172" target="_blank" rel="noopener noreferrer">Agendar com Dr. Igor Morais</a>
+        <a class="btn-ghost" href="https://wa.me/5531995200968" target="_blank" rel="noopener noreferrer">Agendar com Dr. Bernardo Tardin</a>
+      </div>
+      <p class="tel-alt">Prefere ligar? <a href="tel:+5531982873172">(31) 98287-3172</a> (Dr. Igor) · <a href="tel:+5531995200968">(31) 99520-0968</a> (Dr. Bernardo)</p>
     </div>
   </div>
 </header>
@@ -239,7 +322,7 @@
 <section class="alt tight">
   <div class="wrap">
     <p class="eyebrow">Quem atende</p>
-    <h2>Dois médicos, duas especialidades.</h2>
+    <h2>Cardiologia, geriatria e clínica médica.</h2>
     <div class="founders">
       <div class="founder reveal">
         <img class="avf" src="img/igor.jpg" alt="Dr. Igor Morais" loading="lazy" width="88" height="88">
@@ -250,7 +333,8 @@
           <p class="cred">RQE 59904 (Cardiologia) · 66254 (Geriatria)</p>
           <p class="meta-line"><b>Onde:</b> endereço enviado no agendamento, pelo WhatsApp.<br><b>Quanto:</b> valor informado no agendamento.</p>
           <div class="flinks">
-            <a href="https://wa.me/5531982873172" target="_blank" rel="noopener noreferrer">Agendar: (31) 98287-3172</a>
+            <a href="https://wa.me/5531982873172" target="_blank" rel="noopener noreferrer">Agendar pelo WhatsApp</a>
+            <a href="tel:+5531982873172">Ligar: (31) 98287-3172</a>
           </div>
         </div>
       </div>
@@ -263,7 +347,8 @@
           <p class="cred">RQE 56655 (Clínica Médica) · 62264 (Geriatria)</p>
           <p class="meta-line"><b>Onde:</b> Av. Raja Gabáglia, 2000 — Estoril, Belo Horizonte.<br><b>Quanto:</b> consulta particular, R$ 600.</p>
           <div class="flinks">
-            <a href="https://wa.me/5531995200968" target="_blank" rel="noopener noreferrer">Agendar: (31) 99520-0968</a>
+            <a href="https://wa.me/5531995200968" target="_blank" rel="noopener noreferrer">Agendar pelo WhatsApp</a>
+            <a href="tel:+5531995200968">Ligar: (31) 99520-0968</a>
             <a href="https://www.doctoralia.com.br/bernardo-tardin-2/geriatra-medico-clinico-geral/nova-lima" target="_blank" rel="noopener noreferrer">Perfil no Doctoralia</a>
           </div>
         </div>
@@ -290,9 +375,10 @@
     <p class="eyebrow" style="justify-content:center;display:flex">Fale direto com quem atende</p>
     <h2>Sem formulário, sem fila de e-mail.<br>Chama no WhatsApp.</h2>
     <div class="actions">
-      <a class="btn" href="https://wa.me/5531982873172" target="_blank" rel="noopener noreferrer">Dr. Igor Morais · (31) 98287-3172</a>
-      <a class="btn-ghost" href="https://wa.me/5531995200968" target="_blank" rel="noopener noreferrer">Dr. Bernardo Tardin · (31) 99520-0968</a>
+      <a class="btn" href="https://wa.me/5531982873172" target="_blank" rel="noopener noreferrer">Agendar com Dr. Igor Morais</a>
+      <a class="btn-ghost" href="https://wa.me/5531995200968" target="_blank" rel="noopener noreferrer">Agendar com Dr. Bernardo Tardin</a>
     </div>
+    <p class="tel-alt">Prefere ligar? <a href="tel:+5531982873172">(31) 98287-3172</a> (Dr. Igor) · <a href="tel:+5531995200968">(31) 99520-0968</a> (Dr. Bernardo)</p>
   </div>
 </section>
 </main>
@@ -345,6 +431,29 @@
     },{threshold:.14, rootMargin:'0px 0px -8% 0px'});
     els.forEach(function(e,i){ e.style.transitionDelay = (Math.min(i%4,3)*70)+'ms'; io.observe(e); });
   }
+})();
+
+/* Toggle de tema — só nesta página. O <head> já resolveu o tema antes do primeiro paint
+   (localStorage > prefers-color-scheme > claro); aqui só sincronizamos o botão com o
+   estado atual e persistimos a escolha explícita do usuário. */
+(function(){
+  var KEY = 'valura-theme';
+  var toggle = document.getElementById('themeToggle');
+  if(!toggle){ return; }
+  var sync = function(){
+    var isLight = document.documentElement.classList.contains('theme-light');
+    toggle.setAttribute('aria-pressed', isLight ? 'false' : 'true');
+    toggle.textContent = isLight ? 'Tema escuro' : 'Tema claro';
+  };
+  sync();
+  toggle.addEventListener('click', function(){
+    var isLight = document.documentElement.classList.contains('theme-light');
+    var next = isLight ? 'dark' : 'light';
+    document.documentElement.classList.toggle('theme-light', next === 'light');
+    document.documentElement.setAttribute('data-theme', next);
+    try{ localStorage.setItem(KEY, next); }catch(e){}
+    sync();
+  });
 })();
 </script>
 
