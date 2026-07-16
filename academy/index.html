@@ -331,9 +331,9 @@ const AREAS = ['Cardiogeriatria', 'Saúde do Idoso', 'Clínica Médica', 'Urgên
 /* ---------- seed ---------- */
 const SEED_USERS = [
   { id: 'u-igor', nome: 'Igor Morais', email: 'igor@valura.health', senha: 'valura2026', papel: 'professor',
-    titulo: 'Prof. Dr. Igor Morais', cred: 'CRM-MG 76695 · RQE 59902/59904/66254 · PUC Minas · FCMMG' },
+    titulo: 'Prof. Dr. Igor Morais', cred: 'Médico · CRM-MG 76695 · RQE 59904 (Cardiologia) · 66254 (Geriatria) · PUC Minas · FCMMG' },
   { id: 'u-bernardo', nome: 'Bernardo Tardin', email: 'bernardo@valura.health', senha: 'valura2026', papel: 'professor',
-    titulo: 'Prof. Bernardo Tardin', cred: 'CRM-MG 82630 · RQE 56655/62264 · FCMMG' },
+    titulo: 'Prof. Bernardo Tardin', cred: 'Médico · CRM-MG 82630 · RQE 56655/62264 · FCMMG' },
   { id: 'u-demo', nome: 'Aluno de Demonstração', email: 'aluno@demo', senha: 'demo', papel: 'aluno', assinatura: null }
 ];
 
@@ -4151,7 +4151,7 @@ const DOWNLOADS = [
 ];
 
 /* ---------- storage ---------- */
-const DB_KEY = 'va_db_v6', SESS_KEY = 'va_sess_v1', PROG_KEY = 'va_prog_v1';
+const DB_KEY = 'va_db_v7', SESS_KEY = 'va_sess_v1', PROG_KEY = 'va_prog_v1';
 function loadJSON(k, fb) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? fb; } catch { return fb; } }
 function saveJSON(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
 let DB = loadJSON(DB_KEY, null);
@@ -4362,10 +4362,10 @@ function vHome() {
     <h2>Professores à beira do leito.</h2>
     <div class="cards c2" style="margin-top:38px">
       <div class="founder reveal"><img class="avf" src="img/igor.jpg" alt="Prof. Dr. Igor Morais" loading="lazy"><div>
-        <p class="role">Cardiogeriatria · Clínica Médica · CRM-MG 76695</p><h3>Prof. Dr. Igor Morais</h3>
-        <p>Clínico, cardiologista e geriatra (RQE nas três especialidades). Professor na PUC Minas (Contagem) e na FCMMG. Diretor Técnico da Rede Paulo de Tarso e plantonista de CTI no HUCM. O coração do idoso, a evidência e a prática. Sem atalho.</p></div></div>
+        <p class="role">Médico · Cardiogeriatria · CRM-MG 76695</p><h3>Prof. Dr. Igor Morais</h3>
+        <p>Cardiologista e geriatra. Professor na PUC Minas (Contagem) e na FCMMG. Diretor Técnico da Rede Paulo de Tarso e plantonista de CTI no HUCM. O coração do idoso, a evidência e a prática. Sem atalho.</p></div></div>
       <div class="founder reveal"><img class="avf" src="img/bernardo.jpg" alt="Prof. Bernardo Tardin" loading="lazy"><div>
-        <p class="role">Saúde do Idoso · Oncogeriatria · CRM-MG 82630</p><h3>Prof. Bernardo Tardin</h3>
+        <p class="role">Médico · Saúde do Idoso · CRM-MG 82630</p><h3>Prof. Bernardo Tardin</h3>
         <p>Geriatra com formação em oncogeriatria pelo Hospital Sírio-Libanês. Professor de saúde do idoso na FCMMG e geriatra da Suntor (Rede Paulo de Tarso). Avaliação geriátrica, funcionalidade e o cuidado que enxerga a pessoa inteira.</p></div></div>
     </div>
   </div></section>
