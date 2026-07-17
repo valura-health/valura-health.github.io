@@ -4152,6 +4152,14 @@ const DOWNLOADS = [
 
 /* ---------- storage ---------- */
 const DB_KEY = 'va_db_v7', SESS_KEY = 'va_sess_v1', PROG_KEY = 'va_prog_v1';
+/* LGPD: bump de DB_KEY nunca apagou a versao anterior -- nome/e-mail de quem se
+   cadastrou ficavam mortos no localStorage sob chave orfa, indefinidamente.
+   Remove TODAS as va_db_v1..v<atual-1> a cada carga; idempotente e nao toca DB_KEY. */
+(function limparDbKeysOrfas() {
+  const m = /^va_db_v(\d+)$/.exec(DB_KEY);
+  if (!m) return;
+  for (let v = 1; v < Number(m[1]); v++) localStorage.removeItem('va_db_v' + v);
+})();
 function loadJSON(k, fb) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? fb; } catch { return fb; } }
 function saveJSON(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
 let DB = loadJSON(DB_KEY, null);
