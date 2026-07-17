@@ -48,6 +48,26 @@
   nav .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
   nav .brand .mk{width:26px;height:26px}
   nav .brand b{font-family:var(--fd);letter-spacing:.26em;text-indent:.26em;font-size:17px;color:var(--gold);font-weight:500}
+
+  /* Marca em movimento (Cálice Solar) — SÓ nav .brand desta página (uma das 3 páginas
+     frias: index, instituicoes, tese). consultas.html fica 100% estática — paciente
+     idoso, mesma política do halo (Vault: Polaridade de tela e o olho que envelhece;
+     Mund 2010, idoso filtra pior distrator visual durante leitura). O SVG do símbolo é
+     inlinado aqui (em vez de <use>) só para poder animar o sol e o cálice em separado;
+     os paths são idênticos aos do #mark — o desenho não muda 1px. Entrada única no
+     load, sem loop, só opacity/transform/filter (zero layout shift; a nav não pode
+     "pular"). Gate total sob prefers-reduced-motion na media query abaixo: estado final
+     estático direto, sem passar pela animação. */
+  nav .brand .mk-sun,nav .brand .mk-cup{transform-box:fill-box;transform-origin:50% 50%}
+  nav .brand .mk-cup{animation:mkCupIn .5s cubic-bezier(.2,.7,.2,1) both}
+  nav .brand .mk-sun{animation:mkSunRise 1s cubic-bezier(.2,.7,.2,1) .2s both}
+  nav .brand:hover .mk-sun,nav .brand:focus-visible .mk-sun{filter:drop-shadow(0 0 5px rgba(231,206,147,.7));transition:filter .35s ease}
+  @keyframes mkCupIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+  @keyframes mkSunRise{
+    0%{opacity:0;transform:translateY(-9px) scale(.6);filter:drop-shadow(0 0 0 rgba(231,206,147,0))}
+    58%{opacity:1;transform:translateY(1px) scale(1.06);filter:drop-shadow(0 0 6px rgba(231,206,147,.85))}
+    100%{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 0 1.5px rgba(231,206,147,.3))}
+  }
   nav .links{display:flex;align-items:center;gap:8px}
   nav .links a{font-family:var(--fl);font-size:12.5px;letter-spacing:.05em;color:var(--ash-dim);text-decoration:none;transition:color .2s,background .2s;display:inline-flex;align-items:center;min-height:24px;padding:10px 10px;border-radius:8px}
   nav .links a:hover{color:var(--gold-hi)}
@@ -200,6 +220,7 @@
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     .hero-mark .mk,.hero-mark::after{animation:none}
+    nav .brand .mk-sun,nav .brand .mk-cup{animation:none}
     .reveal{opacity:1;transform:none;transition:none}
     .skip-link{transition:none}
   }
@@ -271,7 +292,13 @@
 <a class="skip-link" href="#main">Pular para o conteúdo</a>
 <nav>
   <div class="in">
-    <a class="brand" href="./index.html"><svg class="mk" aria-hidden="true"><use href="#mark"/></svg><b>VALURA</b></a>
+    <a class="brand" href="./index.html">
+      <svg class="mk" viewBox="0 0 100 100" aria-hidden="true">
+        <path class="mk-sun" fill-rule="evenodd" fill="currentColor" stroke="none" d="M50 26.3 a21 21 0 1 0 0.01 0 Z M50 41.3 a6 6 0 1 0 0.01 0 Z"/>
+        <path class="mk-cup" d="M20.3 47.3 L50 77 L79.7 47.3" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <b>VALURA</b>
+    </a>
     <button class="halo-toggle" id="haloToggle" type="button" hidden>Desligar brilho</button>
     <button class="hamburger" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Abrir menu">
       <span></span><span></span><span></span>
@@ -383,6 +410,18 @@
         <p style="margin-top:20px"><a class="btn-ghost btn-sm" href="./tese.html">Conheça a tese completa <span aria-hidden="true">→</span></a></p>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="mensagem">
+  <div class="wrap center">
+    <p class="eyebrow">A tese, em resumo</p>
+    <h2>Tratamos a mortalidade. Esquecemos a morbidade.</h2>
+    <p class="lead">A expectativa de vida no Brasil é de 76,4 anos (IBGE, 2023). A expectativa de vida saudável, porém, para de crescer cerca de dez anos antes: são cerca de dez anos vividos com perda de saúde e de funcionalidade (GBD, 2021). É a morbidade que rouba autonomia, produtividade e qualidade de vida — e foi dela que a saúde do século 20 se esqueceu.</p>
+    <div class="manifesto reveal">
+      <p>Potencial latente de saúde. Potencial econômico. Potencial social. É isto que a Valura persegue: <strong>eficiência em saúde para o século 21.</strong></p>
+    </div>
+    <p style="margin-top:26px"><a class="btn-ghost btn-sm" href="./tese.html">Ler a tese completa <span class="arrow" aria-hidden="true">→</span></a></p>
   </div>
 </section>
 
