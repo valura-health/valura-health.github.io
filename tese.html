@@ -124,6 +124,12 @@
   /* MANIFESTO */
   .manifesto{border:1px solid var(--gold-deep);border-radius:18px;padding:clamp(24px,5vw,44px);background:linear-gradient(180deg,rgba(198,161,91,.06),rgba(11,12,24,.2));margin-top:44px}
   .manifesto p{font-family:var(--fd);font-size:clamp(18px,2.4vw,22px);line-height:1.6;color:#EDE7D8;font-style:italic}
+  .manifesto strong{color:var(--gold-hi);font-style:normal}
+
+  /* TESE — blocos de evidência */
+  .tese-blocks{max-width:660px;margin:44px auto 0;display:flex;flex-direction:column;gap:32px;text-align:left}
+  .tese-block h3{font-family:var(--fd);font-size:clamp(19px,2.4vw,22px);font-weight:500;color:var(--gold-hi);margin:0 0 8px;line-height:1.3}
+  .tese-block p{font-size:18px;line-height:1.7;color:var(--ash-dim)}
 
   /* TIMELINE */
   .timeline{margin-top:48px;display:grid;gap:14px}
@@ -200,6 +206,7 @@
     .card,.founder,.pillar,.virtue,.manifesto{border-color:var(--gold-deep)}
   }
 </style>
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
 
@@ -234,7 +241,7 @@
     <div>
       <p class="eyebrow">A tese</p>
       <h1 style="font-size:clamp(32px,5.6vw,52px)">EBITDA e sinistralidade são <em>o mesmo problema</em>.</h1>
-      <p class="sub">Para investidor, imprensa e quem quer entrar no time.</p>
+      <p class="sub">Eficiência em saúde para o século 21 — para investidor, imprensa e quem quer entrar no time.</p>
       <div class="actions">
         <a class="btn" href="#contato">Falar com os fundadores</a>
       </div>
@@ -242,10 +249,41 @@
   </div>
 </header>
 
-<section class="alt tight">
-  <div class="wrap">
+<section class="alt">
+  <div class="wrap center">
+    <p class="eyebrow">A tese</p>
+    <h2>Tratamos a mortalidade. Esquecemos a morbidade.</h2>
+    <p class="lead">A missão da Valura é levar a saúde à sua máxima eficiência: desfecho por cada real gasto, sem tratar menos. Eficiência não é cortar cuidado — é parar de desperdiçar.</p>
+
+    <div class="tese-blocks">
+      <div class="tese-block reveal">
+        <h3>O peso é de trilhões.</h3>
+        <p>Só as doenças cardiovasculares custaram ao mundo cerca de US$ 863 bilhões por ano em 2010, com projeção de ultrapassar US$ 1 trilhão anual até 2030. O acumulado pode chegar a US$ 20 trilhões em duas décadas (WEF/Harvard, 2011). Somando as demais doenças crônicas, a conta projetada chega a cerca de US$ 47 trilhões.</p>
+      </div>
+      <div class="tese-block reveal">
+        <h3>A população que envelhece.</h3>
+        <p>O Brasil atravessa a transição demográfica. A população de 65 anos ou mais passou de 7,4% em 2010 para 10,9% em 2022 — 22,2 milhões de pessoas (IBGE, Censo 2022). E a conta de quem sustenta o sistema se inverte: a população em idade ativa atinge o pico em 2033 e começa a encolher, enquanto a de 60 anos ou mais deve chegar a um quarto do país já em 2041 (IBGE, 2024).</p>
+      </div>
+      <div class="tese-block reveal">
+        <h3>Anos vividos não são anos com saúde.</h3>
+        <p>A expectativa de vida no Brasil é de 76,4 anos (IBGE, 2023). A expectativa de vida saudável, porém, para de crescer cerca de dez anos antes: são cerca de dez anos vividos com perda de saúde e de funcionalidade (GBD, 2021). É a morbidade que rouba autonomia, produtividade e qualidade de vida — e foi dela que a saúde do século 20 se esqueceu.</p>
+      </div>
+      <div class="tese-block reveal">
+        <h3>O desperdício está à vista.</h3>
+        <p>Cerca de um quinto de tudo que se gasta em saúde traz pouco ou nenhum benefício ao desfecho (OCDE, 2017; Berwick, JAMA, 2012). E a maior parte desse gasto nasce de decisão clínica, da caneta do médico (estimativa clássica de 70% a 90%, Davis & Schieber, 1984; Eisenberg, 1985). O valor não está em cuidar menos. Está em corrigir o fluxo, capacitar quem decide e cortar o desperdício sem cortar o cuidado.</p>
+      </div>
+      <div class="tese-block reveal">
+        <h3>Prevenção da primeira à quarta.</h3>
+        <p>A Valura investe num modelo que atravessa toda a rede, da prevenção primária à quaternária, do ambulatório à alta complexidade, passando pela transição de cuidado. Prevenção quaternária é proteger o paciente do excesso de medicina, do exame e da terapêutica que causam mais dano que benefício (conceito de Jamoulle; WONCA). Buscamos tratamentos que reduzam a mortalidade e também melhorem a morbidade, sempre respaldados em evidência sólida, sem atalho e sem promessa fácil.</p>
+      </div>
+      <div class="tese-block reveal">
+        <h3>Dados, evidência e IA na mesma rede.</h3>
+        <p>Já vencemos a era do achismo e vivemos a da medicina baseada em evidência. Falta chegar à era da alta eficiência, em que dados, evidência, inteligência artificial e o profissional de saúde capacitado atuam como uma única rede sincronizada, corrigindo o fluxo e priorizando o que é custo-efetivo, preventivo e preserva a função.</p>
+      </div>
+    </div>
+
     <div class="manifesto reveal">
-      <p>A saúde no Brasil sangra dos dois lados: quem cuida perde dinheiro, quem paga perde mais, e o paciente perde o que importa. Nós recusamos essa falsa escolha entre cuidar bem e ser eficiente. Medimos tudo, escondemos nada, e só chamamos de valor o que se prova em desfecho. Transformamos desperdício em cuidado, e cuidado em valor — valor ex cura. Fazemos o certo porque é certo; descobrimos, no caminho, que também é o mais eficiente.</p>
+      <p>Potencial latente de saúde. Potencial econômico. Potencial social. É isto que a Valura persegue: <strong>eficiência em saúde para o século 21.</strong></p>
     </div>
   </div>
 </section>
