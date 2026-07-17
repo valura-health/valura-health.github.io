@@ -1,23 +1,24 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="theme-light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 /* Resolve o tema ANTES do primeiro paint, evitando flash. Roda no <head>, então marca
-   o <html> (o <body> ainda não existe neste ponto do parsing). Prioridade: escolha salva
-   em localStorage > prefers-color-scheme do SO > claro (padrão da página — ver Vault:
-   Polaridade de tela e o olho que envelhece §7). */
+   o <html> (o <body> ainda não existe neste ponto do parsing). O markup já nasce com
+   class="theme-light" (assim, sem JS, a página renderiza clara — padrão da página, ver
+   Vault: Polaridade de tela e o olho que envelhece §7); aqui só REMOVEMOS a classe quando
+   o tema resolvido é escuro. Prioridade: escolha salva em localStorage > prefers-color-
+   scheme do SO > claro. */
 (function(){
   var KEY='valura-theme';
   try{
     var saved=localStorage.getItem(KEY);
     var theme=(saved==='light'||saved==='dark')?saved:
       ((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');
-    if(theme==='light'){ document.documentElement.classList.add('theme-light'); }
+    if(theme==='dark'){ document.documentElement.classList.remove('theme-light'); }
     document.documentElement.setAttribute('data-theme', theme);
   }catch(e){
-    document.documentElement.classList.add('theme-light');
     document.documentElement.setAttribute('data-theme','light');
   }
 })();
@@ -81,7 +82,6 @@
      qualquer largura. */
   .theme-toggle{margin-left:auto;font-family:var(--fl);font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--gold-hi);background:transparent;border:1px solid var(--line-soft);border-radius:999px;padding:8px 14px;min-height:24px;min-width:24px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;transition:border-color .2s,background .2s}
   .theme-toggle:hover{border-color:var(--gold-deep);background:rgba(198,161,91,.08)}
-  .theme-toggle[aria-pressed="true"]{color:var(--gold-hi);border-color:var(--gold-deep);background:rgba(198,161,91,.10)}
 
   .hamburger{display:none;flex-shrink:0;width:42px;height:42px;min-width:24px;min-height:24px;border-radius:10px;border:1px solid var(--line-soft);background:transparent;align-items:center;justify-content:center;flex-direction:column;gap:5px;cursor:pointer;padding:0}
   .hamburger span{display:block;width:20px;height:2px;background:var(--gold-hi);border-radius:2px;transition:transform .2s ease,opacity .2s ease}
@@ -288,7 +288,7 @@
 <nav>
   <div class="in">
     <a class="brand" href="./index.html"><svg class="mk" aria-hidden="true"><use href="#mark"/></svg><b>VALURA</b></a>
-    <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">Tema escuro</button>
+    <button class="theme-toggle" id="themeToggle" type="button">Tema escuro</button>
     <button class="hamburger" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Abrir menu">
       <span></span><span></span><span></span>
     </button>
@@ -434,15 +434,18 @@
 })();
 
 /* Toggle de tema — só nesta página. O <head> já resolveu o tema antes do primeiro paint
-   (localStorage > prefers-color-scheme > claro); aqui só sincronizamos o botão com o
-   estado atual e persistimos a escolha explícita do usuário. */
+   (localStorage > prefers-color-scheme > claro); aqui só sincronizamos o rótulo do botão
+   com o estado atual e persistimos a escolha explícita do usuário. É um botão de AÇÃO, não
+   de estado: sem aria-pressed de propósito — o nome acessível (o rótulo visível) já é a
+   própria ação que o clique executa ("Tema escuro" ativa o escuro, "Tema claro" ativa o
+   claro), então não há estado a anunciar nem contradição para o leitor de tela (2.5.3
+   Label in Name). */
 (function(){
   var KEY = 'valura-theme';
   var toggle = document.getElementById('themeToggle');
   if(!toggle){ return; }
   var sync = function(){
     var isLight = document.documentElement.classList.contains('theme-light');
-    toggle.setAttribute('aria-pressed', isLight ? 'false' : 'true');
     toggle.textContent = isLight ? 'Tema escuro' : 'Tema claro';
   };
   sync();
