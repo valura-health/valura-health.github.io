@@ -55,18 +55,31 @@
      Mund 2010, idoso filtra pior distrator visual durante leitura). O SVG do símbolo é
      inlinado aqui (em vez de <use>) só para poder animar o sol e o cálice em separado;
      os paths são idênticos aos do #mark — o desenho não muda 1px. Entrada única no
-     load, sem loop, só opacity/transform/filter (zero layout shift; a nav não pode
-     "pular"). Gate total sob prefers-reduced-motion na media query abaixo: estado final
-     estático direto, sem passar pela animação. */
+     load (mkCupIn/mkSunRise, zero layout shift; a nav não pode "pular") seguida de um
+     brilho pulsante contínuo e lento no sol (mkSunPulse, ~4s, só filter:drop-shadow —
+     nunca transform, para não repetir risco de layout shift): é a marca, presença
+     digna e visível, decisão de identidade autorizada pelo Dr. Igor (rodada 7 — a
+     versão anterior, entrada única sem loop, ficou imperceptível). O delay do pulso
+     (1.2s) casa com o fim exato da entrada (.2s delay + 1s duração) e a moldura
+     0%/100% do pulso repete o filter final da entrada — sem salto entre uma animação
+     e outra. Gate total sob prefers-reduced-motion na media query abaixo: nenhuma das
+     duas animações roda, estado final estático e visível direto. */
   nav .brand .mk-sun,nav .brand .mk-cup{transform-box:fill-box;transform-origin:50% 50%}
   nav .brand .mk-cup{animation:mkCupIn .5s cubic-bezier(.2,.7,.2,1) both}
-  nav .brand .mk-sun{animation:mkSunRise 1s cubic-bezier(.2,.7,.2,1) .2s both}
-  nav .brand:hover .mk-sun,nav .brand:focus-visible .mk-sun{filter:drop-shadow(0 0 5px rgba(231,206,147,.7));transition:filter .35s ease}
+  nav .brand .mk-sun{animation:mkSunRise 1s cubic-bezier(.2,.7,.2,1) .2s both,mkSunPulse 4s ease-in-out 1.2s infinite}
+  /* !important necessário: uma animação CSS ativa (mkSunPulse) tem prioridade de cascata
+     sobre declaração normal da mesma propriedade, mesmo em :hover/:focus-visible — só
+     !important vence o efeito da animação em curso. */
+  nav .brand:hover .mk-sun,nav .brand:focus-visible .mk-sun{filter:drop-shadow(0 0 11px rgba(231,206,147,.95)) !important;transition:filter .35s ease}
   @keyframes mkCupIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
   @keyframes mkSunRise{
     0%{opacity:0;transform:translateY(-9px) scale(.6);filter:drop-shadow(0 0 0 rgba(231,206,147,0))}
-    58%{opacity:1;transform:translateY(1px) scale(1.06);filter:drop-shadow(0 0 6px rgba(231,206,147,.85))}
-    100%{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 0 1.5px rgba(231,206,147,.3))}
+    58%{opacity:1;transform:translateY(1px) scale(1.06);filter:drop-shadow(0 0 8px rgba(231,206,147,.9))}
+    100%{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 0 2px rgba(231,206,147,.35))}
+  }
+  @keyframes mkSunPulse{
+    0%,100%{filter:drop-shadow(0 0 2px rgba(231,206,147,.35))}
+    50%{filter:drop-shadow(0 0 8px rgba(231,206,147,.8))}
   }
   nav .links{display:flex;align-items:center;gap:8px}
   nav .links a{font-family:var(--fl);font-size:12.5px;letter-spacing:.05em;color:var(--ash-dim);text-decoration:none;transition:color .2s,background .2s;display:inline-flex;align-items:center;min-height:24px;padding:10px 10px;border-radius:8px}
