@@ -48,12 +48,22 @@
   nav .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
   nav .brand .mk{width:26px;height:26px}
   nav .brand b{font-family:var(--fd);letter-spacing:.26em;text-indent:.26em;font-size:17px;color:var(--gold);font-weight:500}
-  nav .links{margin-left:auto;display:flex;align-items:center;gap:8px}
+  nav .links{display:flex;align-items:center;gap:8px}
   nav .links a{font-family:var(--fl);font-size:12.5px;letter-spacing:.05em;color:var(--ash-dim);text-decoration:none;transition:color .2s,background .2s;display:inline-flex;align-items:center;min-height:24px;padding:10px 10px;border-radius:8px}
   nav .links a:hover{color:var(--gold-hi)}
   nav .links a[aria-current="page"]{color:var(--gold-hi)}
-  nav .links a.navcta{font-weight:600;letter-spacing:.04em;color:#0B0B10;background:linear-gradient(180deg,var(--gold-hi),var(--gold));padding:10px 18px;margin-left:6px}
-  nav .links a.navcta:hover{color:#0B0B10}
+  nav .links a.navcta{font-weight:600;letter-spacing:.04em;padding:10px 18px;margin-left:6px}
+
+  /* Toggle do halo — ressalva 3 do vault (Polaridade de tela e o olho que envelhece,
+     §Atualização-halo(d): "prefers-reduced-motion não basta, exige toggle visível").
+     Mesmo padrão visual do .theme-toggle de consultas.html: pill, ação pura (sem
+     aria-pressed — o rótulo visível já é a própria ação, WCAG 2.5.3 Label in Name).
+     Nasce [hidden] no markup: o halo é 100% JS, então sem JS o botão nunca aparece; o
+     script só remove o hidden quando os mesmos gates do halo (ponteiro fino, sem
+     reduced-motion) passam. */
+  .halo-toggle{margin-left:auto;font-family:var(--fl);font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--gold-hi);background:transparent;border:1px solid var(--line-soft);border-radius:999px;padding:8px 14px;min-height:24px;min-width:24px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;transition:border-color .2s,background .2s}
+  .halo-toggle:hover{border-color:var(--gold-deep);background:rgba(198,161,91,.08)}
+  .halo-toggle[hidden]{display:none}
 
   .hamburger{display:none;width:42px;height:42px;min-width:24px;min-height:24px;border-radius:10px;border:1px solid var(--line-soft);background:transparent;align-items:center;justify-content:center;flex-direction:column;gap:5px;cursor:pointer;padding:0}
   .hamburger span{display:block;width:20px;height:2px;background:var(--gold-hi);border-radius:2px;transition:transform .2s ease,opacity .2s ease}
@@ -63,6 +73,7 @@
 
   @media(max-width:760px){
     .hamburger{display:inline-flex}
+    .halo-toggle{padding:8px 10px;font-size:11px;letter-spacing:.02em}
     nav .links{position:fixed;top:var(--navh);left:0;right:0;margin-left:0;flex-direction:column;align-items:stretch;gap:0;background:var(--ground-2);border-bottom:1px solid var(--line-soft);max-height:0;overflow:hidden;visibility:hidden;transition:max-height .25s ease,visibility 0s linear .25s}
     nav .links.open{max-height:80vh;overflow-y:auto;visibility:visible;transition:max-height .25s ease,visibility 0s linear 0s}
     nav .links a{min-height:44px;border-top:1px solid var(--line-soft);border-radius:0;padding:14px clamp(20px,5vw,40px)}
@@ -198,11 +209,57 @@
   @media (prefers-contrast:more){
     nav{background:var(--ground);backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom-color:var(--gold-deep)}
     .card,.founder,.pillar,.virtue,.manifesto{border-color:var(--gold-deep)}
+    .btn-ghost,.doors a,.founder .flinks a,nav .links a.navcta{border-color:var(--gold)}
+    .halo-toggle{border-color:var(--gold-deep)}
+  }
+
+  /* HALO DE ILUMINAÇÃO (cursor) — só nesta página, NUNCA em consultas.html. É marca (o
+     "sol" do Cálice Solar seguindo o leitor), não recurso de legibilidade — ver Vault:
+     Polaridade de tela e o olho que envelhece §Atualização-halo. Gate duplo (CSS + JS):
+     só ponteiro fino, desliga sob prefers-reduced-motion. mix-blend-mode:screen + alfa
+     baixa para nunca reduzir o contraste do texto por baixo. */
+  .cursor-halo{position:fixed;top:0;left:0;width:640px;height:640px;margin:-320px 0 0 -320px;border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(circle,rgba(198,161,91,.11),transparent 60%);mix-blend-mode:screen;opacity:0;will-change:transform,opacity}
+  @media (prefers-reduced-motion:reduce), not (pointer:fine){
+    .cursor-halo,.halo-toggle{display:none}
+  }
+
+  /* GLASS — botões ghost/portas/links de rodapé de founder e o CTA de vidro da nav, só
+     nas páginas frias. Receita: fill semi-opaco sólido por trás do texto (nunca só o
+     blur), blur 8-12px, borda visível — ver Vault: Polimento visual e vidro restrito /
+     Acessibilidade do glassmorphism. Cor de base sozinha (sem blur) já garante >=4.5:1
+     com --gold-hi no pior fundo desta página (medido: ~11:1 sobre o pior caso, a seção
+     indigo do contato). O .btn dourado primário NÃO virou vidro: dourado translúcido
+     sobre o mesmo pior fundo mede ~3,6:1 com a tinta escura — reprova AA — então fica
+     com o gradiente sólido (decisão registrada, não esquecimento).  */
+  .btn-ghost,.doors a,.founder .flinks a,nav .links a.navcta{
+    background:rgba(18,19,42,.55);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(198,161,91,.35);
+  }
+  nav .links a.navcta{color:var(--gold-hi)}
+  .btn-ghost:hover,.doors a:hover,.founder .flinks a:hover,nav .links a.navcta:hover{
+    background:rgba(28,25,52,.72);
+    border-color:var(--gold);
+  }
+  .btn-ghost:active,.doors a:active,.founder .flinks a:active,nav .links a.navcta:active{
+    background:rgba(12,11,26,.85);
+    transform:translateY(1px);
+  }
+  @media (prefers-reduced-transparency:reduce){
+    .btn-ghost,.doors a,.founder .flinks a,nav .links a.navcta{
+      background:var(--ground-2);
+      backdrop-filter:none;
+      -webkit-backdrop-filter:none;
+      border-color:var(--gold-deep);
+    }
   }
 </style>
 <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
+
+<div class="cursor-halo" id="cursorHalo" aria-hidden="true"></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="mark" viewBox="0 0 100 100">
@@ -215,6 +272,7 @@
 <nav>
   <div class="in">
     <a class="brand" href="./index.html"><svg class="mk" aria-hidden="true"><use href="#mark"/></svg><b>VALURA</b></a>
+    <button class="halo-toggle" id="haloToggle" type="button" hidden>Desligar brilho</button>
     <button class="hamburger" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Abrir menu">
       <span></span><span></span><span></span>
     </button>
@@ -325,6 +383,85 @@
       entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
     },{threshold:.14, rootMargin:'0px 0px -8% 0px'});
     els.forEach(function(e,i){ e.style.transitionDelay = (Math.min(i%4,3)*70)+'ms'; io.observe(e); });
+  }
+})();
+</script>
+
+<script>
+/* Halo de iluminação do cursor — marca (o sol do Cálice Solar seguindo o leitor), não
+   recurso de legibilidade. Gate duplo: só ponteiro fino (mouse/caneta) e nunca sob
+   prefers-reduced-motion. Segue o mouse com lerp (sem jank), some sobre .parch (contraste
+   medido só sobre fundo escuro — ver CSS acima). NUNCA presente em consultas.html.
+   Toggle visível + persistência (ressalva 3 do vault, Polaridade de tela e o olho que
+   envelhece §Atualização-halo(d): "prefers-reduced-motion não basta, exige toggle
+   visível"). O rAF para assim que hx/hy convergem para mx/my — independe de `active`,
+   porque o estado visual (transform + opacity) já está estável nesse ponto, visível ou
+   não. Reagendado (`startLoop`) no pointermove, no pointerleave/blur (para aplicar o
+   fade-out quando o alvo já estava convergido e parado), no scroll e no resize (mudam os
+   rects do overParch sem mexer no mouse — sem re-armar, o halo convergido podia ficar
+   aceso sobre um .parch que rolou para debaixo dele) e ao religar pelo toggle — nunca
+   dois loops concorrentes (flag `running`); com o alvo já convergido cada gatilho custa
+   só 1 frame. */
+(function(){
+  var HALO_KEY = 'valura-halo';
+  var halo = document.getElementById('cursorHalo');
+  var toggle = document.getElementById('haloToggle');
+  if(!halo){ return; }
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ return; }
+  if(!window.matchMedia('(pointer: fine)').matches){ return; }
+
+  var parchEls = Array.prototype.slice.call(document.querySelectorAll('.parch'));
+  var mx = -9999, my = -9999, hx = -9999, hy = -9999, active = false;
+  var running = false, on = true;
+  try{ on = localStorage.getItem(HALO_KEY) !== 'off'; }catch(e){ on = true; }
+
+  function overParch(x, y){
+    for(var i = 0; i < parchEls.length; i++){
+      var r = parchEls[i].getBoundingClientRect();
+      if(x >= r.left && x <= r.right && y >= r.top && y <= r.bottom){ return true; }
+    }
+    return false;
+  }
+
+  function startLoop(){
+    if(running){ return; } // nunca dois loops concorrentes
+    running = true;
+    requestAnimationFrame(tick);
+  }
+
+  function tick(){
+    hx += (mx - hx) * 0.14;
+    hy += (my - hy) * 0.14;
+    halo.style.transform = 'translate(' + hx.toFixed(1) + 'px,' + hy.toFixed(1) + 'px)';
+    halo.style.opacity = (on && active && !overParch(hx, hy)) ? '1' : '0';
+    var converged = Math.abs(mx - hx) < 0.5 && Math.abs(my - hy) < 0.5;
+    if(!on || converged){ running = false; return; } // achado 2: sem rAF perpétuo (só por convergência)
+    requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('pointermove', function(e){
+    if(e.pointerType && e.pointerType !== 'mouse' && e.pointerType !== 'pen'){ return; }
+    mx = e.clientX; my = e.clientY;
+    active = true;
+    if(on){ startLoop(); }
+  }, {passive:true});
+  window.addEventListener('pointerleave', function(){ active = false; if(on){ startLoop(); } }, {passive:true});
+  window.addEventListener('blur', function(){ active = false; if(on){ startLoop(); } });
+  window.addEventListener('scroll', function(){ if(on){ startLoop(); } }, {passive:true});
+  window.addEventListener('resize', function(){ if(on){ startLoop(); } });
+
+  if(on){ startLoop(); }
+
+  if(toggle){
+    var syncToggle = function(){ toggle.textContent = on ? 'Desligar brilho' : 'Ligar brilho'; };
+    syncToggle();
+    toggle.hidden = false;
+    toggle.addEventListener('click', function(){
+      on = !on;
+      try{ localStorage.setItem(HALO_KEY, on ? 'on' : 'off'); }catch(e){}
+      syncToggle();
+      if(on){ startLoop(); } else { halo.style.opacity = '0'; }
+    });
   }
 })();
 </script>
