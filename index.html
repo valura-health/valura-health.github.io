@@ -167,9 +167,11 @@
   .hero .sub{margin-top:22px;font-size:clamp(18px,2.1vw,20px);color:var(--ash-dim);max-width:58ch}
   .hero .actions{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
   .doors{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
-  .doors a{font-family:var(--fl);font-size:13px;font-weight:600;color:var(--gold-hi);border:1px solid var(--gold-deep);border-radius:10px;padding:12px 18px;text-decoration:none;display:inline-flex;align-items:center;gap:9px;min-height:24px;transition:border-color .2s,background .2s}
+  .doors a{font-family:var(--fl);color:var(--gold-hi);border:1px solid var(--gold-deep);border-radius:12px;padding:14px 18px;text-decoration:none;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:24px;max-width:290px;transition:border-color .2s,background .2s}
   .doors a:hover{border-color:var(--gold);background:rgba(198,161,91,.08)}
+  .doors a .d-t{font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:9px}
   .doors a .arrow{opacity:.65}
+  .doors a .d-v{font-family:var(--fl);font-size:12px;font-weight:400;color:var(--ash-dim);line-height:1.4}
   .hero-mark{display:grid;place-items:center;position:relative}
   .hero-mark .mk{width:min(260px,64vw);animation:rise 1.3s cubic-bezier(.2,.7,.2,1) both}
   .hero-mark::after{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle at 50% 46%,rgba(198,161,91,.20),transparent 66%);filter:blur(8px);z-index:-1;animation:breathe 7s ease-in-out infinite}
@@ -258,6 +260,16 @@
   .founder p{font-size:18px;color:var(--ash-dim);line-height:1.6}
   .founder .meta-line{font-family:var(--fl);font-size:18px;color:var(--ash-dim);margin-top:12px;line-height:1.6}
   .founder .meta-line b{color:var(--ash);font-weight:600}
+
+  /* ACADEMY — cartão de produto em destaque na home (assinatura vendável) */
+  .acad-card{border:1px solid var(--gold-deep);border-radius:16px;padding:30px;background:linear-gradient(180deg,rgba(198,161,91,.09),rgba(11,12,24,.25))}
+  .acad-card .k{font-family:var(--fl);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.85}
+  .acad-price{font-family:var(--fd);font-size:clamp(30px,5vw,40px);color:var(--gold-hi);margin-top:10px}
+  .acad-price span{font-family:var(--fl);font-size:14px;color:var(--ash-dim);font-weight:400}
+  .acad-list{margin-top:20px;display:flex;flex-direction:column;gap:12px}
+  .acad-list li{font-family:var(--fl);font-size:14px;color:var(--ash-dim);line-height:1.5;list-style:none;padding-left:20px;position:relative}
+  .acad-list li::before{content:"—";position:absolute;left:0;color:var(--gold)}
+  .acad-card .btn{margin-top:24px;width:100%;justify-content:center;text-align:center}
 
   /* CONTATO (compartilhado, mesma posição em todas as páginas) */
   section.contato{text-align:center;background:linear-gradient(180deg,var(--ground),var(--indigo) 120%)}
@@ -390,9 +402,9 @@
       <h1>Construindo a <em>saúde do futuro</em>.</h1>
       <p class="sub">Somos médicos. Atendemos no consultório, damos aula toda semana para quem está virando médico e construímos ferramentas para hospital cuidar melhor gastando certo.</p>
       <div class="doors">
-        <a href="./consultas.html">Sou paciente <span class="arrow" aria-hidden="true">→</span></a>
-        <a href="./academy/">Sou estudante de medicina <span class="arrow" aria-hidden="true">→</span></a>
-        <a href="./instituicoes.html">Sou hospital ou operadora <span class="arrow" aria-hidden="true">→</span></a>
+        <a href="./consultas.html"><span class="d-t">Sou paciente <span class="arrow" aria-hidden="true">→</span></span><span class="d-v">Consulta particular — cardiologia, geriatria e saúde do idoso</span></a>
+        <a href="./academy/"><span class="d-t">Sou estudante de medicina <span class="arrow" aria-hidden="true">→</span></span><span class="d-v">Educação médica continuada — aula semanal, pós-teste e certificado</span></a>
+        <a href="./instituicoes.html"><span class="d-t">Sou hospital ou operadora <span class="arrow" aria-hidden="true">→</span></span><span class="d-v">Software e eficiência auditável — giro de leito, glosa e sinistralidade</span></a>
       </div>
     </div>
     <div class="hero-mark">
@@ -461,6 +473,29 @@
             <a href="https://www.instagram.com/tardin.bernardo" target="_blank" rel="noopener noreferrer">@tardin.bernardo</a>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="academy">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">Valura Academy</p>
+        <h2>Educação médica continuada, direto com quem ensina.</h2>
+        <p class="lead">Aula nova toda semana para estudantes de medicina, com os fundadores da Valura. Assista pelo navegador, faça o pós-teste comentado e receba certificado digital com código de verificação ao ser aprovado no pós-teste.</p>
+        <p style="margin-top:26px"><a class="btn" href="./academy/">Conhecer o Academy <span aria-hidden="true">→</span></a></p>
+      </div>
+      <div class="acad-card reveal">
+        <div class="k">Assinatura mensal</div>
+        <div class="acad-price">R$ 39,90<span>/mês</span></div>
+        <ul class="acad-list">
+          <li>Aula semanal — vídeo, slides ou material, como o tema pedir</li>
+          <li>Pós-teste comentado por aula</li>
+          <li>Certificado digital com código de verificação</li>
+        </ul>
+        <a class="btn" href="./academy/">Assinar por R$ 39,90/mês</a>
       </div>
     </div>
   </div>
