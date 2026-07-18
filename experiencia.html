@@ -93,7 +93,25 @@
      leitura em qualquer estado do palco. O texto nunca entra na zona da marca:
      ver .scene .content mais abaixo. */
   .stage{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
-    --stage-glow-o:.28;--stage-scale:.8;--stage-ring-o:0;--stage-drop:3px}
+    --stage-glow-o:.28;--stage-scale:.8;--stage-ring-o:0;--stage-drop:3px;
+    --bg-hero-o:0;--bg-net-o:0;--bg-sun-o:0}
+
+  /* ---- Backdrop cinematográfico (3 imagens locais, gold-on-black, provenance
+     Pollinations.ai/Flux — arte de marca, sem pessoa/texto/logo). Camadas
+     empilhadas atrás de .stage-visual/.stage-scrim; a cena ativa (data-stage no
+     <body>) controla qual opacidade acende via as variáveis --bg-*-o acima.
+     Ken Burns muito lento (só transform) mantém o clima de "vídeo" sem custo;
+     desligado por completo sob prefers-reduced-motion (guarda-corpo 1). */
+  .stage-bg{position:absolute;inset:0;overflow:hidden}
+  .stage-bg-img{position:absolute;inset:-4%;background-size:cover;background-position:center;opacity:0;transition:opacity 1.6s ease;will-change:opacity,transform;animation:kenburns 28s ease-in-out infinite alternate}
+  .stage-bg-hero{background-image:url(img/exp-hero.jpg);opacity:var(--bg-hero-o)}
+  .stage-bg-net{background-image:url(img/exp-net.jpg);opacity:var(--bg-net-o);animation-duration:32s;animation-delay:-9s}
+  .stage-bg-sun{background-image:url(img/exp-sun.jpg);opacity:var(--bg-sun-o);animation-duration:24s;animation-delay:-5s}
+  @keyframes kenburns{
+    0%{transform:scale(1) translate(0,0)}
+    50%{transform:scale(1.03) translate(-.8%,-.5%)}
+    100%{transform:scale(1.06) translate(.5%,.4%)}
+  }
   .stage-visual{position:absolute;top:50%;right:clamp(16px,6vw,90px);transform:translateY(-50%);width:min(38vw,480px);height:min(38vw,480px);display:grid;place-items:center}
   .stage-glow{position:absolute;inset:-20%;background:radial-gradient(circle at 50% 48%, rgba(198,161,91,var(--stage-glow-o)), rgba(11,11,16,0) 62%);transition:opacity 1.1s ease}
   .stage-ring{position:absolute;width:100%;height:100%;border:1px solid rgba(198,161,91,var(--stage-ring-o));border-radius:50%;animation:ringspin 46s linear infinite;transition:border-color 1.1s ease}
@@ -107,24 +125,40 @@
   .particle:nth-child(4){top:70%;left:34%;animation-delay:.7s;animation-duration:11s}
   .particle:nth-child(5){top:44%;left:24%;animation-delay:3.6s;animation-duration:9.5s}
   .particle:nth-child(6){top:48%;left:76%;animation-delay:1.9s;animation-duration:10s}
-  /* scrim: renderiza DEPOIS de .stage-visual no DOM (mesmo z-index auto da pilha
-     do .stage) => fica por cima do brilho/anel/partículas, por baixo de nav/main
-     (que têm z-index explícito maior). Forte à esquerda (coluna de texto),
-     esmaece a partir de ~46% e some perto de onde a marca vive (~84%). */
-  .stage-scrim{position:absolute;inset:0;background:linear-gradient(90deg, rgba(11,11,16,.94) 0%, rgba(11,11,16,.86) 46%, rgba(11,11,16,.35) 64%, rgba(11,11,16,0) 84%)}
+  /* scrim: renderiza DEPOIS de .stage-visual/.stage-bg no DOM (mesmo z-index auto
+     da pilha do .stage) => fica por cima do brilho/anel/partículas/backdrop, por
+     baixo de nav/main (que têm z-index explícito maior). Forte à esquerda (coluna
+     de texto, ≥.85 até 56%), esmaece depois e some perto de onde a marca vive
+     (~92%). REFORÇADO (backdrop real): as 3 imagens têm áreas claras que podiam
+     cair sob o texto (ex.: nós dourados de exp-net perto da borda esquerda) — o
+     linear ficou mais opaco e mais largo, e ganhou um radial adicional centrado
+     na coluna de leitura (24% 50%) para dar folga extra sob QUALQUER cena.
+     Conferido à mão (pior caso: pixel dourado saturado sob bg-hero-o máx. .48 +
+     scrim .85 no ponto mais fraco da faixa de texto) ≈ 5,85:1 — folga real sobre
+     o piso AA de 4,5:1 antes até da medição por screenshot abaixo. */
+  .stage-scrim{position:absolute;inset:0;background:
+    radial-gradient(62% 78% at 24% 50%, rgba(11,11,16,.55), rgba(11,11,16,0) 74%),
+    linear-gradient(90deg, rgba(11,11,16,.97) 0%, rgba(11,11,16,.95) 44%, rgba(11,11,16,.85) 56%, rgba(11,11,16,.5) 70%, rgba(11,11,16,.15) 82%, rgba(11,11,16,0) 92%)}
 
   /* 10 estados do palco — hero (0) a manifesto (8) sobe intensidade; CTA (9) assenta
-     num brilho calmo, convite estável em vez de clímax. */
-  body[data-stage="0"] .stage{--stage-glow-o:.28;--stage-scale:.80;--stage-ring-o:0;--stage-drop:3px}
-  body[data-stage="1"] .stage{--stage-glow-o:.36;--stage-scale:.86;--stage-ring-o:.22;--stage-drop:5px}
-  body[data-stage="2"] .stage{--stage-glow-o:.44;--stage-scale:.91;--stage-ring-o:.32;--stage-drop:7px}
-  body[data-stage="3"] .stage{--stage-glow-o:.50;--stage-scale:.96;--stage-ring-o:.40;--stage-drop:8px}
-  body[data-stage="4"] .stage{--stage-glow-o:.58;--stage-scale:1.01;--stage-ring-o:.48;--stage-drop:10px}
-  body[data-stage="5"] .stage{--stage-glow-o:.66;--stage-scale:1.06;--stage-ring-o:.56;--stage-drop:12px}
-  body[data-stage="6"] .stage{--stage-glow-o:.72;--stage-scale:1.10;--stage-ring-o:.62;--stage-drop:13px}
-  body[data-stage="7"] .stage{--stage-glow-o:.78;--stage-scale:1.14;--stage-ring-o:.68;--stage-drop:14px}
-  body[data-stage="8"] .stage{--stage-glow-o:.92;--stage-scale:1.24;--stage-ring-o:.85;--stage-drop:18px}
-  body[data-stage="9"] .stage{--stage-glow-o:.66;--stage-scale:1.08;--stage-ring-o:.5;--stage-drop:11px}
+     num brilho calmo, convite estável em vez de clímax. Cada estado também liga a
+     camada de backdrop correta (--bg-hero-o / --bg-net-o / --bg-sun-o — as duas
+     outras ficam em 0, cross-fade só por transition:opacity). Mapeamento:
+     hero (0) → exp-hero forte; cenas de evidência (1-6) → exp-hero bem esmaecida,
+     mesma imagem (sem crossfade extra, "menos é mais"); "Dados, evidência e IA"
+     (7) → exp-net; manifesto/síntese (8) e fecho/CTA (9) → exp-sun. --stage-glow-o
+     desce um pouco em relação ao original: a imagem real já traz a luz, o glow
+     chapado só completa (pedido: "pode reduzir, já que a imagem traz a luz"). */
+  body[data-stage="0"] .stage{--stage-glow-o:.20;--stage-scale:.80;--stage-ring-o:0;--stage-drop:3px;--bg-hero-o:.48}
+  body[data-stage="1"] .stage{--stage-glow-o:.34;--stage-scale:.86;--stage-ring-o:.22;--stage-drop:5px;--bg-hero-o:.16}
+  body[data-stage="2"] .stage{--stage-glow-o:.40;--stage-scale:.91;--stage-ring-o:.32;--stage-drop:7px;--bg-hero-o:.18}
+  body[data-stage="3"] .stage{--stage-glow-o:.46;--stage-scale:.96;--stage-ring-o:.40;--stage-drop:8px;--bg-hero-o:.15}
+  body[data-stage="4"] .stage{--stage-glow-o:.52;--stage-scale:1.01;--stage-ring-o:.48;--stage-drop:10px;--bg-hero-o:.18}
+  body[data-stage="5"] .stage{--stage-glow-o:.60;--stage-scale:1.06;--stage-ring-o:.56;--stage-drop:12px;--bg-hero-o:.15}
+  body[data-stage="6"] .stage{--stage-glow-o:.66;--stage-scale:1.10;--stage-ring-o:.62;--stage-drop:13px;--bg-hero-o:.13}
+  body[data-stage="7"] .stage{--stage-glow-o:.68;--stage-scale:1.14;--stage-ring-o:.68;--stage-drop:14px;--bg-net-o:.46}
+  body[data-stage="8"] .stage{--stage-glow-o:.70;--stage-scale:1.24;--stage-ring-o:.85;--stage-drop:18px;--bg-sun-o:.50}
+  body[data-stage="9"] .stage{--stage-glow-o:.50;--stage-scale:1.08;--stage-ring-o:.5;--stage-drop:11px;--bg-sun-o:.38}
 
   /* ================= SCROLLCONTAINER (seções) ================= */
   main{position:relative;z-index:1}
@@ -141,7 +175,13 @@
   @media(max-width:760px){
     .scene .content{max-width:100%}
     .stage-visual{right:50%;transform:translate(50%,-50%);width:min(72vw,300px);height:min(72vw,300px);opacity:.4}
-    .stage-scrim{background:rgba(11,11,16,.88)}
+    /* backdrop real esmaecido ainda mais no mobile (metade da opacidade do
+       desktop, cada camada mantém sua própria variável) e véu quase opaco por
+       cima — texto ocupa a largura toda e precisa do fundo praticamente neutro. */
+    .stage-bg-hero{opacity:calc(var(--bg-hero-o) * .5)}
+    .stage-bg-net{opacity:calc(var(--bg-net-o) * .5)}
+    .stage-bg-sun{opacity:calc(var(--bg-sun-o) * .5)}
+    .stage-scrim{background:rgba(11,11,16,.92)}
   }
 
   .scene{min-height:100vh;display:flex;align-items:center;padding:clamp(90px,12vh,140px) 0 60px;position:relative;scroll-snap-align:start;scroll-margin-top:var(--navh)}
@@ -204,6 +244,12 @@
     .stage-ring,.particle{display:none}
     .stage-mark{transform:none!important;filter:drop-shadow(0 0 4px rgba(231,206,147,.5))!important;transition:none!important}
     .stage-glow{opacity:.32!important;transition:none!important}
+    /* backdrop: nenhum Ken Burns, nenhuma troca de cena por scroll (data-stage não
+       muda sem IntersectionObserver) — só a imagem do hero, estática e esmaecida,
+       como pano de fundo calmo. */
+    .stage-bg-img{animation:none!important;transform:none!important;transition:none!important}
+    .stage-bg-hero{opacity:.32!important}
+    .stage-bg-net,.stage-bg-sun{opacity:0!important}
     .scene .content{opacity:1!important;transform:none!important;transition:none!important}
     nav .brand .mk{animation:none}
     .skip-link{transition:none}
@@ -230,6 +276,11 @@
      A marca vive em .stage-visual (coluna à direita); .stage-scrim escurece a
      coluna de leitura à esquerda por cima dela (ver CSS). -->
 <div class="stage" aria-hidden="true">
+  <div class="stage-bg">
+    <div class="stage-bg-img stage-bg-hero"></div>
+    <div class="stage-bg-img stage-bg-net"></div>
+    <div class="stage-bg-img stage-bg-sun"></div>
+  </div>
   <div class="stage-visual">
     <div class="stage-glow"></div>
     <div class="stage-ring"></div>
@@ -267,8 +318,8 @@
   <div class="wrap">
     <div class="content">
       <p class="eyebrow">A tese</p>
-      <h1>EBITDA e sinistralidade são <em>o mesmo problema</em>.</h1>
-      <p class="sub">Eficiência em saúde para o século 21 — para investidor, imprensa e quem quer entrar no time.</p>
+      <h1>Tratamos a mortalidade. <em>Esquecemos a morbidade.</em></h1>
+      <p class="sub">A medicina aprendeu a adiar a morte. Falta cuidar dos anos vividos com perda de saúde — é aí que mora o potencial latente que a Valura persegue: eficiência em saúde para o século 21.</p>
       <div class="actions">
         <a class="btn" href="#contato">Falar com os fundadores</a>
         <a class="btn-ghost" href="./tese.html">Ler a tese completa</a>
@@ -282,7 +333,7 @@
   <div class="wrap">
     <div class="content">
       <p class="eyebrow">A tese</p>
-      <h2>Tratamos a mortalidade. Esquecemos a morbidade.</h2>
+      <h2>EBITDA e sinistralidade são o mesmo problema.</h2>
       <p class="lead">A missão da Valura é levar a saúde à sua máxima eficiência: desfecho por cada real gasto, sem tratar menos. Eficiência não é cortar cuidado — é parar de desperdiçar.</p>
     </div>
   </div>
