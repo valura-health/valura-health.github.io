@@ -4336,6 +4336,17 @@ function vHome() {
   </div></section>
 
   <section><div class="wrap">
+    <p class="eyebrow">Para quem é</p>
+    <h2>Feita para quem está virando médico.</h2>
+    <p class="lead">Cardiogeriatria, saúde do idoso e clínica médica, do ciclo clínico ao início de carreira.</p>
+    <div class="cards c3">
+      <div class="card reveal"><div class="k">Graduação</div><h3>Internato e ciclo clínico</h3><p>Fixe cardiologia, geriatria e clínica com quem está na beira do leito todo dia — e não só no slide.</p></div>
+      <div class="card reveal"><div class="k">Preparação</div><h3>Rumo à residência</h3><p>Os temas de clínica que voltam sempre, com pós-teste e gabarito comentado para você conferir se aprendeu de verdade.</p></div>
+      <div class="card reveal"><div class="k">Início de carreira</div><h3>Recém-formado</h3><p>Atualização contínua em cardiogeriatria e clínica, com certificado a cada pós-teste aprovado, no seu ritmo.</p></div>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
     <p class="eyebrow">No catálogo</p>
     <h2>Últimas aulas publicadas.</h2>
     <div class="cards c2">${pubs.slice(0, 6).map(courseCard).join('')}</div>
@@ -4378,6 +4389,19 @@ function vHome() {
     </div>
   </div></section>
 
+  <section><div class="wrap">
+    <p class="eyebrow">Perguntas frequentes</p>
+    <h2>Antes de assinar.</h2>
+    <div class="cards c2">
+      <div class="card reveal"><div class="k">Acesso</div><h3>Preciso já ser médico?</h3><p>Não. É educação médica continuada pensada para o estudante de medicina e para o início de carreira: o conteúdo é técnico, de graduação em diante.</p></div>
+      <div class="card reveal"><div class="k">Formato</div><h3>As aulas são ao vivo?</h3><p>São gravadas, para assistir no seu ritmo, direto no navegador. Aula nova toda semana, com material de apoio para baixar.</p></div>
+      <div class="card reveal"><div class="k">Certificado</div><h3>Como funciona o certificado?</h3><p>Ao ser aprovado no pós-teste (a partir de ${NOTA_MINIMA}%), o certificado digital sai na hora — com código de verificação, carga horária e assinatura dos professores.</p></div>
+      <div class="card reveal"><div class="k">Assinatura</div><h3>Posso cancelar?</h3><p>Quando quiser, sem fidelidade. Na versão em produção, a cobrança mensal é processada pelo Mercado Pago (cartão ou Pix Automático).</p></div>
+      <div class="card reveal"><div class="k">Segurança</div><h3>Substitui protocolo clínico?</h3><p>Não. É material educacional; não substitui o julgamento clínico nem os protocolos da sua instituição. Dado de paciente não entra na plataforma.</p></div>
+      <div class="card reveal"><div class="k">Conteúdo</div><h3>Em que dá para estudar?</h3><p>Cardiogeriatria, saúde do idoso e clínica médica, com a central de referência (diretrizes, exames e medicações) já inclusa.</p></div>
+    </div>
+  </div></section>
+
   <section class="alt"><div class="wrap">
     <p class="eyebrow">Radar da medicina</p>
     <h2>Inovação, do mundo ao Brasil.</h2>
@@ -4396,6 +4420,13 @@ function vHome() {
       <a class="card reveal" href="#/referencia"><div class="k">Fármacos</div><h3>Antimicrobianos & medicações</h3><p>Sanford Guide, Stanford Bugs & Drugs, bulário Anvisa, interações.</p></a>
       <a class="card reveal" href="#/referencia"><div class="k">Biblioteca</div><h3>Downloads</h3><p>Documentos selecionados — como a Nova AGA Completa (SBGG 2023).</p></a>
     </div>
+  </div></section>
+
+  <section class="alt"><div class="wrap center">
+    <p class="eyebrow">Comece hoje</p>
+    <h2>Uma aula nova toda semana, por R$ 39,90/mês.</h2>
+    <p class="lead">Sem fidelidade: cancele quando quiser. O certificado sai a cada pós-teste aprovado.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px"><a class="btn" href="#/assinar">Assinar por R$ 39,90/mês</a><a class="btn-ghost" href="#/aulas">Ver o catálogo</a></div>
   </div></section>`;
 }
 
