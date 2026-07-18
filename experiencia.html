@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
 <meta name="description" content="A tese da Valura em scrollytelling: eficiência em saúde para o século 21, um dado por vez.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>A experiência — Valura</title>
 <style>
   /*
-    PROTÓTIPO — não é o site oficial. Arquivo novo, isolado (experiencia.html),
-    não linkado de index/consultas/instituicoes/tese.html (guarda-corpo 5 do pedido).
-    Tokens e SVG da marca copiados de tese.html/Documento Constitutivo — identidade
-    Cálice Solar intacta, "não se toca" no desenho.
+    PÁGINA OFICIAL DA TESE (promovida pelo Dr. Igor) — pública e ligada ao menu
+    "Tese" de todas as páginas. Tokens e SVG da marca copiados de tese.html/
+    Documento Constitutivo — identidade Cálice Solar intacta, "não se toca" no
+    desenho. A versão em texto plano segue existindo em tese.html, alcançada
+    pela CTA "Ler a tese completa".
   */
   :root{
     color-scheme:dark;
@@ -57,6 +57,7 @@
   nav .links{display:flex;align-items:center;gap:8px;margin-left:auto}
   nav .links a{font-family:var(--fl);font-size:12.5px;letter-spacing:.05em;color:var(--ash-dim);text-decoration:none;transition:color .2s,background .2s;display:inline-flex;align-items:center;min-height:24px;padding:10px 10px;border-radius:8px}
   nav .links a:hover{color:var(--gold-hi)}
+  nav .links a[aria-current="page"]{color:var(--gold-hi)}
   nav .links a.navcta{font-weight:600;letter-spacing:.04em;padding:10px 18px;margin-left:6px;background:rgba(18,19,42,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(198,161,91,.35);color:var(--gold-hi)}
   nav .links a.navcta:hover{background:rgba(28,25,52,.72);border-color:var(--gold)}
 
@@ -139,6 +140,28 @@
   .stage-scrim{position:absolute;inset:0;background:
     radial-gradient(62% 78% at 24% 50%, rgba(11,11,16,.55), rgba(11,11,16,0) 74%),
     linear-gradient(90deg, rgba(11,11,16,.97) 0%, rgba(11,11,16,.95) 44%, rgba(11,11,16,.85) 56%, rgba(11,11,16,.5) 70%, rgba(11,11,16,.15) 82%, rgba(11,11,16,0) 92%)}
+
+  /* body.motion-paused: aplicado pelo JS do #stageMotionToggle. Trava WCAG 2.2.2
+     (Pause/Stop/Hide) para o Ken Burns/crossfade do palco, que é animação
+     automática infinita >5s. Só congela transform/opacity via
+     animation-play-state — nunca desmonta as camadas (retomar é instantâneo). */
+  body.motion-paused .stage-bg-img,
+  body.motion-paused .stage-ring,
+  body.motion-paused .particle{animation-play-state:paused}
+
+  /* Botão de pausa da animação — ação pura como #haloToggle (sem aria-pressed,
+     o rótulo É a ação). position:fixed (não absolute) porque o palco é fixed e
+     as cenas rolam por baixo dele: o botão tem de continuar acessível em
+     qualquer scroll. Canto inferior esquerdo (discreto, longe do CTA/WhatsApp
+     que mora à direita nas cenas). Nasce [hidden]: só o JS revela, e só quando
+     NÃO há prefers-reduced-motion (nesse caso não há o que pausar — mesmo gate
+     duplo do halo, CSS abaixo + guarda no script). */
+  .stage-motion-toggle{position:fixed;left:20px;bottom:20px;z-index:3;font-family:var(--fl);font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--gold-hi);background:rgba(11,11,16,.6);border:1px solid var(--line-soft);border-radius:999px;padding:8px 14px;min-height:24px;min-width:24px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;transition:border-color .2s,background .2s}
+  .stage-motion-toggle:hover{border-color:var(--gold-deep);background:rgba(11,11,16,.8)}
+  .stage-motion-toggle[hidden]{display:none}
+  @media(max-width:760px){
+    .stage-motion-toggle{padding:8px 10px;font-size:11px;letter-spacing:.02em}
+  }
 
   /* 10 estados do palco — hero (0) a manifesto (8) sobe intensidade; CTA (9) assenta
      num brilho calmo, convite estável em vez de clímax. Cada estado também liga a
@@ -253,6 +276,9 @@
     .scene .content{opacity:1!important;transform:none!important;transition:none!important}
     nav .brand .mk{animation:none}
     .skip-link{transition:none}
+    /* sem movimento, não há o que pausar: o botão nunca aparece (mesma lógica
+       de gate do halo). */
+    .stage-motion-toggle{display:none}
   }
   @media (prefers-reduced-transparency:reduce){
     nav{background:var(--ground);backdrop-filter:none;-webkit-backdrop-filter:none}
@@ -260,6 +286,7 @@
   @media (prefers-contrast:more){
     nav{background:var(--ground);backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom-color:var(--gold-deep)}
     .manifesto,.btn-ghost,nav .links a.navcta{border-color:var(--gold-deep)}
+    .stage-motion-toggle{border-color:var(--gold-deep);background:rgba(11,11,16,.85)}
   }
 </style>
 </head>
@@ -291,6 +318,8 @@
   <div class="stage-scrim"></div>
 </div>
 
+<button class="stage-motion-toggle" id="stageMotionToggle" type="button" hidden>Pausar animação</button>
+
 <a class="skip-link" href="#main">Pular para o conteúdo</a>
 <nav>
   <div class="in">
@@ -306,7 +335,7 @@
       <a href="./consultas.html">Consultas</a>
       <a href="./academy/">Academy</a>
       <a href="./instituicoes.html">Instituições</a>
-      <a href="./tese.html">Tese</a>
+      <a href="./experiencia.html" aria-current="page">Tese</a>
       <a class="navcta" href="#contato">WhatsApp</a>
     </div>
   </div>
@@ -509,6 +538,39 @@
   }, {threshold:.55});
 
   scenes.forEach(function(s){ io.observe(s); });
+})();
+</script>
+
+<script>
+/* Botão de pausa da animação do palco — trava WCAG 2.2.2 (Pause/Stop/Hide) exigida
+   pela Iva para página pública: o Ken Burns do backdrop, o giro do anel e o flutuar
+   das partículas são animação automática infinita >5s. Ação pura como #haloToggle
+   (sem aria-pressed, o rótulo É a ação: "Pausar animação" ↔ "Retomar animação").
+   Gate duplo: sob prefers-reduced-motion não há movimento algum (guarda-corpo 1
+   já zera as animações via CSS) — não há o que pausar, então o botão nunca sai de
+   [hidden], igual ao halo. Estado persiste em localStorage (`valura-exp-motion`:
+   'playing'/'paused'); se a última decisão foi 'paused', já nasce pausado. */
+(function(){
+  var toggle = document.getElementById('stageMotionToggle');
+  if(!toggle){ return; }
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ return; }
+
+  var MOTION_KEY = 'valura-exp-motion';
+  var paused = false;
+  try{ paused = localStorage.getItem(MOTION_KEY) === 'paused'; }catch(e){ paused = false; }
+
+  var apply = function(){
+    document.body.classList.toggle('motion-paused', paused);
+    toggle.textContent = paused ? 'Retomar animação' : 'Pausar animação';
+  };
+  apply();
+  toggle.hidden = false;
+
+  toggle.addEventListener('click', function(){
+    paused = !paused;
+    try{ localStorage.setItem(MOTION_KEY, paused ? 'paused' : 'playing'); }catch(e){}
+    apply();
+  });
 })();
 </script>
 

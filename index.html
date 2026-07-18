@@ -127,19 +127,11 @@
   header.hero::before{content:"";position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:900px;height:900px;border-radius:50%;
     background:radial-gradient(circle,rgba(27,31,59,.55),rgba(11,11,16,0) 62%);z-index:0}
 
-  /* Vídeo de fundo do hero — pronto para os arquivos do Dr. Igor (img/hero-loop.webm +
-     img/hero-loop.mp4, ainda NÃO EXISTEM — intencional: sem arquivo, sem <source>
-     resolvendo, o <video> nunca dispara playing/canplay, a classe .playing nunca é
-     aplicada, opacity fica 0 e o fundo é a .hero-glow abaixo). Gates de reduced-motion
-     /viewport/Save-Data no script no fim do arquivo (IIFE `heroVideo`); se qualquer
-     gate barrar, o vídeo é pausado e escondido (display:none) já no boot. */
-  .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;pointer-events:none;transition:opacity .8s ease}
-  .hero-video.playing{opacity:1}
-
-  /* Luz dourada do Cálice Solar derivando devagar pelo fundo do hero — default enquanto
-     não há vídeo (CSS puro, só transform, nunca cobre o texto: fica atrás do scrim e do
-     conteúdo). Convive com o breathe do símbolo (.hero-mark::after) — este é o halo do
-     símbolo, aquele é o fundo amplo. */
+  /* Luz dourada do Cálice Solar derivando devagar pelo fundo do hero (CSS puro, só
+     transform, nunca cobre o texto: fica atrás do scrim e do conteúdo). Convive com
+     o breathe do símbolo (.hero-mark::after) — este é o halo do fundo amplo, aquele
+     é o halo do símbolo. Vídeo de fundo foi cogitado e abandonado (fomos por
+     experiencia.html): hero da home é só gradiente + esta luz, sem vídeo. */
   .hero-glow{position:absolute;inset:-20%;z-index:0;pointer-events:none;
     background:radial-gradient(circle,rgba(198,161,91,.16),transparent 60%);
     animation:heroGlowDrift 18s ease-in-out infinite alternate}
@@ -149,13 +141,8 @@
     100%{transform:translate(-2%,5%)}
   }
 
-  /* Scrim entre o fundo (vídeo/glow) e o conteúdo. Hoje (sem vídeo) o pior caso é o
-     gradiente + a hero-glow, ambos escuros: texto do hero medido em 15,5:1, AA folgado.
-     ⚠️ ATENÇÃO ao subir vídeo real: como está (só ,52 de opacidade na faixa ~45%, onde
-     ficam H1/.sub), este scrim NÃO garante AA para vídeo CLARO — o .sub cairia a ~1,3:1
-     (achado da Iva, r8). Regra antes de qualquer footage ir ao ar: (a) footage
-     escuro/low-key OU reforçar o scrim na faixa do conteúdo, E (b) re-medir com o arquivo
-     real, E (c) adicionar controle de pausa visível (WCAG 2.2.2 — autoplay loop exige). */
+  /* Scrim entre o fundo (gradiente + .hero-glow) e o conteúdo — pior caso medido em
+     15,5:1 sobre o H1/.sub, AA bem folgado. */
   .hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
     background:linear-gradient(180deg,rgba(11,11,16,.72) 0%,rgba(11,11,16,.52) 45%,rgba(11,11,16,.82) 100%)}
 
@@ -364,7 +351,7 @@
       <a href="./consultas.html">Consultas</a>
       <a href="./academy/">Academy</a>
       <a href="./instituicoes.html">Instituições</a>
-      <a href="./tese.html">Tese</a>
+      <a href="./experiencia.html">Tese</a>
       <a class="navcta" href="#contato">WhatsApp</a>
     </div>
   </div>
@@ -372,14 +359,6 @@
 
 <main id="main">
 <header class="hero" id="top">
-  <!-- Vídeo de fundo do hero: pronto para receber img/hero-loop.webm / img/hero-loop.mp4
-       do Dr. Igor. Os arquivos AINDA NÃO EXISTEM — sem eles o <video> nunca dispara
-       playing/canplay, .playing nunca é aplicada e opacity fica 0 (fundo = .hero-glow
-       abaixo). Gates de reduced-motion/viewport/Save-Data no script no fim do arquivo. -->
-  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="none" aria-hidden="true">
-    <source src="img/hero-loop.webm" type="video/webm">
-    <source src="img/hero-loop.mp4" type="video/mp4">
-  </video>
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="hero-scrim" aria-hidden="true"></div>
   <div class="wrap">
@@ -681,44 +660,6 @@
       syncToggle();
       if(on){ startLoop(); } else { halo.style.opacity = '0'; }
     });
-  }
-})();
-</script>
-
-<script>
-/* Vídeo de fundo do hero — drop-in para o Dr. Igor: quando img/hero-loop.webm e
-   img/hero-loop.mp4 existirem, este script deixa o vídeo tocar (sujeito aos 3 gates
-   abaixo); até lá os <source> dão 404, o <video> nunca dispara `playing`, a classe
-   .playing nunca é aplicada (opacity fica 0 via CSS) e o fundo visível continua sendo
-   a .hero-glow + o gradiente. Gates (TODOS têm de passar para o vídeo tocar):
-     1) prefers-reduced-motion: reduce -> NÃO toca;
-     2) viewport < 760px (maioria do público é mobile/idoso) -> NÃO toca;
-     3) navigator.connection.saveData === true -> NÃO toca.
-   Falhando qualquer gate: pause() + display:none (some por completo, fica só o
-   fundo 2b). Passando todos: escuta `playing`/`canplay` para aplicar .playing (só
-   quando o vídeo REALMENTE está tocando) e chama play() explicitamente. */
-(function(){
-  var v = document.getElementById('heroVideo');
-  if(!v){ return; }
-
-  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var isDesktop = window.matchMedia('(min-width: 760px)').matches;
-  var saveData = !!(navigator.connection && navigator.connection.saveData);
-
-  if(reducedMotion || !isDesktop || saveData){
-    v.pause();
-    v.style.display = 'none';
-    return;
-  }
-
-  var markPlaying = function(){ v.classList.add('playing'); };
-  v.addEventListener('playing', markPlaying);
-  v.addEventListener('canplay', markPlaying);
-  v.addEventListener('error', function(){ v.style.display = 'none'; });
-
-  var p = v.play();
-  if(p && typeof p.catch === 'function'){
-    p.catch(function(){ v.style.display = 'none'; });
   }
 })();
 </script>
