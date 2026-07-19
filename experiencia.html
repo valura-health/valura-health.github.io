@@ -108,6 +108,13 @@
   .stage-bg-hero{background-image:url(img/exp-hero.jpg);opacity:var(--bg-hero-o)}
   .stage-bg-net{background-image:url(img/exp-net.jpg);opacity:var(--bg-net-o);animation-duration:32s;animation-delay:-9s}
   .stage-bg-sun{background-image:url(img/exp-sun.jpg);opacity:var(--bg-sun-o);animation-duration:24s;animation-delay:-5s}
+  /* Camada do hero como ANIMAÇÃO viva (raios do Cálice Solar, #teseSky): quando há JS
+     e não é reduced-motion, o canvas substitui a imagem estática do hero e segue a
+     mesma --bg-hero-o (acende no stage 0, apaga ao rolar). Transparente — só o ouro
+     aditivo; o .stage-scrim cuida da legibilidade. O exp-hero.jpg (.stage-bg-hero)
+     fica de FALLBACK para sem-JS e reduced-motion. */
+  .stage-bg-cv{position:absolute;inset:0;width:100%;height:100%;opacity:var(--bg-hero-o);pointer-events:none;transition:opacity 1.6s ease}
+  body.cv-hero .stage-bg-hero{opacity:0}
   @keyframes kenburns{
     0%{transform:scale(1) translate(0,0)}
     50%{transform:scale(1.03) translate(-.8%,-.5%)}
@@ -204,6 +211,7 @@
     .stage-bg-hero{opacity:calc(var(--bg-hero-o) * .5)}
     .stage-bg-net{opacity:calc(var(--bg-net-o) * .5)}
     .stage-bg-sun{opacity:calc(var(--bg-sun-o) * .5)}
+    .stage-bg-cv{opacity:calc(var(--bg-hero-o) * .5)}
     .stage-scrim{background:rgba(11,11,16,.92)}
   }
 
@@ -273,6 +281,7 @@
     .stage-bg-img{animation:none!important;transform:none!important;transition:none!important}
     .stage-bg-hero{opacity:.32!important}
     .stage-bg-net,.stage-bg-sun{opacity:0!important}
+    .stage-bg-cv{display:none!important}
     .scene .content{opacity:1!important;transform:none!important;transition:none!important}
     nav .brand .mk{animation:none}
     .skip-link{transition:none}
@@ -307,6 +316,7 @@
     <div class="stage-bg-img stage-bg-hero"></div>
     <div class="stage-bg-img stage-bg-net"></div>
     <div class="stage-bg-img stage-bg-sun"></div>
+    <canvas class="stage-bg-cv" id="teseSky"></canvas>
   </div>
   <div class="stage-visual">
     <div class="stage-glow"></div>
@@ -571,6 +581,61 @@
     try{ localStorage.setItem(MOTION_KEY, paused ? 'paused' : 'playing'); }catch(e){}
     apply();
   });
+})();
+</script>
+
+<script>
+/* Hero da Tese: "Raios do Cálice Solar" como camada VIVA do backdrop (#teseSky), no
+   lugar da imagem estática do hero. Transparente (só o ouro aditivo); a --bg-hero-o
+   controla a intensidade por cena (forte no stage 0, some ao rolar), e o .stage-scrim
+   cuida da legibilidade. Gate duplo igual ao resto do palco: sob prefers-reduced-motion
+   NÃO roda (fica o exp-hero.jpg estático do guarda-corpo 1); respeita body.motion-paused
+   (mesma trava WCAG 2.2.2 do #stageMotionToggle — o rótulo "Pausar animação" já cobre isto).
+   Só desenha nos stages 0-6 (onde o hero aparece); nos 7-9 o canvas fica invisível. */
+(function(){
+  var cv = document.getElementById('teseSky');
+  if(!cv) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // fallback: exp-hero estático
+  var ctx = cv.getContext('2d');
+  document.body.classList.add('cv-hero');                 // esconde a imagem estática do hero
+  var dpr = Math.min(window.devicePixelRatio||1, 2), W=0, H=0, TAU=Math.PI*2;
+  function resize(){ W=cv.clientWidth; H=cv.clientHeight; cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); }
+  function mul(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  var rnd=mul(0x5A17), beams=[], emb=[], i;
+  for(i=0;i<52;i++) beams.push({ang:(i/52)*TAU+(rnd()-0.5)*0.06, wid:0.004+rnd()*0.018, base:0.018+rnd()*0.05, sp:0.15+rnd()*0.5, wob:0.2+rnd()*0.6, ph:rnd()*TAU});
+  for(i=0;i<92;i++) emb.push({x:rnd(), y:rnd(), r:0.5+rnd()*2.4, vy:11+rnd()*30, amp:8+rnd()*30, sw:0.25+rnd()*0.7, tw:0.5+rnd()*1.3, ph:rnd()*TAU, a:0.10+rnd()*0.4});
+  function draw(t){
+    if(W!==cv.clientWidth||H!==cv.clientHeight) resize();
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,W,H);                               // TRANSPARENTE (o palco já é escuro)
+    ctx.globalCompositeOperation='lighter';
+    var sx=W*0.80, sy=H*0.24;
+    var pulse=0.5+0.5*Math.sin(t*(TAU/6.5));
+    var coreR=Math.min(W,H)*(0.34+0.05*Math.sin(t*0.6));
+    var cg=ctx.createRadialGradient(sx,sy,0,sx,sy,coreR);
+    cg.addColorStop(0,'rgba(242,200,120,'+(0.26+0.14*pulse).toFixed(3)+')');
+    cg.addColorStop(0.4,'rgba(198,161,91,0.10)'); cg.addColorStop(1,'rgba(198,161,91,0)');
+    ctx.fillStyle=cg; ctx.fillRect(0,0,W,H);
+    ctx.save(); ctx.translate(sx,sy);
+    var rot=t*0.028, osc=0.05*Math.sin(t*0.13), gp=0.7+0.3*Math.sin(t*0.72), L=Math.hypot(W,H)*1.25, k;
+    for(k=0;k<beams.length;k++){ var b=beams[k]; var a=b.ang+rot+osc+0.03*Math.sin(t*b.wob+b.ph); var sh=0.32+0.68*Math.sin(t*b.sp+b.ph); var al=b.base*sh*gp; if(al<=0.002) continue; ctx.save(); ctx.rotate(a); var half=b.wid*L; var lg=ctx.createLinearGradient(0,0,L,0); lg.addColorStop(0,'rgba(242,208,142,'+al.toFixed(3)+')'); lg.addColorStop(0.35,'rgba(198,161,91,'+(al*0.5).toFixed(3)+')'); lg.addColorStop(1,'rgba(198,161,91,0)'); ctx.fillStyle=lg; ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(L,-half); ctx.lineTo(L,half); ctx.closePath(); ctx.fill(); ctx.restore(); }
+    ctx.restore();
+    var Rmax=Math.hypot(W,H)*0.98, per=6.5, m;
+    for(m=0;m<3;m++){ var f=((t/per)+m/3)%1; var env=Math.sin(f*Math.PI); if(env<=0.02) continue; var pr=f*Rmax, band=Rmax*0.15; var pg=ctx.createRadialGradient(sx,sy,Math.max(0,pr-band),sx,sy,pr+band); pg.addColorStop(0,'rgba(198,161,91,0)'); pg.addColorStop(0.5,'rgba(244,212,150,'+(0.13*env).toFixed(3)+')'); pg.addColorStop(1,'rgba(198,161,91,0)'); ctx.fillStyle=pg; ctx.fillRect(0,0,W,H); }
+    var e; for(e=0;e<emb.length;e++){ var p=emb[e]; var yy=(p.y*H-(t*p.vy)%(H+60)+H+60)%(H+60); var xx=p.x*W+Math.sin(t*p.sw+p.ph)*p.amp; var tw=0.5+0.5*Math.sin(t*p.tw+p.ph); var al2=p.a*tw; if(al2<=0.003) continue; var rr=p.r*3.2; var rg=ctx.createRadialGradient(xx,yy,0,xx,yy,rr); rg.addColorStop(0,'rgba(240,214,150,'+al2.toFixed(3)+')'); rg.addColorStop(1,'rgba(240,214,150,0)'); ctx.fillStyle=rg; ctx.beginPath(); ctx.arc(xx,yy,rr,0,TAU); ctx.fill(); }
+    ctx.globalCompositeOperation='source-over';
+  }
+  var raf=0, acc=0, last=0, live=false;
+  function loop(now){ if(!last) last=now; acc+=(now-last)/1000; last=now; draw(acc); raf=requestAnimationFrame(loop); }
+  function start(){ if(live) return; live=true; last=0; raf=requestAnimationFrame(loop); }
+  function stop(){ live=false; cancelAnimationFrame(raf); }
+  resize(); draw(6.0);                                    // quadro inicial (caso já nasça pausado)
+  window.addEventListener('resize', function(){ resize(); if(!live) draw(6.0); });
+  // roda só quando o hero aparece (stages 0-6) e não está pausado — economiza CPU no resto da página
+  function sync(){ var st=+(document.body.dataset.stage||0);
+    if(document.body.classList.contains('motion-paused') || st>6) stop(); else start(); }
+  new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class','data-stage']});
+  sync();
 })();
 </script>
 
