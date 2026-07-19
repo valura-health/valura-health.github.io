@@ -169,7 +169,7 @@
      sr-only (focável por teclado); a .hero-pause é o pill visível; o JS abaixo só persiste a
      escolha e pausa o elemento. */
   .hero-pause-cb{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%)}
-  .hero-pause-cb:checked ~ .hero-bg-video{display:none}
+  .hero:has(.hero-pause-cb:checked) .hero-bg-video{display:none}
   .hero-pause{position:absolute;z-index:4;right:18px;bottom:18px;font-family:var(--fl);font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--gold-hi);background:rgba(11,11,16,.62);border:1px solid var(--line-soft);border-radius:999px;padding:9px 15px;min-height:24px;min-width:24px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:border-color .2s,background .2s}
   .hero-pause:hover{border-color:var(--gold);background:rgba(11,11,16,.8)}
   .hero-pause-cb:focus-visible ~ .hero-pause{outline:2px solid var(--gold-hi);outline-offset:2px}
@@ -199,7 +199,12 @@
      texto e as 3 portas fiquem legíveis em largura total. */
   @media(max-width:760px){
     .hero-bg-img{opacity:.4}
+    .hero-bg-video{opacity:.4}
     .hero-scrim{background:rgba(11,11,16,.9)}
+    /* no mobile a marca/tag empilham no fundo do herói; centraliza o pill abaixo delas
+       (evita encostar na tag "Valor·ex·cura", achado [BAIXO] da Iva) com folga extra. */
+    header.hero{padding-bottom:92px}
+    .hero-pause{left:50%;right:auto;transform:translateX(-50%)}
   }
 
   /* section shell */
@@ -412,7 +417,6 @@
 
 <main id="main">
 <header class="hero" id="top">
-  <input class="hero-pause-cb" id="heroPause" type="checkbox">
   <img class="hero-bg-img" src="img/serene-gold-v3-poster.webp" alt="" aria-hidden="true" width="1920" height="1080" loading="eager" fetchpriority="high" decoding="async">
   <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata" poster="img/serene-gold-v3-poster.webp" aria-hidden="true">
     <source src="img/serene-gold-v3.webm" type="video/webm">
@@ -420,7 +424,6 @@
   </video>
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="hero-scrim" aria-hidden="true"></div>
-  <label class="hero-pause" for="heroPause"><span class="l-pause">Pausar fundo</span><span class="l-play">Animar fundo</span></label>
   <div class="wrap">
     <div>
       <p class="eyebrow">Dois médicos, uma tese</p>
@@ -437,6 +440,11 @@
       <p class="tag">Valor · ex · cura</p>
     </div>
   </div>
+  <!-- Controle de pausa DEPOIS do conteúdo: ordem de foco natural (portas → pausa),
+       casando com a posição visual (pill no canto). O hide do vídeo usa :has() (independe
+       da posição do checkbox). -->
+  <input class="hero-pause-cb" id="heroPause" type="checkbox">
+  <label class="hero-pause" for="heroPause"><span class="l-pause">Pausar fundo</span><span class="l-play">Animar fundo</span></label>
 </header>
 
 <section id="portas" class="alt">
