@@ -127,14 +127,16 @@
   header.hero::before{content:"";position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:900px;height:900px;border-radius:50%;
     background:radial-gradient(circle,rgba(27,31,59,.55),rgba(11,11,16,0) 62%);z-index:0}
 
-  /* Fundo cinematográfico do hero da home (mesmo tratamento dourado premium de
-     experiencia.html): raios/partículas douradas sobre preto, luz à direita,
-     escuro à esquerda — image ESTÁTICA, sem Ken Burns (a home fica simples e não
-     precisa de botão de pausa; o único movimento continua sendo a .hero-glow
-     abaixo, já gated por prefers-reduced-motion). Empilhamento: imagem (z:0) →
-     .hero-glow (z:1, drift, dá vida por cima da imagem) → .hero-scrim (z:2,
-     contraste) → conteúdo (.wrap, z:3). */
+  /* Fundo cinematográfico do hero da home: LOOP de vídeo dourado abstrato
+     (serene-gold-v3 — gerado do Canva/Magic Media, base curada do seam central,
+     auditado pela Iva: movimento sóbrio « 3 Hz, sem flash). Sob prefers-reduced-motion
+     o vídeo some e fica só o poster ESTÁTICO (mesmo frame 0) — mesmo tratamento que a
+     .hero-glow, que também é background gated só por reduced-motion. Empilhamento:
+     poster (z:0) → vídeo (z:0, por cima do poster) → .hero-glow (z:1) → .hero-scrim
+     (z:2, contraste) → conteúdo (.wrap, z:3). Vídeo é decorativo (aria-hidden), fica
+     atrás do scrim e nunca cobre o texto. */
   .hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center right;z-index:0;pointer-events:none}
+  .hero-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center right;z-index:0;pointer-events:none}
 
   /* Luz dourada do Cálice Solar derivando devagar pelo fundo do hero (CSS puro, só
      transform, nunca cobre o texto: fica atrás do scrim e do conteúdo). Convive com
@@ -159,6 +161,21 @@
     background:
       linear-gradient(90deg,rgba(11,11,16,.92) 0%,rgba(11,11,16,.82) 45%,rgba(11,11,16,.3) 75%,rgba(11,11,16,0) 100%),
       linear-gradient(180deg,rgba(11,11,16,.72) 0%,rgba(11,11,16,.52) 45%,rgba(11,11,16,.82) 100%)}
+
+  /* Controle VISÍVEL de pausa do vídeo de fundo (WCAG 2.2.2, Nível A + régua da casa,
+     linhas ~92: movimento de marca no fundo exige toggle visível, não só reduced-motion —
+     mesma decisão do .halo-toggle). CSS-only: o checkbox :checked esconde o vídeo e cai no
+     poster ESTÁTICO (mesmo estado final do reduced-motion) — funciona sem JS. O checkbox é
+     sr-only (focável por teclado); a .hero-pause é o pill visível; o JS abaixo só persiste a
+     escolha e pausa o elemento. */
+  .hero-pause-cb{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%)}
+  .hero-pause-cb:checked ~ .hero-bg-video{display:none}
+  .hero-pause{position:absolute;z-index:4;right:18px;bottom:18px;font-family:var(--fl);font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--gold-hi);background:rgba(11,11,16,.62);border:1px solid var(--line-soft);border-radius:999px;padding:9px 15px;min-height:24px;min-width:24px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:border-color .2s,background .2s}
+  .hero-pause:hover{border-color:var(--gold);background:rgba(11,11,16,.8)}
+  .hero-pause-cb:focus-visible ~ .hero-pause{outline:2px solid var(--gold-hi);outline-offset:2px}
+  .hero-pause .l-play{display:none}
+  .hero-pause-cb:checked ~ .hero-pause .l-pause{display:none}
+  .hero-pause-cb:checked ~ .hero-pause .l-play{display:inline}
 
   .hero .wrap{position:relative;z-index:3;display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
   @media(min-width:900px){.hero .wrap{grid-template-columns:1.15fr .85fr}}
@@ -298,6 +315,8 @@
     .hero-mark .mk,.hero-mark::after{animation:none}
     nav .brand .mk-sun,nav .brand .mk-cup{animation:none}
     .hero-glow{animation:none}
+    .hero-bg-video{display:none}
+    .hero-pause{display:none}
     .reveal{opacity:1;transform:none;transition:none}
     .skip-link{transition:none}
   }
@@ -393,14 +412,20 @@
 
 <main id="main">
 <header class="hero" id="top">
-  <img class="hero-bg-img" src="img/exp-hero.jpg" alt="" aria-hidden="true" width="2048" height="1152" loading="eager" fetchpriority="high" decoding="async">
+  <input class="hero-pause-cb" id="heroPause" type="checkbox">
+  <img class="hero-bg-img" src="img/serene-gold-v3-poster.webp" alt="" aria-hidden="true" width="1920" height="1080" loading="eager" fetchpriority="high" decoding="async">
+  <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata" poster="img/serene-gold-v3-poster.webp" aria-hidden="true">
+    <source src="img/serene-gold-v3.webm" type="video/webm">
+    <source src="img/serene-gold-v3.mp4" type="video/mp4">
+  </video>
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="hero-scrim" aria-hidden="true"></div>
+  <label class="hero-pause" for="heroPause"><span class="l-pause">Pausar fundo</span><span class="l-play">Animar fundo</span></label>
   <div class="wrap">
     <div>
-      <p class="eyebrow">Saúde · Tecnologia · Educação · Eficiência</p>
-      <h1>Construindo a <em>saúde do futuro</em>.</h1>
-      <p class="sub">Somos médicos. Atendemos no consultório, damos aula toda semana para quem está virando médico e construímos ferramentas para hospital cuidar melhor gastando certo.</p>
+      <p class="eyebrow">Dois médicos, uma tese</p>
+      <h1>Cuidar melhor <em>não custa mais caro</em>.</h1>
+      <p class="sub">Somos dois médicos. Atendemos no consultório, formamos quem está chegando à medicina e construímos as ferramentas para o hospital gastar certo — sem cuidar menos.</p>
       <div class="doors">
         <a href="./consultas.html"><span class="d-t">Sou paciente <span class="arrow" aria-hidden="true">→</span></span><span class="d-v">Consulta particular de cardiologia, geriatria e saúde do idoso</span></a>
         <a href="./academy/"><span class="d-t">Sou estudante de medicina <span class="arrow" aria-hidden="true">→</span></span><span class="d-v">Aula semanal, pós-teste e certificado — educação médica continuada</span></a>
@@ -417,7 +442,7 @@
 <section id="portas" class="alt">
   <div class="wrap">
     <p class="eyebrow">Escolha seu caminho</p>
-    <h2>Três portas, um só compromisso.</h2>
+    <h2>Três portas. Um só compromisso.</h2>
     <p class="lead">Cada pessoa que chega até aqui quer uma coisa diferente. Escolha a sua.</p>
     <div class="cards c3">
       <div class="card reveal">
@@ -559,7 +584,7 @@
 <section id="principios" class="parch">
   <div class="wrap center">
     <p class="eyebrow">Princípios</p>
-    <h2>Virtudes que nos norteiam e nos unem.</h2>
+    <h2>Princípios que não negociamos.</h2>
     <p class="lead">Virtude só é cultura quando vira comportamento com consequência.</p>
     <div class="virtues" style="width:100%;text-align:left">
       <div class="virtue reveal">
@@ -719,6 +744,20 @@
       if(on){ startLoop(); } else { halo.style.opacity = '0'; }
     });
   }
+})();
+
+// Controle de pausa do vídeo de fundo do herói. O esconder visual já é CSS-only (:checked);
+// isto só PERSISTE a escolha e pausa o elemento (para o decode quando pausado).
+(function(){
+  var cb = document.getElementById('heroPause'), v = document.querySelector('.hero-bg-video');
+  if(!cb || !v){ return; }
+  try{ if(localStorage.getItem('heroBg') === 'paused'){ cb.checked = true; } }catch(e){}
+  function sync(){ if(cb.checked){ try{ v.pause(); }catch(e){} } else { try{ v.play(); }catch(e){} } }
+  cb.addEventListener('change', function(){
+    try{ localStorage.setItem('heroBg', cb.checked ? 'paused' : 'play'); }catch(e){}
+    sync();
+  });
+  sync();
 })();
 </script>
 
